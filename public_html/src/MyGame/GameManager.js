@@ -6,7 +6,7 @@ class GameManager {
     this.instance = this;
 
     //properties
-    this.State = State;
+    this.State = new State();
     this.mGameScene = new MyGame();
     this.mMenuScene = new Menu();
     //events
@@ -16,7 +16,7 @@ class GameManager {
   }
 
   startGame() {
-    if (AppState.Executing !== Executing.Game) {
+    if (this.State.AppState.Executing !== Executing.Game) {
       this.OnGameStart.dispatch();
       gEngine.GameLoop.stop();
     }
