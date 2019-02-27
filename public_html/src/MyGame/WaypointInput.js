@@ -4,7 +4,7 @@ class WaypointInput {
     this.enabled = false;
     //this is just for testing. should be an event from roundmanager or something
     GameManager.instance.OnRoundStart.subscribe(this.onStart.bind(this));
-    GameManager.instance.OnRoundEnd.subscribe(this.onStart.bind(this));
+    GameManager.instance.OnRoundEnd.subscribe(this.onEnd.bind(this));
   }
 
   update() {
