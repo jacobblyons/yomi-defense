@@ -1,7 +1,7 @@
 class RoundManager {
   static instance;
   constructor() {
-    if (this.instance) return this.instance;
-    this.instance = this;
+    if (RoundManager.instance) return RoundManager.instance;
+    RoundManager.instance = this;
   }
 }
