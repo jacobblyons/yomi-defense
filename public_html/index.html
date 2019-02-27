@@ -111,19 +111,21 @@
     <script type="text/javascript" src="src/Engine/UI/UIDDButton.js"></script>
 
     <!-- Client game code -->
+    <script type="text/javascript" src="src/MyGame/HelperClasses/GameEvent.js"></script>
+    <script type="text/javascript" src="src/MyGame/HelperClasses/Vector2.js"></script>
     <script type="text/javascript" src="src/MyGame/State.js"></script>
     <script type="text/javascript" src="src/MyGame/GameManager.js"></script>
     <script type="text/javascript" src="src/MyGame/RoundManager.js"></script>
-    <script type="text/javascript" src="src/MyGame/HelperClasses/GameEvent.js"></script>
-    <script type="text/javascript" src="src/MyGame/MyGame.js"></script>
+    <script type="text/javascript" src="src/MyGame/WaypointInput.js"></script>
     <script type="text/javascript" src="src/MyGame/Scenes/Menu.js"></script>
-
+    <script type="text/javascript" src="src/MyGame/Scenes/MyGame.js"></script>
     <link rel="stylesheet" type="text/css" href="LoadingIcons.css" />
   </head>
 
   <body
     onload="
         var myGame = new Menu();
+        new GameManager(); //set up singleton
         gEngine.Core.initializeEngineCore('GLCanvas', myGame);
      "
   >
@@ -136,6 +138,11 @@
       <script type="text/javascript">
         gEngine.LoadingIconConfig.setup();
       </script>
+    </div>
+    <div>
+      <p id="state-debug" style="color:black; font-size: 12px; font-family: 'Courier New', Courier, monospace">
+        Loading State..
+      </p>
     </div>
   </body>
 </html>

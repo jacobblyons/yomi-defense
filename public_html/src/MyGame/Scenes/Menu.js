@@ -13,7 +13,7 @@ class Menu extends Scene {
   }
   unloadScene() {
     gEngine.Textures.unloadTexture(this.kButtonSprite);
-    new GameManager().sceneSwapReady();
+    GameManager.instance.sceneSwapReady();
   }
   initialize() {
     var canvas = document.getElementById("GLCanvas");
@@ -27,7 +27,7 @@ class Menu extends Scene {
     this.mPlayButtonUI = new UIButton(
       this.kButtonSprite,
       () => {
-        new GameManager().startGame();
+        GameManager.instance.startGame();
       },
       this,
       [canvas.width / 2, canvas.height / 2 - 100],

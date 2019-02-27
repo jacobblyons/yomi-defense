@@ -16,4 +16,10 @@ class State {
 
     this.RoundState = {};
   }
+
+  toString() {
+    return `<b>AppState</b><br>${JSON.stringify(this.AppState, null, 2)} 
+    <br><br><b>GameState</b><br>${JSON.stringify(this.GameState, null, 2)} 
+      <br><br><b>RoundState</b><br>${JSON.stringify(this.RoundState, null, 2)} <br> `;
+  }
 }

@@ -5,6 +5,7 @@ class MyGame extends Scene {
     super();
     this.mCam = null;
     this.mGameTitleTextUI = null;
+    this.mWaypointInput = null;
   }
 
   loadScene() {}
@@ -26,8 +27,12 @@ class MyGame extends Scene {
       UIText.eVAlignment.eTop,
       [1, 1, 1, 1]
     );
+
+    this.mWaypointInput = new WaypointInput();
   }
-  update() {}
+  update() {
+    this.mWaypointInput.update();
+  }
   draw() {
     this.mCam.setupViewProjection();
     this.mGameTitleTextUI.draw(this.mCam);
