@@ -41,7 +41,7 @@ class State {
 
   toString() {
     return `<b>AppState</b><br><pre>${JSON.stringify(this.AppState, null, 4)}</pre> 
-    <br><br><b>GameState</b><br><pre>${JSON.stringify(this.GameState, null, 4)}</pre>
-      <br><br><b>RoundState</b><br><pre>${JSON.stringify(this.RoundState, null, 4)} </pre> <br>`;
+    <br><br><b>RoundState</b><br><pre>${JSON.stringify(this.RoundState, null, 4)} </pre>
+    <br><br><b>GameState</b><br><pre>${JSON.stringify(this.GameState, null, 4)}</pre> <br>`;
   }
 }
