@@ -4,17 +4,29 @@ const Executing = Object.freeze({
   Menu: "MENU"
 });
 
+const Turn = Object.freeze({
+  RoundMessage: "ROUND_MESSAGE",
+  VapingReadyUp: "VAPING_READY_UP",
+  Vaping: "VAPING",
+  WavingReadyUp: "WAVING_READY_UP",
+  Waving: "WAVING"
+});
+
 class State {
   constructor() {
     //inits
     this.AppState = {
-      name: "jacob",
       Executing: Executing.Menu
     };
 
-    this.GameState = {};
+    this.GameState = {
+      P1Points: 0,
+      P2Points: 0
+    };
 
-    this.RoundState = {};
+    this.RoundState = {
+      Turn: Turn.RoundMessage
+    };
   }
 
   toString() {

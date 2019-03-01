@@ -4,8 +4,8 @@ class MyGame extends Scene {
   constructor() {
     super();
     this.mCam = null;
-    this.mGameTitleTextUI = null;
     this.mWaypointInput = null;
+    this.HUD = null;
   }
 
   loadScene() {}
@@ -19,22 +19,30 @@ class MyGame extends Scene {
     );
     this.mCam.setBackgroundColor([0.2, 0.2, 0.2, 1]);
 
-    this.mGameTitleTextUI = new UIText(
-      "IN GAME",
-      [canvas.width / 2, canvas.height / 2 + 100],
-      10,
-      UIText.eHAlignment.eCenter,
-      UIText.eVAlignment.eTop,
-      [1, 1, 1, 1]
-    );
-
     this.mWaypointInput = new WaypointInput();
+    this.mHUD = new HUD();
   }
   update() {
     this.mWaypointInput.update();
+    this.mHUD.update();
+
+    //handle game flow input
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Space)) {
+      switch (GameManager.instance.State.RoundState.Turn) {
+        case Turn.RoundMessage:
+          RoundManager.instance.readyForRound();
+          break;
+        case Turn.VapingReadyUp:
+          RoundManager.instance.vapingPlayerReady();
+          break;
+        case Turn.WavingReadyUp:
+          RoundManager.instance.wavingPlayerReady();
+          break;
+      }
+    }
   }
   draw() {
     this.mCam.setupViewProjection();
-    this.mGameTitleTextUI.draw(this.mCam);
+    this.mHUD.draw(this.mCam);
   }
 }

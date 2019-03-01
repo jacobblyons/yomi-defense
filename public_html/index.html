@@ -117,6 +117,7 @@
     <script type="text/javascript" src="src/MyGame/GameManager.js"></script>
     <script type="text/javascript" src="src/MyGame/RoundManager.js"></script>
     <script type="text/javascript" src="src/MyGame/WaypointInput.js"></script>
+    <script type="text/javascript" src="src/MyGame/HUD.js"></script>
     <script type="text/javascript" src="src/MyGame/Scenes/Menu.js"></script>
     <script type="text/javascript" src="src/MyGame/Scenes/MyGame.js"></script>
     <link rel="stylesheet" type="text/css" href="LoadingIcons.css" />
@@ -126,6 +127,7 @@
     onload="
         var myGame = new Menu();
         new GameManager(); //set up singleton
+        new RoundManager(); //set up singleton
         gEngine.Core.initializeEngineCore('GLCanvas', myGame);
      "
   >

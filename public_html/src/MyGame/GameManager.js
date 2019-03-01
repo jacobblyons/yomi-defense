@@ -11,9 +11,6 @@ class GameManager {
     this.mGameScene = new MyGame();
     this.mMenuScene = new Menu();
     //events
-    this.OnRoundStart = new GameEvent();
-    this.OnRoundEnd = new GameEvent();
-    this.OnRoundStart = new GameEvent();
 
     //logging
     setInterval(() => {
@@ -28,12 +25,10 @@ class GameManager {
     }
   }
 
-  startRound() {}
-
   sceneSwapReady() {
     if (this.State.AppState.Executing == Executing.Game) {
       gEngine.Core.startScene(this.mGameScene);
-      this.OnRoundStart.dispatch();
+      RoundManager.instance.startRound();
     }
   }
 }

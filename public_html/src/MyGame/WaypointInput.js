@@ -3,8 +3,8 @@ class WaypointInput {
     this.mousePos = this._updateMousePos();
     this.enabled = false;
     //this is just for testing. should be an event from roundmanager or something
-    GameManager.instance.OnRoundStart.subscribe(this.onStart.bind(this));
-    GameManager.instance.OnRoundEnd.subscribe(this.onEnd.bind(this));
+    RoundManager.instance.OnRoundStart.subscribe(this.onStart.bind(this));
+    RoundManager.instance.OnRoundEnd.subscribe(this.onEnd.bind(this));
   }
 
   update() {
