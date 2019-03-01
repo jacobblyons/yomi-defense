@@ -22,17 +22,26 @@ class State {
 
     this.GameState = {
       P1Points: 0,
-      P2Points: 0
+      P2Points: 0,
+      SpawnPoints: [{ x: 0, y: 50 }, { x: 0, y: 100 }, { x: 0, y: 150 }],
+      EndPoint: [{ x: 600, y: 50 }, { x: 600, y: 100 }, { x: 600, y: 150 }]
     };
 
     this.RoundState = {
-      Turn: Turn.RoundMessage
+      Turn: Turn.RoundMessage,
+      WayPoints: [
+        {
+          // something like this
+          x: 0,
+          y: 0
+        }
+      ]
     };
   }
 
   toString() {
-    return `<b>AppState</b><br>${JSON.stringify(this.AppState, null, 2)} 
-    <br><br><b>GameState</b><br>${JSON.stringify(this.GameState, null, 2)} 
-      <br><br><b>RoundState</b><br>${JSON.stringify(this.RoundState, null, 2)} <br> `;
+    return `<b>AppState</b><br><pre>${JSON.stringify(this.AppState, null, 4)}</pre> 
+    <br><br><b>GameState</b><br><pre>${JSON.stringify(this.GameState, null, 4)}</pre>
+      <br><br><b>RoundState</b><br><pre>${JSON.stringify(this.RoundState, null, 4)} </pre> <br>`;
   }
 }

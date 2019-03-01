@@ -3,7 +3,6 @@ class GameManager {
   constructor() {
     //class singleton implementation
     if (GameManager.instance) return GameManager.instance;
-    console.log("new instance");
     GameManager.instance = this;
 
     //properties

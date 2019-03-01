@@ -114,8 +114,8 @@
     <script type="text/javascript" src="src/MyGame/HelperClasses/GameEvent.js"></script>
     <script type="text/javascript" src="src/MyGame/HelperClasses/Vector2.js"></script>
     <script type="text/javascript" src="src/MyGame/State.js"></script>
-    <script type="text/javascript" src="src/MyGame/GameManager.js"></script>
-    <script type="text/javascript" src="src/MyGame/RoundManager.js"></script>
+    <script type="text/javascript" src="src/MyGame/Managers/GameManager.js"></script>
+    <script type="text/javascript" src="src/MyGame/Managers/RoundManager.js"></script>
     <script type="text/javascript" src="src/MyGame/WavingInput.js"></script>
     <script type="text/javascript" src="src/MyGame/HUD.js"></script>
     <script type="text/javascript" src="src/MyGame/Scenes/Menu.js"></script>
@@ -151,9 +151,12 @@
           gEngine.LoadingIconConfig.setup();
         </script>
       </div>
-      <div style=" align-self: start; margin: 25px;">
-        <u style="color:black; font-size: 18px; font-family: 'Courier New', Courier, monospace; ">State Debug</u>
-        <p id="state-debug" style="color:black; font-size: 18px; font-family: 'Courier New', Courier, monospace; ">
+      <div style=" align-self: start; margin: 25px; overflow-y:scroll; height: 600px; width: 300px;">
+        <u style="color:black; font-size: 10px; font-family: 'Courier New', Courier, monospace; ">State Debug</u>
+        <p
+          id="state-debug"
+          style="color:black; font-size: 12px; font-family: 'Courier New', Courier, monospace;line-height:1.2; position:relative !important "
+        >
           Loading State..
         </p>
       </div>

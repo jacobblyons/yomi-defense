@@ -6,6 +6,8 @@ class MyGame extends Scene {
     this.mCam = null;
     this.mWavingInput = null;
     this.HUD = null;
+    this.EnemySet = null;
+    this.TowerSet = null;
   }
 
   loadScene() {}
@@ -21,6 +23,8 @@ class MyGame extends Scene {
 
     this.mWavingInput = new WavingInput();
     this.mHUD = new HUD();
+    this.EnemySet = new GameObjectSet();
+    this.TowerSet = new GameObjectSet();
   }
   update() {
     this.mWavingInput.update();
@@ -41,7 +45,7 @@ class MyGame extends Scene {
       }
     }
 
-    /* TEST CODE - these should be handled by seperate input handlers for waving and vaping */
+    /* TEST CODE - these should be handled by seperate input handlers for waving and vaping or whatever*/
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.X)) {
       switch (GameManager.instance.State.RoundState.Turn) {
         case Turn.Waving:

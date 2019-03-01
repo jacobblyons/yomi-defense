@@ -18,7 +18,7 @@ class HUD {
     RoundManager.instance.OnWavingPlayerReadyUpShow.subscribe(this.showWavingReadyUpMessage.bind(this));
     RoundManager.instance.OnWavingPlayerReadyUpHide.subscribe(this.clearMessage.bind(this));
 
-    /*    TEST     */
+    /* TEST - just to show the game state */
     RoundManager.instance.OnWavingPlayerStart.subscribe(
       (() =>
         this.mGameMessage.setText("insert waving gameplay here. can see waving input in console. x to continue. ")).bind(
@@ -31,7 +31,6 @@ class HUD {
     );
     RoundManager.instance.OnVapingPlayerEnd.subscribe(this.clearMessage.bind(this));
     RoundManager.instance.OnWaveStart.subscribe((() => this.mGameMessage.setText("wave runs here...")).bind(this));
-    /*    TEST     */
   }
 
   draw(cam) {

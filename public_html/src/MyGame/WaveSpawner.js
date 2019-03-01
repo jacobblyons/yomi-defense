@@ -1,0 +1,3 @@
+class WaveSpawner {
+  constructor() {}
+}

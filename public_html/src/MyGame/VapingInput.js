@@ -3,8 +3,7 @@ class WavingInput {
     this.mousePos = this._updateMousePos();
     this.enabled = false;
 
-    RoundManager.instance.OnWavingPlayerStart.subscribe(this._onStart.bind(this));
-    RoundManager.instance.OnWavingPlayerEnd.subscribe(this._onEnd.bind(this));
+    //subscriptions
   }
 
   update() {
