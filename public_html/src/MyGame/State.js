@@ -9,7 +9,8 @@ const Turn = Object.freeze({
   VapingReadyUp: "VAPING_READY_UP",
   Vaping: "VAPING",
   WavingReadyUp: "WAVING_READY_UP",
-  Waving: "WAVING"
+  Waving: "WAVING",
+  RunningWave: "RUNNING_WAVE"
 });
 
 class State {

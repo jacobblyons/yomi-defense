@@ -1,10 +1,10 @@
-class WaypointInput {
+class WavingInput {
   constructor() {
     this.mousePos = this._updateMousePos();
     this.enabled = false;
     //this is just for testing. should be an event from roundmanager or something
-    RoundManager.instance.OnRoundStart.subscribe(this.onStart.bind(this));
-    RoundManager.instance.OnRoundEnd.subscribe(this.onEnd.bind(this));
+    RoundManager.instance.OnWavingPlayerStart.subscribe(this.onStart.bind(this));
+    RoundManager.instance.OnWavingPlayerEnd.subscribe(this.onEnd.bind(this));
   }
 
   update() {

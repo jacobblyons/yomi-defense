@@ -18,6 +18,7 @@ class RoundManager {
     this.OnWavingPlayerEnd = new GameEvent();
     this.OnWaveStart = new GameEvent();
     this.OnWaveEnd = new GameEvent();
+    this.State = GameManager.instance.State.RoundState;
   }
 
   //meant to be called by GameManager after menu
@@ -27,18 +28,34 @@ class RoundManager {
   }
 
   readyForRound() {
-    console.log("round ready");
-    GameManager.instance.State.RoundState.Turn = Turn.WavingReadyUp;
+    this.State.Turn = Turn.WavingReadyUp;
     this.OnRoundMessageHide.dispatch();
     this.OnWavingPlayerReadyUpShow.dispatch();
   }
-  vapingPlayerReady() {
-    console.log("vaping ready");
-  }
-  vapingPlayerFinished() {}
+
   wavingPlayerReady() {
-    console.log("waving ready");
+    this.State.Turn = Turn.Waving;
+    this.OnWavingPlayerReadyUpHide.dispatch();
+    this.OnWavingPlayerStart.dispatch();
   }
-  wavingPlayerFinished() {}
+
+  wavingPlayerFinished() {
+    this.State.Turn = Turn.VapingReadyUp;
+    this.OnWavingPlayerEnd.dispatch();
+    this.OnVapingPlayerReadyUpShow.dispatch();
+  }
+
+  vapingPlayerReady() {
+    this.State.Turn = Turn.Vaping;
+    this.OnVapingPlayerReadyUpHide.dispatch();
+    this.OnVapingPlayerStart.dispatch();
+  }
+
+  vapingPlayerFinished() {
+    this.State.Turn = Turn.RunningWave;
+    this.OnVapingPlayerEnd.dispatch();
+    this.OnWaveStart.dispatch();
+  }
+
   enemyKilled() {}
 }

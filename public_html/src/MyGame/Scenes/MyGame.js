@@ -4,7 +4,7 @@ class MyGame extends Scene {
   constructor() {
     super();
     this.mCam = null;
-    this.mWaypointInput = null;
+    this.mWavingInput = null;
     this.HUD = null;
   }
 
@@ -19,11 +19,11 @@ class MyGame extends Scene {
     );
     this.mCam.setBackgroundColor([0.2, 0.2, 0.2, 1]);
 
-    this.mWaypointInput = new WaypointInput();
+    this.mWavingInput = new WavingInput();
     this.mHUD = new HUD();
   }
   update() {
-    this.mWaypointInput.update();
+    this.mWavingInput.update();
     this.mHUD.update();
 
     //handle game flow input
@@ -37,6 +37,18 @@ class MyGame extends Scene {
           break;
         case Turn.WavingReadyUp:
           RoundManager.instance.wavingPlayerReady();
+          break;
+      }
+    }
+
+    /* TEST CODE - these should be handled by seperate input handlers for waving and vaping */
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.X)) {
+      switch (GameManager.instance.State.RoundState.Turn) {
+        case Turn.Waving:
+          RoundManager.instance.wavingPlayerFinished();
+          break;
+        case Turn.Vaping:
+          RoundManager.instance.vapingPlayerFinished();
           break;
       }
     }
