@@ -8,6 +8,8 @@ class MyGame extends Scene {
     this.HUD = null;
     this.EnemySet = null;
     this.TowerSet = null;
+
+    this.enemy = null;
   }
 
   loadScene() {}
@@ -25,11 +27,13 @@ class MyGame extends Scene {
     this.mHUD = new HUD();
     this.EnemySet = new GameObjectSet();
     this.TowerSet = new GameObjectSet();
+
+    this.enemy = new Enemy(new Renderable());
   }
   update() {
     this.mWavingInput.update();
     this.mHUD.update();
-
+    this.enemy.update();
     //handle game flow input
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Space)) {
       switch (GameManager.instance.State.RoundState.Turn) {
@@ -60,5 +64,6 @@ class MyGame extends Scene {
   draw() {
     this.mCam.setupViewProjection();
     this.mHUD.draw(this.mCam);
+    this.enemy.draw(this.mCam);
   }
 }
