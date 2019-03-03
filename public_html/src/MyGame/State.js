@@ -20,11 +20,12 @@ class State {
       Executing: Executing.Menu,
       CanvasWidth: document.getElementById("GLCanvas").width,
       CanvasHeight: document.getElementById("GLCanvas").height,
-      CameraWidth: 200,
+      CameraWidth: 100,
       CameraCenter: {
         x: 50,
         y: 50
-      }
+      },
+      HUDTextSize: 2
     };
 
     this.GameState = {

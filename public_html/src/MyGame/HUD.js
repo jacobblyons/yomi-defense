@@ -4,7 +4,7 @@ class HUD {
     this.mGameMessage = new UIText(
       "IN GAME",
       [canvas.width / 2, canvas.height / 2 + 100],
-      4,
+      GameManager.instance.State.AppState.HUDTextSize,
       UIText.eHAlignment.eCenter,
       UIText.eVAlignment.eTop,
       [1, 1, 1, 1]
@@ -20,10 +20,7 @@ class HUD {
 
     /* TEST - just to show the game state */
     RoundManager.instance.OnWavingPlayerStart.subscribe(
-      (() =>
-        this.mGameMessage.setText("insert waving gameplay here. can see waving input in console. x to continue. ")).bind(
-        this
-      )
+      (() => this.mGameMessage.setText("insert waving gameplay here.  x to finish. ")).bind(this)
     );
     RoundManager.instance.OnWavingPlayerEnd.subscribe(this.clearMessage.bind(this));
     RoundManager.instance.OnVapingPlayerStart.subscribe(
