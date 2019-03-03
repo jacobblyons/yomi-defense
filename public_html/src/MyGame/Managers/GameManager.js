@@ -30,4 +30,19 @@ class GameManager {
       RoundManager.instance.startRound();
     }
   }
+
+  getMouseWorldCoordinates() {
+    var AppState = GameManager.instance.State.AppState;
+    var mouseCoordinates = new Vector2(gEngine.Input.getMousePosX(), gEngine.Input.getMousePosY());
+    var multiplier = AppState.CameraWidth / AppState.CanvasWidth;
+    var lowerLeft = new Vector2(
+      AppState.CameraCenter.x - AppState.CameraWidth / 2,
+      AppState.CameraCenter.y - (AppState.CanvasHeight * multiplier) / 2
+    );
+    var worldCoordinates = new Vector2(
+      mouseCoordinates.x * multiplier + lowerLeft.x,
+      mouseCoordinates.y * multiplier + lowerLeft.y
+    );
+    return worldCoordinates;
+  }
 }

@@ -58,4 +58,8 @@ class RoundManager {
   }
 
   enemyKilled() {}
+
+  addWaypoint(pos) {
+    this.State.Waypoints.push(pos);
+  }
 }

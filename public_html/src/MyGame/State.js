@@ -17,7 +17,14 @@ class State {
   constructor() {
     //inits
     this.AppState = {
-      Executing: Executing.Menu
+      Executing: Executing.Menu,
+      CanvasWidth: document.getElementById("GLCanvas").width,
+      CanvasHeight: document.getElementById("GLCanvas").height,
+      CameraWidth: 200,
+      CameraCenter: {
+        x: 50,
+        y: 50
+      }
     };
 
     this.GameState = {
@@ -29,13 +36,7 @@ class State {
 
     this.RoundState = {
       Turn: Turn.RoundMessage,
-      WayPoints: [
-        {
-          // something like this
-          x: 0,
-          y: 0
-        }
-      ]
+      Waypoints: []
     };
   }
 

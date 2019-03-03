@@ -4,6 +4,7 @@ class MyGame extends Scene {
   constructor() {
     super();
     this.mCam = null;
+    this.gm = GameManager.instance;
     this.mWavingInput = null;
     this.HUD = null;
     this.EnemySet = null;
@@ -15,25 +16,33 @@ class MyGame extends Scene {
   loadScene() {}
   unloadScene() {}
   initialize() {
-    var canvas = document.getElementById("GLCanvas");
+    var AppState = this.gm.State.AppState;
     this.mCam = new Camera(
-      vec2.fromValues(50, 50), // position of the camera
-      200, // width of camera
-      [0, 0, canvas.width, canvas.height] // viewport (orgX, orgY, width, height)
+      vec2.fromValues(AppState.CameraCenter.x, AppState.CameraCenter.y), // position of the camera
+      AppState.CameraWidth, // width of camera
+      [0, 0, AppState.CanvasWidth, AppState.CanvasHeight] // viewport (orgX, orgY, width, height)
     );
     this.mCam.setBackgroundColor([0.2, 0.2, 0.2, 1]);
 
-    this.mWavingInput = new WavingInput();
+    this.mWavingInput = new WavingInput(this);
     this.mHUD = new HUD();
     this.EnemySet = new GameObjectSet();
     this.TowerSet = new GameObjectSet();
+    this.WaypointSet = new GameObjectSet();
 
-    this.enemy = new Enemy(new Renderable());
+    this.enemy = new Enemy();
   }
+
+  instantiateEnemy() {}
+  instantiateWaypoint(pos) {
+    this.WaypointSet.addToSet(new Waypoint(pos));
+  }
+
   update() {
     this.mWavingInput.update();
     this.mHUD.update();
     this.enemy.update();
+    this.WaypointSet.update();
     //handle game flow input
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Space)) {
       switch (GameManager.instance.State.RoundState.Turn) {
@@ -65,5 +74,6 @@ class MyGame extends Scene {
     this.mCam.setupViewProjection();
     this.mHUD.draw(this.mCam);
     this.enemy.draw(this.mCam);
+    this.WaypointSet.draw(this.mCam);
   }
 }

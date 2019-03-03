@@ -1,10 +1,12 @@
 class Enemy extends GameObject {
-  constructor(rend) {
+  constructor() {
+    var rend = new Renderable();
+    rend.setColor([1, 0, 0, 1]);
     super(rend);
   }
 
   update() {
-    this.moveTowards(mouse, 0.2);
+    this.moveTowards(new Vector2(50, 50), 0.2);
   }
 
   moveTowards(targetPos, dist) {
