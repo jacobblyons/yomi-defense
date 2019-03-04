@@ -35,8 +35,6 @@ class MyGame extends Scene {
     this.SpawnPointSet = new GameObjectSet();
     this.EndPointSet = new GameObjectSet();
 
-    //this.enemy = new Enemy();
-    //this.EnemySet.addToSet(this.enemy);
     this._initializeStartPoints();
     this._initializeEndPoints();
   }
@@ -57,6 +55,7 @@ class MyGame extends Scene {
 
   update() {
 
+
     if(this.gm.State.RoundState.Turn === "RUNNING_WAVE"){
         if (this.spawnTimer > 60 && this.waveCount > 0){
             this.spawnTimer = 0;
@@ -66,6 +65,19 @@ class MyGame extends Scene {
         this.spawnTimer++;
     }
     this.checkRange();    
+
+
+    if (this.gm.State.RoundState.Turn === "RUNNING_WAVE") {
+      if (this.spawnTimer > 120 && this.waveCount > 0) {
+        this.spawnTimer = 0;
+        this.instantiateEnemy();
+        this.waveCount--;
+      }
+      this.spawnTimer++;
+
+      this.checkRange();
+    }
+
 
     this.mWavingInput.update();
     this.mVapingInput.update();
