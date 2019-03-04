@@ -22,6 +22,34 @@ class WavingInput {
   }
 
   _handleClick() {
+    var waypointLimit = RoundManager.instance.State.WaypointLimit;
+    var waypoints = RoundManager.instance.State.Waypoints;
+    var selectedSpawn = RoundManager.instance.State.SelectedSpawnPoint;
+    var selectedEnd = RoundManager.instance.State.SelectedEndPoint;
+
+    if (selectedSpawn === -1) this._handleSpawnSelect();
+    else if (selectedEnd === -1) this._handleEndSelect();
+    else if (waypoints.length < waypointLimit) this._handleWaypointSelect();
+    else RoundManager.instance.wavingPlayerFinished();
+  }
+
+  _handleSpawnSelect() {
+    this.sceneRef.SpawnPointSet.mSet.forEach(s => {
+      if (s.isIntersection(this.mousePos)) {
+        RoundManager.instance.selectSpawn(s.id);
+      }
+    });
+  }
+
+  _handleEndSelect() {
+    this.sceneRef.EndPointSet.mSet.forEach(e => {
+      if (e.isIntersection(this.mousePos)) {
+        RoundManager.instance.selectEnd(e.id);
+      }
+    });
+  }
+
+  _handleWaypointSelect() {
     this.sceneRef.instantiateWaypoint(this.mousePos);
     RoundManager.instance.addWaypoint(this.mousePos);
   }

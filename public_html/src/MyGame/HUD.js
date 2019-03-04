@@ -17,6 +17,9 @@ class HUD {
     RoundManager.instance.OnVapingPlayerReadyUpHide.subscribe(this.clearMessage.bind(this));
     RoundManager.instance.OnWavingPlayerReadyUpShow.subscribe(this.showWavingReadyUpMessage.bind(this));
     RoundManager.instance.OnWavingPlayerReadyUpHide.subscribe(this.clearMessage.bind(this));
+    RoundManager.instance.OnWavingPlayerStart.subscribe(this.showWavingPickSpawnMessage.bind(this));
+    RoundManager.instance.OnSpawnPointSelected.subscribe(this.showWavingPickEndMessage.bind(this));
+    RoundManager.instance.OnEndPointSelected.subscribe(this.showWavingWavepointMessage.bind(this));
 
     /* TEST - just to show the game state */
     RoundManager.instance.OnWavingPlayerStart.subscribe(
@@ -38,12 +41,22 @@ class HUD {
   showRoundMessage() {
     this.mGameMessage.setText("ROUND BEGIN! press space...");
   }
-  showVapingReadyUpMessage() {
-    this.mGameMessage.setText("Vaping Player press space to start ");
-  }
   showWavingReadyUpMessage() {
     this.mGameMessage.setText("Waving Player press space to start ");
   }
+  showWavingPickSpawnMessage() {
+    this.mGameMessage.setText("select a SPAWN...");
+  }
+  showWavingPickEndMessage() {
+    this.mGameMessage.setText("select an END...");
+  }
+  showWavingWavepointMessage() {
+    this.mGameMessage.setText("SET WAYPOINTS");
+  }
+  showVapingReadyUpMessage() {
+    this.mGameMessage.setText("Vaping Player press space to start ");
+  }
+
   clearMessage() {
     this.mGameMessage.setText("");
   }
