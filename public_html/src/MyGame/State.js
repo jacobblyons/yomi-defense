@@ -39,7 +39,7 @@ class State {
       Towers: [],
       SelectedSpawnPoint: -1,
       SelectedEndPoint: -1,
-      WaypointLimit: 7
+      WaypointLimit: 107
     };
   }
 

@@ -3,7 +3,7 @@ class HUD {
     var canvas = document.getElementById("GLCanvas");
     this.mGameMessage = new UIText(
       "IN GAME",
-      [canvas.width / 2, canvas.height / 2 + 100],
+      [canvas.width / 2, canvas.height / 2 + 250],
       GameManager.instance.State.AppState.HUDTextSize,
       UIText.eHAlignment.eCenter,
       UIText.eVAlignment.eTop,
@@ -22,13 +22,15 @@ class HUD {
     RoundManager.instance.OnEndPointSelected.subscribe(this.showWavingWavepointMessage.bind(this));
 
     /* TEST - just to show the game state */
-
+    RoundManager.instance.OnWavingPlayerStart.subscribe(
+      (() => this.mGameMessage.setText("(WAVING) Click to set waypoints. x to finish. ")).bind(this)
+    );
     RoundManager.instance.OnWavingPlayerEnd.subscribe(this.clearMessage.bind(this));
     RoundManager.instance.OnVapingPlayerStart.subscribe(
-      (() => this.mGameMessage.setText("insert vaping gameplay here. press x.")).bind(this)
+      (() => this.mGameMessage.setText("(VAPING) Click to set towers. x to finish.")).bind(this)
     );
     RoundManager.instance.OnVapingPlayerEnd.subscribe(this.clearMessage.bind(this));
-    RoundManager.instance.OnWaveStart.subscribe((() => this.mGameMessage.setText("wave runs here...")).bind(this));
+    RoundManager.instance.OnWaveStart.subscribe((() => this.mGameMessage.setText("Wave running...")).bind(this));
   }
 
   draw(cam) {
