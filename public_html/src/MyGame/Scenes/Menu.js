@@ -2,7 +2,7 @@ class Menu extends Scene {
   constructor() {
     super();
     this.kButtonSprite = "assets/UI/button.png";
-    this.mGameTitle = "OUR GAME";
+    this.mGameTitle = "YOMI DEFENSE";
     this.mPlayButtonUI = null;
     this.mExitButtonUI = null;
     this.mGameTitleTextUI = null;
