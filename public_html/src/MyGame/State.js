@@ -37,7 +37,8 @@ class State {
 
     this.RoundState = {
       Turn: Turn.RoundMessage,
-      Waypoints: []
+      Waypoints: [],
+      Towers: []
     };
   }
 

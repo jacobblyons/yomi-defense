@@ -6,10 +6,10 @@ class MyGame extends Scene {
     this.mCam = null;
     this.gm = GameManager.instance;
     this.mWavingInput = null;
+    this.mVapingInput = null;
     this.HUD = null;
     this.EnemySet = null;
     this.TowerSet = null;
-
     this.enemy = null;
   }
 
@@ -25,6 +25,7 @@ class MyGame extends Scene {
     this.mCam.setBackgroundColor([0.2, 0.2, 0.2, 1]);
 
     this.mWavingInput = new WavingInput(this);
+    this.mVapingInput = new VapingInput(this);
     this.mHUD = new HUD();
     this.EnemySet = new GameObjectSet();
     this.TowerSet = new GameObjectSet();
@@ -37,12 +38,17 @@ class MyGame extends Scene {
   instantiateWaypoint(pos) {
     this.WaypointSet.addToSet(new Waypoint(pos));
   }
+  instantiateTower(pos){
+      this.TowerSet.addToSet(new Tower(pos));
+  }
 
   update() {
     this.mWavingInput.update();
+    this.mVapingInput.update();
     this.mHUD.update();
     this.enemy.update();
     this.WaypointSet.update();
+    this.TowerSet.update();
     //handle game flow input
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Space)) {
       switch (GameManager.instance.State.RoundState.Turn) {
@@ -75,5 +81,6 @@ class MyGame extends Scene {
     this.mHUD.draw(this.mCam);
     this.enemy.draw(this.mCam);
     this.WaypointSet.draw(this.mCam);
+    this.TowerSet.draw(this.mCam);
   }
 }

@@ -62,4 +62,8 @@ class RoundManager {
   addWaypoint(pos) {
     this.State.Waypoints.push(pos);
   }
+  
+  addTower(pos){
+      this.State.Towers.push(pos);
+  }
 }
