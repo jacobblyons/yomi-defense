@@ -103,7 +103,8 @@ class MyGame extends Scene {
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.X)) {
       switch (GameManager.instance.State.RoundState.Turn) {
         case Turn.Waving:
-          RoundManager.instance.wavingPlayerFinished();
+          //RoundManager.instance.wavingPlayerFinished();
+          //handled case safely in waypoint input
           break;
         case Turn.Vaping:
           RoundManager.instance.vapingPlayerFinished();
