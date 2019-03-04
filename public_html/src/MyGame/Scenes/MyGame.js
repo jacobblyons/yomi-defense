@@ -45,11 +45,6 @@ class MyGame extends Scene {
     var startPos = GameManager.instance.State.GameState.SpawnPoints[RoundManager.instance.State.SelectedSpawnPoint];
     _enemy.getXform().setXPos(startPos.x);
     _enemy.getXform().setYPos(startPos.y);
-
-    var _enemy = new Enemy(waypointSet, this.EndPointSet);
-    _enemy.getXform().setXPos(10);
-    _enemy.getXform().setYPos(50);
-
     this.EnemySet.addToSet(_enemy);
   }
 
