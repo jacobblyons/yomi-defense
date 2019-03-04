@@ -50,17 +50,6 @@ class MyGame extends Scene {
     }
     this.checkRange();
 
-    if (this.gm.State.RoundState.Turn === "RUNNING_WAVE") {
-      if (this.spawnTimer > 120 && this.waveCount > 0) {
-        this.spawnTimer = 0;
-        this.instantiateEnemy();
-        this.waveCount--;
-      }
-      this.spawnTimer++;
-
-      this.checkRange();
-    }
-
     this.mWavingInput.update();
     this.mVapingInput.update();
 
