@@ -1,7 +1,7 @@
 class Enemy extends GameObject {
   constructor(WS,ES) {
     var rend = new Renderable();
-    rend.setColor([1, 0, 0, 1]);
+    rend.setColor([0, 1, 0, 1]);
     super(rend);
     //this.pos = pos;
     //this.getXform().setXPos(pos.x);
@@ -41,10 +41,19 @@ class Enemy extends GameObject {
   
   hit(){
       this.mHitPoints--;
-      if(this.mHitPoints === 0){
-          return true;
-      } else{
-          return false;
+      
+      switch(this.mHitPoints){
+          case 2:
+               this.getRenderable().setColor([1,.65,0,1]);
+               break;
+           case 1:
+               this.getRenderable().setColor([1,0,0,1]);
+               break;
+           
+           case 0:
+                return true;
+                break;
+          
       }
   }
 }
