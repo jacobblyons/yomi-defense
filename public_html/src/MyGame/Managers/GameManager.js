@@ -15,7 +15,7 @@ class GameManager {
 
     //logging
     setInterval(() => {
-      document.getElementById("state-debug").innerHTML = this.State.toString();
+      //document.getElementById("state-debug").innerHTML = this.State.toString();
     }, 100);
   }
 
