@@ -40,10 +40,16 @@ class MyGame extends Scene {
   }
 
   instantiateEnemy(waypointSet) {
+
     var _enemy = new Enemy(waypointSet,this.EndPointSet);
     var startPos = GameManager.instance.State.GameState.SpawnPoints[RoundManager.instance.State.SelectedSpawnPoint];
     _enemy.getXform().setXPos(startPos.x);
     _enemy.getXform().setYPos(startPos.y);
+
+    var _enemy = new Enemy(waypointSet, this.EndPointSet);
+    _enemy.getXform().setXPos(10);
+    _enemy.getXform().setYPos(50);
+
     this.EnemySet.addToSet(_enemy);
   }
 
@@ -55,18 +61,15 @@ class MyGame extends Scene {
   }
 
   update() {
-
-
-    if(this.gm.State.RoundState.Turn === "RUNNING_WAVE"){
-        if (this.spawnTimer > 60 && this.waveCount > 0){
-            this.spawnTimer = 0;
-            this.instantiateEnemy(this.WaypointSet);
-            this.waveCount--;
-        }
-        this.spawnTimer++;
+    if (this.gm.State.RoundState.Turn === "RUNNING_WAVE") {
+      if (this.spawnTimer > 60 && this.waveCount > 0) {
+        this.spawnTimer = 0;
+        this.instantiateEnemy(this.WaypointSet);
+        this.waveCount--;
+      }
+      this.spawnTimer++;
     }
-    this.checkRange();    
-
+    this.checkRange();
 
     if (this.gm.State.RoundState.Turn === "RUNNING_WAVE") {
       if (this.spawnTimer > 120 && this.waveCount > 0) {
@@ -79,10 +82,9 @@ class MyGame extends Scene {
       this.checkRange();
     }
 
-
     this.mWavingInput.update();
     this.mVapingInput.update();
-    
+
     this.mHUD.update();
     //this.enemy.update();
     this.EnemySet.update();
@@ -108,7 +110,8 @@ class MyGame extends Scene {
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.X)) {
       switch (GameManager.instance.State.RoundState.Turn) {
         case Turn.Waving:
-          RoundManager.instance.wavingPlayerFinished();
+          //RoundManager.instance.wavingPlayerFinished();
+          //handled case safely in waypoint input
           break;
         case Turn.Vaping:
           RoundManager.instance.vapingPlayerFinished();

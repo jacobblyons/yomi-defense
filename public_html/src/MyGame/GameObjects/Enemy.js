@@ -25,9 +25,7 @@ class Enemy extends GameObject {
           this.waypointsReached++;
         }
       }else{
-        var _endPos = GameManager.instance.State.GameState.EndPoints[RoundManager.instance.State.SelectedEndPoint];
-        //var _endpt = this.EndPointSet.getObjectAt(1);//.getXform().getPosition();
-        console.log(_endPos);
+        var _endPos = GameManager.instance.State.GameState.EndPoints[RoundManager.instance.State.SelectedEndPoint];               
         this.moveTowards(_endPos,0.2);
       }
     }

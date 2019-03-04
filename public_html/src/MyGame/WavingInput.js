@@ -3,6 +3,7 @@ class WavingInput {
     this.mousePos = this._updateMousePos();
     this.enabled = false;
     this.sceneRef = sceneRef;
+    this.doneSettingWaypoints = false;
     RoundManager.instance.OnWavingPlayerStart.subscribe(this._onStart.bind(this));
     RoundManager.instance.OnWavingPlayerEnd.subscribe(this._onEnd.bind(this));
   }
@@ -11,6 +12,13 @@ class WavingInput {
     if (!this.enabled) return;
     this._updateMousePos();
     if (gEngine.Input.isButtonClicked(0)) this._handleClick();
+    //x to stop placing waypoints early
+    var selectedEnd = RoundManager.instance.State.SelectedEndPoint;
+    if (selectedEnd != -1 && gEngine.Input.isKeyClicked(gEngine.Input.keys.X)) {
+      this.doneSettingWaypoints = true;
+      RoundManager.instance.wavingPlayerFinished();
+      this.doneSettingWaypoints = false;
+    }
   }
 
   _onStart() {
@@ -29,8 +37,11 @@ class WavingInput {
 
     if (selectedSpawn === -1) this._handleSpawnSelect();
     else if (selectedEnd === -1) this._handleEndSelect();
-    else if (waypoints.length < waypointLimit) this._handleWaypointSelect();
-    else RoundManager.instance.wavingPlayerFinished();
+    else if (waypoints.length < waypointLimit && !this.doneSettingWaypoints) this._handleWaypointSelect();
+    else {
+      RoundManager.instance.wavingPlayerFinished();
+      this.doneSettingWaypoints = false;
+    }
   }
 
   _handleSpawnSelect() {
