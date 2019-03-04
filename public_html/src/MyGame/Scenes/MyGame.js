@@ -40,7 +40,7 @@ class MyGame extends Scene {
   }
 
   instantiateEnemy(waypointSet) {
-    var _enemy = new Enemy(waypointSet,this.EndPointSet);
+    var _enemy = new Enemy(waypointSet, this.EndPointSet);
     _enemy.getXform().setXPos(10);
     _enemy.getXform().setYPos(50);
     this.EnemySet.addToSet(_enemy);
@@ -54,18 +54,15 @@ class MyGame extends Scene {
   }
 
   update() {
-
-
-    if(this.gm.State.RoundState.Turn === "RUNNING_WAVE"){
-        if (this.spawnTimer > 60 && this.waveCount > 0){
-            this.spawnTimer = 0;
-            this.instantiateEnemy(this.WaypointSet);
-            this.waveCount--;
-        }
-        this.spawnTimer++;
+    if (this.gm.State.RoundState.Turn === "RUNNING_WAVE") {
+      if (this.spawnTimer > 60 && this.waveCount > 0) {
+        this.spawnTimer = 0;
+        this.instantiateEnemy(this.WaypointSet);
+        this.waveCount--;
+      }
+      this.spawnTimer++;
     }
-    this.checkRange();    
-
+    this.checkRange();
 
     if (this.gm.State.RoundState.Turn === "RUNNING_WAVE") {
       if (this.spawnTimer > 120 && this.waveCount > 0) {
@@ -78,10 +75,9 @@ class MyGame extends Scene {
       this.checkRange();
     }
 
-
     this.mWavingInput.update();
     this.mVapingInput.update();
-    
+
     this.mHUD.update();
     //this.enemy.update();
     this.EnemySet.update();

@@ -4,7 +4,7 @@ class EndPoint extends GameObject {
     rend.setColor([1, 0, 0, 1]);
     rend.getXform().setSize(3, 3);
     super(rend);
-
+    this.pos = pos;
     this.id = id;
     this.getXform().setPosition(pos.x, pos.y);
     RoundManager.instance.OnEndPointSelected.subscribe(this._onEndPointSelected.bind(this));
