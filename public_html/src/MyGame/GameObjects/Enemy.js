@@ -9,6 +9,7 @@ class Enemy extends GameObject {
     this.waypointsReached = 0;
     this.WaypointSet = WS;
     this.EndPointSet = ES;
+    this.gm = GameManager.instance;
   }
 
   update() {
@@ -24,8 +25,8 @@ class Enemy extends GameObject {
           this.waypointsReached++;
         }
       }else{
-        var _endpt = this.EndPointSet.getObjectAt(1);//.getXform().getPosition();
-        this.moveTowards(_endpt.pos,0.2);
+        var _endPos = GameManager.instance.State.GameState.EndPoints[RoundManager.instance.State.SelectedEndPoint];               
+        this.moveTowards(_endPos,0.2);
       }
     }
 
