@@ -133,10 +133,10 @@ class MyGame extends Scene {
 
   _initializeStartPoints() {
     var spawns = GameManager.instance.State.GameState.SpawnPoints;
-    spawns.forEach(s => this.SpawnPointSet.addToSet(new SpawnPoint(s)));
+    spawns.forEach((s, i) => this.SpawnPointSet.addToSet(new SpawnPoint(s, i)));
   }
   _initializeEndPoints() {
     var ends = GameManager.instance.State.GameState.EndPoints;
-    ends.forEach(f => this.EndPointSet.addToSet(new EndPoint(f)));
+    ends.forEach((f, i) => this.EndPointSet.addToSet(new EndPoint(f, i)));
   }
 }

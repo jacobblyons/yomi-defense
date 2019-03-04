@@ -37,8 +37,9 @@ class State {
       Turn: Turn.RoundMessage,
       Waypoints: [],
       Towers: [],
-      SelectedSpawnPoint: Math.floor(Math.random() * 2.999),
-      SelectedEndPoint: Math.floor(Math.random() * 2.999)
+      SelectedSpawnPoint: -1,
+      SelectedEndPoint: -1,
+      WaypointLimit: 7
     };
   }
 

@@ -9,9 +9,7 @@ class Tower extends GameObject {
     this.getXform().setXPos(pos.x);
     this.getXform().setYPos(pos.y);
     this.xform = this.getXform();
-    
   }
 
-  update() {
-  }
+  update() {}
 }

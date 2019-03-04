@@ -18,6 +18,8 @@ class RoundManager {
     this.OnWavingPlayerEnd = new GameEvent();
     this.OnWaveStart = new GameEvent();
     this.OnWaveEnd = new GameEvent();
+    this.OnSpawnPointSelected = new GameEvent();
+    this.OnEndPointSelected = new GameEvent();
     this.State = GameManager.instance.State.RoundState;
   }
 
@@ -62,8 +64,18 @@ class RoundManager {
   addWaypoint(pos) {
     this.State.Waypoints.push(pos);
   }
-  
-  addTower(pos){
-      this.State.Towers.push(pos);
+
+  selectSpawn(s) {
+    this.State.SelectedSpawnPoint = s;
+    this.OnSpawnPointSelected.dispatch();
+  }
+
+  selectEnd(e) {
+    this.State.SelectedEndPoint = e;
+    this.OnEndPointSelected.dispatch();
+  }
+
+  addTower(pos) {
+    this.State.Towers.push(pos);
   }
 }
