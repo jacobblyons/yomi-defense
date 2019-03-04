@@ -22,9 +22,7 @@ class HUD {
     RoundManager.instance.OnEndPointSelected.subscribe(this.showWavingWavepointMessage.bind(this));
 
     /* TEST - just to show the game state */
-    RoundManager.instance.OnWavingPlayerStart.subscribe(
-      (() => this.mGameMessage.setText("(WAVING) Click to set waypoints. x to finish. ")).bind(this)
-    );
+
     RoundManager.instance.OnWavingPlayerEnd.subscribe(this.clearMessage.bind(this));
     RoundManager.instance.OnVapingPlayerStart.subscribe(
       (() => this.mGameMessage.setText("(VAPING) Click to set towers. x to finish.")).bind(this)
@@ -51,7 +49,7 @@ class HUD {
     this.mGameMessage.setText("select an END...");
   }
   showWavingWavepointMessage() {
-    this.mGameMessage.setText("SET WAYPOINTS");
+    this.mGameMessage.setText("(WAVING) Click to set waypoints. x to finish.");
   }
   showVapingReadyUpMessage() {
     this.mGameMessage.setText("Vaping Player press space to start ");
