@@ -10,6 +10,7 @@ class GameManager {
     this.State = new State();
     this.mGameScene = new MyGame();
     this.mMenuScene = new Menu();
+    this.showState = true;
     //events
 
     //logging
@@ -45,5 +46,10 @@ class GameManager {
       mouseCoordinates.y * multiplier + lowerLeft.y
     );
     return worldCoordinates;
+  }
+
+  _toggleStateDebug() {
+    this.showState = !this.showState;
+    console.log(this.showState);
   }
 }
