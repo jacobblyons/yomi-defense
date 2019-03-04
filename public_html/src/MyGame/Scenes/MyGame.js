@@ -32,23 +32,28 @@ class MyGame extends Scene {
     this.EnemySet = new GameObjectSet();
     this.TowerSet = new GameObjectSet();
     this.WaypointSet = new GameObjectSet();
+    this.SpawnPointSet = new GameObjectSet();
+    this.EndPointSet = new GameObjectSet();
 
     this.enemy = new Enemy();
     this.EnemySet.addToSet(this.enemy);
+    this._initializeStartPoints();
+    this._initializeEndPoints();
   }
 
   instantiateEnemy() {
     this.EnemySet.addToSet(new Enemy());
   }
-  
+
   instantiateWaypoint(pos) {
     this.WaypointSet.addToSet(new Waypoint(pos));
   }
-  instantiateTower(pos){
-      this.TowerSet.addToSet(new Tower(pos));
+  instantiateTower(pos) {
+    this.TowerSet.addToSet(new Tower(pos));
   }
 
   update() {
+<<<<<<< HEAD
     if(this.gm.State.RoundState.Turn === "RUNNING_WAVE"){
         if (this.spawnTimer > 120 && this.waveCount > 0){
             this.spawnTimer = 0;
@@ -58,6 +63,17 @@ class MyGame extends Scene {
         this.spawnTimer++;
     }
     this.checkRange();    
+=======
+    if (this.spawnTimer > 120 && this.waveCount > 0) {
+      this.spawnTimer = 0;
+      this.instantiateEnemy();
+      this.waveCount--;
+    }
+    this.spawnTimer++;
+
+    this.checkRange();
+
+>>>>>>> 97e023498fca2382102ce4d24603a85e7f98e073
     this.mWavingInput.update();
     this.mVapingInput.update();
     this.mHUD.update();
@@ -99,7 +115,10 @@ class MyGame extends Scene {
     this.EnemySet.draw(this.mCam);
     this.WaypointSet.draw(this.mCam);
     this.TowerSet.draw(this.mCam);
+    this.SpawnPointSet.draw(this.mCam);
+    this.EndPointSet.draw(this.mCam);
   }
+<<<<<<< HEAD
   
   checkRange(){
       //console.log("CR called");
@@ -123,7 +142,37 @@ class MyGame extends Scene {
                 var _enemyColor = _enemy.getRenderable();
                 _enemyColor.setColor([.1, .7, .7, 1]);              
             }
+=======
+
+  checkRange() {
+    for (var t = 0; t < this.TowerSet.size(); t++) {
+      for (var e = 0; e < this.EnemySet.size(); e++) {
+        var _enemy = this.EnemySet.getObjectAt(e);
+        var _tower = this.TowerSet.getObjectAt(t);
+
+        var eX = _enemy.getXform().getXPos();
+        var eY = _enemy.getXform().getYPos();
+        var dX = _tower.getXform().getXPos() - eX;
+
+        var dY = _tower.getXform().getYPos() - eY;
+
+        var dist = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
+
+        if (dist < 10) {
+          var _enemyColor = _enemy.getRenderable();
+          _enemyColor.setColor([0.1, 0.7, 0.7, 1]);
+>>>>>>> 97e023498fca2382102ce4d24603a85e7f98e073
         }
+      }
     }
+  }
+
+  _initializeStartPoints() {
+    var spawns = GameManager.instance.State.GameState.SpawnPoints;
+    spawns.forEach(s => this.SpawnPointSet.addToSet(new SpawnPoint(s)));
+  }
+  _initializeEndPoints() {
+    var ends = GameManager.instance.State.GameState.EndPoints;
+    ends.forEach(f => this.EndPointSet.addToSet(new EndPoint(f)));
   }
 }

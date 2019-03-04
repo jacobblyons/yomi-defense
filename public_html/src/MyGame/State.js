@@ -29,16 +29,16 @@ class State {
     };
 
     this.GameState = {
-      P1Points: 0,
-      P2Points: 0,
-      SpawnPoints: [{ x: 0, y: 50 }, { x: 0, y: 100 }, { x: 0, y: 150 }],
-      EndPoint: [{ x: 600, y: 50 }, { x: 600, y: 100 }, { x: 600, y: 150 }]
+      SpawnPoints: [{ x: 10, y: 25 }, { x: 10, y: 50 }, { x: 10, y: 75 }],
+      EndPoints: [{ x: 90, y: 25 }, { x: 90, y: 50 }, { x: 90, y: 75 }]
     };
 
     this.RoundState = {
       Turn: Turn.RoundMessage,
       Waypoints: [],
-      Towers: []
+      Towers: [],
+      SelectedSpawnPoint: Math.floor(Math.random() * 2.999),
+      SelectedEndPoint: Math.floor(Math.random() * 2.999)
     };
   }
 
