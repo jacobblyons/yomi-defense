@@ -9,6 +9,7 @@ class Enemy extends GameObject {
     this.waypointsReached = 0;
     this.WaypointSet = WS;
     this.EndPointSet = ES;
+    this.mHitPoints = 3;
     this.gm = GameManager.instance;
   }
 
@@ -36,5 +37,14 @@ class Enemy extends GameObject {
     vectorTowards = vectorTowards.getNormalized();
     transform.incXPosBy(vectorTowards.x * dist);
     transform.incYPosBy(vectorTowards.y * dist);
+  }
+  
+  hit(){
+      this.mHitPoints--;
+      if(this.mHitPoints === 0){
+          return true;
+      } else{
+          return false;
+      }
   }
 }

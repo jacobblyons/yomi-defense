@@ -27,11 +27,13 @@ class Tower extends GameObject {
             .getXform()
             .getPosition()[1]
         );
-        this.projectileSet.addToSet(new TowerProjectile(target, this.pos));
+        this.projectileSet.addToSet(new TowerProjectile(target, this.pos)); 
         this.lastTime = Date.now();
       }
     }
     this.projectileSet.update();
+    this.checkCollision();
+  
   }
 
   _getTarget() {
@@ -46,4 +48,21 @@ class Tower extends GameObject {
     super.draw(cam);
     this.projectileSet.draw(cam);
   }
+  
+  checkCollision(){
+      for(var i = 0; i < this.projectileSet.size(); i++){
+          for(var j = 0; j < this.enemySet.size(); j++){
+              if(this.projectileSet.getObjectAt(i).getBBox().boundCollideStatus(this.enemySet.getObjectAt(j).getBBox())){
+                  this.projectileSet.removeFromSet(this.projectileSet.getObjectAt(i));
+                  
+                  var isDead = this.enemySet.getObjectAt(j).hit();
+                  if(isDead){
+                      this.enemySet.removeFromSet(this.enemySet.getObjectAt(j));
+                  }
+              }
+          }
+      }
+  }
+  
+  
 }

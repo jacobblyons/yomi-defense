@@ -139,4 +139,5 @@ class MyGame extends Scene {
     var ends = GameManager.instance.State.GameState.EndPoints;
     ends.forEach((f, i) => this.EndPointSet.addToSet(new EndPoint(f, i)));
   }
+
 }

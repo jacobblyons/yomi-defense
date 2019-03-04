@@ -23,7 +23,8 @@ class TowerProjectile extends GameObject {
   }
 
   isAtTarget() {
-    if (this.getXform().getXPos() === this.mTargetObjectPos[0] && this.getXform().getYPos() === this.mTargetObjectPos[1]) {
+    if (this.getXform().getXPos() === this.mTargetObjectPos.x && 
+            this.getXform().getYPos() === this.mTargetObjectPos.y) {
       return true;
     } else {
       return false;
