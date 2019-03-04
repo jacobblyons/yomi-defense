@@ -5,11 +5,13 @@ class Tower extends GameObject {
     super(rend);
     this.pos = pos;
     this.rotateDelta = 5;
-
+    this.range = 25;
     this.getXform().setXPos(pos.x);
     this.getXform().setYPos(pos.y);
+    this.xform = this.getXform();
+    
   }
 
-  update() {    
+  update() {
   }
 }

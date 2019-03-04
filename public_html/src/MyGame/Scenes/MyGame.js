@@ -11,6 +11,8 @@ class MyGame extends Scene {
     this.EnemySet = null;
     this.TowerSet = null;
     this.enemy = null;
+    this.spawnTimer = 0;
+    this.waveCount = 20;
   }
 
   loadScene() {}
@@ -32,9 +34,13 @@ class MyGame extends Scene {
     this.WaypointSet = new GameObjectSet();
 
     this.enemy = new Enemy();
+    this.EnemySet.addToSet(this.enemy);
   }
 
-  instantiateEnemy() {}
+  instantiateEnemy() {
+    this.EnemySet.addToSet(new Enemy());
+  }
+  
   instantiateWaypoint(pos) {
     this.WaypointSet.addToSet(new Waypoint(pos));
   }
@@ -43,10 +49,20 @@ class MyGame extends Scene {
   }
 
   update() {
+    if (this.spawnTimer > 120 && this.waveCount > 0){
+        this.spawnTimer = 0;
+        this.instantiateEnemy();
+        this.waveCount--;
+    }
+    this.spawnTimer++;
+    
+    this.checkRange();
+    
     this.mWavingInput.update();
     this.mVapingInput.update();
     this.mHUD.update();
-    this.enemy.update();
+    //this.enemy.update();
+    this.EnemySet.update();
     this.WaypointSet.update();
     this.TowerSet.update();
     //handle game flow input
@@ -79,8 +95,35 @@ class MyGame extends Scene {
   draw() {
     this.mCam.setupViewProjection();
     this.mHUD.draw(this.mCam);
-    this.enemy.draw(this.mCam);
+    //this.enemy.draw(this.mCam);
+    this.EnemySet.draw(this.mCam);
     this.WaypointSet.draw(this.mCam);
     this.TowerSet.draw(this.mCam);
+  }
+  
+  checkRange(){
+      console.log("CR called");
+    for(var t = 0; t < this.TowerSet.size(); t++){
+        console.log("CR T Loop called");
+        for (var e = 0; e < this.EnemySet.size(); e++){
+            console.log("CR E Loop called");
+            var _enemy = this.EnemySet.getObjectAt(e);
+            var _tower = this.TowerSet.getObjectAt(t);
+            console.log(_enemy);
+            console.log(_tower);
+            var eX = _enemy.getXform().getXPos(); 
+            var eY = _enemy.getXform().getYPos();
+            var dX = _tower.getXform().getXPos() - eX;
+            console.log(dX);
+            var dY = _tower.getXform().getYPos() - eY;
+            console.log(dY);
+            var dist = Math.sqrt(Math.pow(dX,2)+Math.pow(dY,2));
+            console.log(dist);
+            if (dist < 10){
+                var _enemyColor = _enemy.getRenderable();
+                _enemyColor.setColor([.1, .7, .7, 1]);              
+            }
+        }
+    }
   }
 }
