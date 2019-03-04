@@ -39,22 +39,6 @@ class MyGame extends Scene {
     this._initializeEndPoints();
   }
 
-  instantiateEnemy(waypointSet) {
-
-    var _enemy = new Enemy(waypointSet,this.EndPointSet);
-    var startPos = GameManager.instance.State.GameState.SpawnPoints[RoundManager.instance.State.SelectedSpawnPoint];
-    _enemy.getXform().setXPos(startPos.x);
-    _enemy.getXform().setYPos(startPos.y);
-    this.EnemySet.addToSet(_enemy);
-  }
-
-  instantiateWaypoint(pos) {
-    this.WaypointSet.addToSet(new Waypoint(pos));
-  }
-  instantiateTower(pos) {
-    this.TowerSet.addToSet(new Tower(pos));
-  }
-
   update() {
     if (this.gm.State.RoundState.Turn === "RUNNING_WAVE") {
       if (this.spawnTimer > 60 && this.waveCount > 0) {
@@ -141,6 +125,21 @@ class MyGame extends Scene {
         }
       }
     }
+  }
+
+  instantiateEnemy(waypointSet) {
+    var _enemy = new Enemy(waypointSet, this.EndPointSet);
+    var startPos = GameManager.instance.State.GameState.SpawnPoints[RoundManager.instance.State.SelectedSpawnPoint];
+    _enemy.getXform().setXPos(startPos.x);
+    _enemy.getXform().setYPos(startPos.y);
+    this.EnemySet.addToSet(_enemy);
+  }
+
+  instantiateWaypoint(pos) {
+    this.WaypointSet.addToSet(new Waypoint(pos));
+  }
+  instantiateTower(pos) {
+    this.TowerSet.addToSet(new Tower(pos, this.EnemySet));
   }
 
   _initializeStartPoints() {

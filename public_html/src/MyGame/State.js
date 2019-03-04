@@ -30,7 +30,8 @@ class State {
 
     this.GameState = {
       SpawnPoints: [{ x: 10, y: 25 }, { x: 10, y: 50 }, { x: 10, y: 75 }],
-      EndPoints: [{ x: 90, y: 25 }, { x: 90, y: 50 }, { x: 90, y: 75 }]
+      EndPoints: [{ x: 90, y: 25 }, { x: 90, y: 50 }, { x: 90, y: 75 }],
+      TowerFireRate: 1000
     };
 
     this.RoundState = {

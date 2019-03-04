@@ -3,13 +3,13 @@ class TowerProjectile extends GameObject {
     var rend = new SpriteRenderable("assets/ParticleSystem/flameparticle.png");
     rend.setColor([0, 1, 0, 1]);
     super(rend);
-    this.getXform().setXPos(towerPos[0]);
-    this.getXform().setYPos(towerPos[1]);
+    this.getXform().setXPos(towerPos.x);
+    this.getXform().setYPos(towerPos.y);
     this.mTargetObjectPos = targetObjectPos;
   }
 
   update() {
-    this.moveTowards(this.mTargetObjectPos, 0.01);
+    this.moveTowards(this.mTargetObjectPos, 0.1);
   }
 
   moveTowards(targetPos, dist) {
