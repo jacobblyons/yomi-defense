@@ -88,13 +88,14 @@ class MyGame extends Scene {
   }
   draw() {
     this.mCam.setupViewProjection();
-    this.mHUD.draw(this.mCam);
+
     //this.enemy.draw(this.mCam);
     this.EnemySet.draw(this.mCam);
     this.WaypointSet.draw(this.mCam);
     this.TowerSet.draw(this.mCam);
     this.SpawnPointSet.draw(this.mCam);
     this.EndPointSet.draw(this.mCam);
+    this.mHUD.draw(this.mCam);
   }
 
   instantiateEnemy(waypointSet) {
@@ -120,5 +121,4 @@ class MyGame extends Scene {
     var ends = GameManager.instance.State.GameState.EndPoints;
     ends.forEach((f, i) => this.EndPointSet.addToSet(new EndPoint(f, i)));
   }
-
 }
