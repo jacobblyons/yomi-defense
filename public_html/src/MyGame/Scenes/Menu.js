@@ -4,6 +4,7 @@ class Menu extends Scene {
     this.kButtonSprite = "assets/UI/button.png";
     this.mGameTitle = "OUR GAME";
     this.mPlayButtonUI = null;
+    this.mExitButtonUI = null;
     this.mGameTitleTextUI = null;
     this.mCam = null;
   }
@@ -37,6 +38,18 @@ class Menu extends Scene {
       [1, 0, 0, 1],
       [1, 1, 1, 1]
     );
+    
+    this.mExitButtonUI = new UIButton(
+      this.kButtonSprite,
+      () => {},
+      this,
+      [canvas.width / 2, canvas.height / 2 - 175],
+      [150, 75],
+      "Exit",
+      6,
+      [1, 0, 0, 1],
+      [1, 1, 1, 1]
+    );
 
     this.mGameTitleTextUI = new UIText(
       this.mGameTitle,
@@ -49,10 +62,12 @@ class Menu extends Scene {
   }
   update() {
     this.mPlayButtonUI.update();
+    this.mExitButtonUI.update();
   }
   draw() {
     this.mCam.setupViewProjection();
     this.mPlayButtonUI.draw(this.mCam);
+    this.mExitButtonUI.draw(this.mCam);
     this.mGameTitleTextUI.draw(this.mCam);
   }
 }
