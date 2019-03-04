@@ -53,27 +53,17 @@ class MyGame extends Scene {
   }
 
   update() {
-<<<<<<< HEAD
-    if(this.gm.State.RoundState.Turn === "RUNNING_WAVE"){
-        if (this.spawnTimer > 120 && this.waveCount > 0){
-            this.spawnTimer = 0;
-            this.instantiateEnemy();
-            this.waveCount--;
-        }
-        this.spawnTimer++;
-    }
-    this.checkRange();    
-=======
-    if (this.spawnTimer > 120 && this.waveCount > 0) {
-      this.spawnTimer = 0;
-      this.instantiateEnemy();
-      this.waveCount--;
-    }
-    this.spawnTimer++;
+    if (this.gm.State.RoundState.Turn === "RUNNING_WAVE") {
+      if (this.spawnTimer > 120 && this.waveCount > 0) {
+        this.spawnTimer = 0;
+        this.instantiateEnemy();
+        this.waveCount--;
+      }
+      this.spawnTimer++;
 
-    this.checkRange();
+      this.checkRange();
+    }
 
->>>>>>> 97e023498fca2382102ce4d24603a85e7f98e073
     this.mWavingInput.update();
     this.mVapingInput.update();
     this.mHUD.update();
@@ -118,31 +108,6 @@ class MyGame extends Scene {
     this.SpawnPointSet.draw(this.mCam);
     this.EndPointSet.draw(this.mCam);
   }
-<<<<<<< HEAD
-  
-  checkRange(){
-      //console.log("CR called");
-    for(var t = 0; t < this.TowerSet.size(); t++){
-        //console.log("CR T Loop called");
-        for (var e = 0; e < this.EnemySet.size(); e++){
-            //console.log("CR E Loop called");
-            var _enemy = this.EnemySet.getObjectAt(e);
-            var _tower = this.TowerSet.getObjectAt(t);
-            //console.log(_enemy);
-            //console.log(_tower);
-            var eX = _enemy.getXform().getXPos(); 
-            var eY = _enemy.getXform().getYPos();
-            var dX = _tower.getXform().getXPos() - eX;
-            //console.log(dX);
-            var dY = _tower.getXform().getYPos() - eY;
-            //console.log(dY);
-            var dist = Math.sqrt(Math.pow(dX,2)+Math.pow(dY,2));
-            //console.log(dist);
-            if (dist < 10){
-                var _enemyColor = _enemy.getRenderable();
-                _enemyColor.setColor([.1, .7, .7, 1]);              
-            }
-=======
 
   checkRange() {
     for (var t = 0; t < this.TowerSet.size(); t++) {
@@ -161,7 +126,6 @@ class MyGame extends Scene {
         if (dist < 10) {
           var _enemyColor = _enemy.getRenderable();
           _enemyColor.setColor([0.1, 0.7, 0.7, 1]);
->>>>>>> 97e023498fca2382102ce4d24603a85e7f98e073
         }
       }
     }
