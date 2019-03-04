@@ -12,4 +12,8 @@ class Vector2 {
   getMagnitude() {
     return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
   }
+
+  getDistance(other) {
+    return Math.sqrt(Math.pow(other.x - this.x, 2), Math.pow(other.y - this.y, 2));
+  }
 }

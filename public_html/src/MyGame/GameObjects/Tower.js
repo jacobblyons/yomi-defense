@@ -18,8 +18,16 @@ class Tower extends GameObject {
   update() {
     super.update();
     if (GameManager.instance.State.RoundState.Turn === Turn.RunningWave) {
-      if (Date.now() - this.lastTime > GameManager.instance.State.GameState.TowerFireRate) {
-        this.projectileSet.addToSet(new TowerProjectile(this._getTarget(), this.pos));
+      if (Date.now() - this.lastTime > GameManager.instance.State.GameState.TowerFireRate && this.enemySet.size() > 0) {
+        var target = new Vector2(
+          this._getTarget()
+            .getXform()
+            .getPosition()[0],
+          this._getTarget()
+            .getXform()
+            .getPosition()[1]
+        );
+        this.projectileSet.addToSet(new TowerProjectile(target, this.pos));
         this.lastTime = Date.now();
       }
     }
@@ -27,7 +35,11 @@ class Tower extends GameObject {
   }
 
   _getTarget() {
-    return new Vector2(50, 50);
+    return this.enemySet.mSet.reduce((acc, cur) => {
+      var curDist = this.pos.getDistance(new Vector2(cur.getXform().getPosition()[0], cur.getXform().getPosition()[1]));
+      var accDist = this.pos.getDistance(new Vector2(acc.getXform().getPosition()[0], acc.getXform().getPosition()[1]));
+      return curDist < accDist ? cur : acc;
+    }, this.enemySet.getObjectAt(0));
   }
 
   draw(cam) {

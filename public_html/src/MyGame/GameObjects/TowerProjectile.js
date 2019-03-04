@@ -9,7 +9,7 @@ class TowerProjectile extends GameObject {
   }
 
   update() {
-    this.moveTowards(this.mTargetObjectPos, 0.1);
+    this.moveTowards(this.mTargetObjectPos, 1);
   }
 
   moveTowards(targetPos, dist) {
