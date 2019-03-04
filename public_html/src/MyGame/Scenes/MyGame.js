@@ -10,12 +10,17 @@ class MyGame extends Scene {
     this.HUD = null;
     this.EnemySet = null;
     this.TowerSet = null;
+    this.mTowerProjectileSet = null;
     this.enemy = null;
     this.spawnTimer = 0;
-    this.waveCount = 40;
+    this.waveCount = 20;
+    
+    this.kFireSprite = "assets/ParticleSystem/flameparticle.png";
   }
 
-  loadScene() {}
+  loadScene() {
+      gEngine.Textures.loadTexture(this.kFireSprite);
+  }
   unloadScene() {}
   initialize() {
     var AppState = this.gm.State.AppState;
@@ -34,16 +39,16 @@ class MyGame extends Scene {
     this.WaypointSet = new GameObjectSet();
     this.SpawnPointSet = new GameObjectSet();
     this.EndPointSet = new GameObjectSet();
+    this.mTowerProjectileSet = new GameObjectSet();
 
+    this.enemy = new Enemy();
+    this.EnemySet.addToSet(this.enemy);
     this._initializeStartPoints();
     this._initializeEndPoints();
   }
 
-  instantiateEnemy(waypointSet) {
-    var _enemy = new Enemy(waypointSet,this.EndPointSet);
-    _enemy.getXform().setXPos(10);
-    _enemy.getXform().setYPos(50);
-    this.EnemySet.addToSet(_enemy);
+  instantiateEnemy() {
+    this.EnemySet.addToSet(new Enemy());
   }
 
   instantiateWaypoint(pos) {
@@ -54,19 +59,6 @@ class MyGame extends Scene {
   }
 
   update() {
-
-
-    if(this.gm.State.RoundState.Turn === "RUNNING_WAVE"){
-        if (this.spawnTimer > 60 && this.waveCount > 0){
-            this.spawnTimer = 0;
-            this.instantiateEnemy(this.WaypointSet);
-            this.waveCount--;
-        }
-        this.spawnTimer++;
-    }
-    this.checkRange();    
-
-
     if (this.gm.State.RoundState.Turn === "RUNNING_WAVE") {
       if (this.spawnTimer > 120 && this.waveCount > 0) {
         this.spawnTimer = 0;
@@ -78,16 +70,21 @@ class MyGame extends Scene {
       this.checkRange();
     }
 
-
     this.mWavingInput.update();
     this.mVapingInput.update();
-    
     this.mHUD.update();
     //this.enemy.update();
     this.EnemySet.update();
-    //this.updateEnemy();
     this.WaypointSet.update();
     this.TowerSet.update();
+    this.mTowerProjectileSet.update();
+
+    for(var i = 0; i < this.mTowerProjectileSet.size(); i++){
+        var atTarget = this.mTowerProjectileSet.getObjectAt(i).isAtTarget();
+        if(atTarget){
+            this.mTowerProjectileSet.removeFromSet(this.mTowerProjectileSet.getObjectAt(i));
+        }
+    }
     //handle game flow input
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Space)) {
       switch (GameManager.instance.State.RoundState.Turn) {
@@ -119,37 +116,43 @@ class MyGame extends Scene {
     this.mCam.setupViewProjection();
     this.mHUD.draw(this.mCam);
     //this.enemy.draw(this.mCam);
-    this.EnemySet.draw(this.mCam);
+    this.EnemySet.draw(this.mCam); 
     this.WaypointSet.draw(this.mCam);
     this.TowerSet.draw(this.mCam);
+    this.mTowerProjectileSet.draw(this.mCam);
     this.SpawnPointSet.draw(this.mCam);
     this.EndPointSet.draw(this.mCam);
+    
   }
-
-  checkRange() {
-    for (var t = 0; t < this.TowerSet.size(); t++) {
-      for (var e = 0; e < this.EnemySet.size(); e++) {
-        var _enemy = this.EnemySet.getObjectAt(e);
-        var _tower = this.TowerSet.getObjectAt(t);
-        var eX = _enemy.getXform().getXPos();
-        var eY = _enemy.getXform().getYPos();
-        var dX = _tower.getXform().getXPos() - eX;
-        var dY = _tower.getXform().getYPos() - eY;
-        var dist = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
-        if (dist < 10) {
-          var _enemyColor = _enemy.getRenderable();
-          _enemyColor.setColor([0.1, 0.7, 0.7, 1]);
+  
+  checkRange(){
+    for(var t = 0; t < this.TowerSet.size(); t++){
+        for (var e = 0; e < this.EnemySet.size(); e++){
+            var _enemy = this.EnemySet.getObjectAt(e);
+            var _tower = this.TowerSet.getObjectAt(t);
+            var eX = _enemy.getXform().getXPos(); 
+            var eY = _enemy.getXform().getYPos();
+            var dX = _tower.getXform().getXPos() - eX;
+            var dY = _tower.getXform().getYPos() - eY;
+            var dist = Math.sqrt(Math.pow(dX,2)+Math.pow(dY,2));
+            if (dist < 10){
+                var _enemyColor = _enemy.getRenderable();
+                _enemyColor.setColor([.1, .7, .7, 1]); 
+                if(this.mTowerProjectileSet.size() < this.TowerSet.size()){
+                    this.mTowerProjectileSet.addToSet(new TowerProjectile(_enemy.getXform().getPosition(), _tower.getXform().getPosition()));
+                }
+                
+            }
         }
-      }
     }
   }
 
   _initializeStartPoints() {
     var spawns = GameManager.instance.State.GameState.SpawnPoints;
-    spawns.forEach((s, i) => this.SpawnPointSet.addToSet(new SpawnPoint(s, i)));
+    spawns.forEach(s => this.SpawnPointSet.addToSet(new SpawnPoint(s)));
   }
   _initializeEndPoints() {
     var ends = GameManager.instance.State.GameState.EndPoints;
-    ends.forEach((f, i) => this.EndPointSet.addToSet(new EndPoint(f, i)));
+    ends.forEach(f => this.EndPointSet.addToSet(new EndPoint(f)));
   }
 }
