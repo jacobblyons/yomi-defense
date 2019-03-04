@@ -19,21 +19,14 @@ class Tower extends GameObject {
     super.update();
     if (GameManager.instance.State.RoundState.Turn === Turn.RunningWave) {
       if (Date.now() - this.lastTime > GameManager.instance.State.GameState.TowerFireRate && this.enemySet.size() > 0) {
-        var target = new Vector2(
-          this._getTarget()
-            .getXform()
-            .getPosition()[0],
-          this._getTarget()
-            .getXform()
-            .getPosition()[1]
-        );
-        this.projectileSet.addToSet(new TowerProjectile(target, this.pos)); 
+        var target = this._getTarget();
+        var targetPos = new Vector2(target.getXform().getPosition()[0], target.getXform().getPosition()[1]);
+        this.projectileSet.addToSet(new TowerProjectile(target, this.pos));
         this.lastTime = Date.now();
       }
     }
     this.projectileSet.update();
     this.checkCollision();
-  
   }
 
   _getTarget() {
@@ -48,21 +41,24 @@ class Tower extends GameObject {
     super.draw(cam);
     this.projectileSet.draw(cam);
   }
-  
-  checkCollision(){
-      for(var i = 0; i < this.projectileSet.size(); i++){
-          for(var j = 0; j < this.enemySet.size(); j++){
-              if(this.projectileSet.getObjectAt(i).getBBox().boundCollideStatus(this.enemySet.getObjectAt(j).getBBox())){
-                  this.projectileSet.removeFromSet(this.projectileSet.getObjectAt(i));
-                  
-                  var isDead = this.enemySet.getObjectAt(j).hit();
-                  if(isDead){
-                      this.enemySet.removeFromSet(this.enemySet.getObjectAt(j));
-                  }
-              }
+
+  checkCollision() {
+    for (var i = 0; i < this.projectileSet.size(); i++) {
+      for (var j = 0; j < this.enemySet.size(); j++) {
+        if (
+          this.projectileSet
+            .getObjectAt(i)
+            .getBBox()
+            .boundCollideStatus(this.enemySet.getObjectAt(j).getBBox())
+        ) {
+          this.projectileSet.removeFromSet(this.projectileSet.getObjectAt(i));
+
+          var isDead = this.enemySet.getObjectAt(j).hit();
+          if (isDead) {
+            this.enemySet.removeFromSet(this.enemySet.getObjectAt(j));
           }
+        }
       }
+    }
   }
-  
-  
 }
