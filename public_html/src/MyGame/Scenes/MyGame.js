@@ -49,15 +49,15 @@ class MyGame extends Scene {
   }
 
   update() {
-    if (this.spawnTimer > 120 && this.waveCount > 0){
-        this.spawnTimer = 0;
-        this.instantiateEnemy();
-        this.waveCount--;
+    if(this.gm.State.RoundState.Turn === "RUNNING_WAVE"){
+        if (this.spawnTimer > 120 && this.waveCount > 0){
+            this.spawnTimer = 0;
+            this.instantiateEnemy();
+            this.waveCount--;
+        }
+        this.spawnTimer++;
     }
-    this.spawnTimer++;
-    
-    this.checkRange();
-    
+    this.checkRange();    
     this.mWavingInput.update();
     this.mVapingInput.update();
     this.mHUD.update();
@@ -102,23 +102,23 @@ class MyGame extends Scene {
   }
   
   checkRange(){
-      console.log("CR called");
+      //console.log("CR called");
     for(var t = 0; t < this.TowerSet.size(); t++){
-        console.log("CR T Loop called");
+        //console.log("CR T Loop called");
         for (var e = 0; e < this.EnemySet.size(); e++){
-            console.log("CR E Loop called");
+            //console.log("CR E Loop called");
             var _enemy = this.EnemySet.getObjectAt(e);
             var _tower = this.TowerSet.getObjectAt(t);
-            console.log(_enemy);
-            console.log(_tower);
+            //console.log(_enemy);
+            //console.log(_tower);
             var eX = _enemy.getXform().getXPos(); 
             var eY = _enemy.getXform().getYPos();
             var dX = _tower.getXform().getXPos() - eX;
-            console.log(dX);
+            //console.log(dX);
             var dY = _tower.getXform().getYPos() - eY;
-            console.log(dY);
+            //console.log(dY);
             var dist = Math.sqrt(Math.pow(dX,2)+Math.pow(dY,2));
-            console.log(dist);
+            //console.log(dist);
             if (dist < 10){
                 var _enemyColor = _enemy.getRenderable();
                 _enemyColor.setColor([.1, .7, .7, 1]);              
