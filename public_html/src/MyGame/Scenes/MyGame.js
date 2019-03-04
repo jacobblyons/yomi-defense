@@ -48,7 +48,6 @@ class MyGame extends Scene {
       }
       this.spawnTimer++;
     }
-    this.checkRange();
 
     this.mWavingInput.update();
     this.mVapingInput.update();
@@ -96,24 +95,6 @@ class MyGame extends Scene {
     this.TowerSet.draw(this.mCam);
     this.SpawnPointSet.draw(this.mCam);
     this.EndPointSet.draw(this.mCam);
-  }
-
-  checkRange() {
-    for (var t = 0; t < this.TowerSet.size(); t++) {
-      for (var e = 0; e < this.EnemySet.size(); e++) {
-        var _enemy = this.EnemySet.getObjectAt(e);
-        var _tower = this.TowerSet.getObjectAt(t);
-        var eX = _enemy.getXform().getXPos();
-        var eY = _enemy.getXform().getYPos();
-        var dX = _tower.getXform().getXPos() - eX;
-        var dY = _tower.getXform().getYPos() - eY;
-        var dist = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
-        if (dist < 10) {
-          var _enemyColor = _enemy.getRenderable();
-          _enemyColor.setColor([0.1, 0.7, 0.7, 1]);
-        }
-      }
-    }
   }
 
   instantiateEnemy(waypointSet) {

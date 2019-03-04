@@ -19,10 +19,12 @@ class Tower extends GameObject {
     super.update();
     if (GameManager.instance.State.RoundState.Turn === Turn.RunningWave) {
       if (Date.now() - this.lastTime > GameManager.instance.State.GameState.TowerFireRate && this.enemySet.size() > 0) {
-        var target = this._getTarget();
-        var targetPos = new Vector2(target.getXform().getPosition()[0], target.getXform().getPosition()[1]);
-        this.projectileSet.addToSet(new TowerProjectile(target, this.pos));
-        this.lastTime = Date.now();
+          if(this.checkRange()){
+              var target = this._getTarget();
+              var targetPos = new Vector2(target.getXform().getPosition()[0], target.getXform().getPosition()[1]);
+              this.projectileSet.addToSet(new TowerProjectile(target, this.pos));
+              this.lastTime = Date.now();
+          }  
       }
     }
     this.projectileSet.update();
@@ -60,5 +62,21 @@ class Tower extends GameObject {
         }
       }
     }
+  }
+  
+  checkRange(){
+      for (var e = 0; e < this.enemySet.size(); e++) {
+        var _enemy = this.enemySet.getObjectAt(e);
+        var eX = _enemy.getXform().getXPos();
+        var eY = _enemy.getXform().getYPos();
+        var dX = this.getXform().getXPos() - eX;
+        var dY = this.getXform().getYPos() - eY;
+        var dist = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
+        if (dist < 10) {
+          var _enemyColor = _enemy.getRenderable();
+          //_enemyColor.setColor([0.1, 0.7, 0.7, 1]);
+          return true;
+        }
+      }
   }
 }
