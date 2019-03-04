@@ -4,7 +4,7 @@ class SpawnPoint extends GameObject {
     rend.setColor([0, 0, 1, 1]);
     rend.getXform().setSize(3, 3);
     super(rend);
-
+    this.pos = pos;
     this.getXform().setPosition(pos.x, pos.y);
     this.id = id;
     RoundManager.instance.OnSpawnPointSelected.subscribe(this._onSpawnPointSelected.bind(this));

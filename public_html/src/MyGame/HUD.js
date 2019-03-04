@@ -23,7 +23,7 @@ class HUD {
 
     /* TEST - just to show the game state */
     RoundManager.instance.OnWavingPlayerStart.subscribe(
-      (() => this.mGameMessage.setText("(WAVING) Click to set waypoints.  x to finish. ")).bind(this)
+      (() => this.mGameMessage.setText("(WAVING) Click to set waypoints. x to finish. ")).bind(this)
     );
     RoundManager.instance.OnWavingPlayerEnd.subscribe(this.clearMessage.bind(this));
     RoundManager.instance.OnVapingPlayerStart.subscribe(
