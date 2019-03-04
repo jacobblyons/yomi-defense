@@ -1,4 +1,5 @@
 class GameManager {
+  /**@type {GameManager} */
   static instance;
   constructor() {
     //class singleton implementation

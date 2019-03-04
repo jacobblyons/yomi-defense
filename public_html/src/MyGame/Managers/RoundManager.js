@@ -1,4 +1,5 @@
 class RoundManager {
+  /**@type {RoundManager} */
   static instance;
   constructor() {
     if (RoundManager.instance) return RoundManager.instance;
