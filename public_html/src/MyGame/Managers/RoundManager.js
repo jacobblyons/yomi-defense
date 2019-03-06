@@ -60,8 +60,6 @@ class RoundManager {
     this.OnWaveStart.dispatch();
   }
 
-  enemyKilled() {}
-
   addWaypoint(pos) {
     this.State.Waypoints.push(pos);
   }
@@ -78,5 +76,19 @@ class RoundManager {
 
   addTower(pos) {
     this.State.Towers.push(pos);
+  }
+
+  enemySpawned(){
+    this.State.EnemiesSpawned++;
+    
+  }
+  
+  enemyKilled() {
+    this.State.EnemiesDestroyed++;
+    var waveSize = this.State.InitialWaveSize + this.State.InitialWaveSize * (this.State.WaveSizeMultiplier*this.State.CurrentWave);
+    if(this.State.EnemiesSpawned == waveSize && this.State.EnemiesDestroyed == waveSize){
+      this.State.Turn = Turn.FinishedWave;
+      this.OnRoundEnd.dispatch();
+    }
   }
 }

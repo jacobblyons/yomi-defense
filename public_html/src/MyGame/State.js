@@ -10,8 +10,14 @@ const Turn = Object.freeze({
   Vaping: "VAPING",
   WavingReadyUp: "WAVING_READY_UP",
   Waving: "WAVING",
-  RunningWave: "RUNNING_WAVE"
+  RunningWave: "RUNNING_WAVE",
+  FinishedWave: "FINISHED_WAVE"
 });
+
+const PlayerRole = Object.freeze({
+  Waving: "WAVING",
+  Vaping: "VAPING"
+})
 
 class State {
   constructor() {
@@ -29,18 +35,32 @@ class State {
     };
 
     this.GameState = {
+      PlayerOne:{
+        Role: PlayerRole.Waving,
+        Score: 0
+      },
+      PlayerTwo: {
+        Role: PlayerRole.Vaping,
+        Score: 0
+      },
       SpawnPoints: [{ x: 10, y: 25 }, { x: 10, y: 50 }, { x: 10, y: 75 }],
       EndPoints: [{ x: 90, y: 25 }, { x: 90, y: 50 }, { x: 90, y: 75 }],
-      TowerFireRate: 1000
+      TowerFireRate: 1000,
+
     };
 
     this.RoundState = {
       Turn: Turn.RoundMessage,
-      Waypoints: [],
-      Towers: [],
       SelectedSpawnPoint: -1,
       SelectedEndPoint: -1,
-      WaypointLimit: 107
+      WaypointLimit: 107,
+      EnemiesSpawned: 0,
+      EnemiesDestroyed: 0,
+      InitialWaveSize: 10,
+      WaveSizeMultiplier: 1.75,
+      CurrentWave: 0,
+      Waypoints: [],
+      Towers: [],
     };
   }
 

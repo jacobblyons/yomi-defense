@@ -58,6 +58,7 @@ class Tower extends GameObject {
           var isDead = this.enemySet.getObjectAt(j).hit();
           if (isDead) {
             this.enemySet.removeFromSet(this.enemySet.getObjectAt(j));
+            RoundManager.instance.enemyKilled();
           }
         }
       }

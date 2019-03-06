@@ -1,9 +1,17 @@
 class HUD {
   constructor() {
     var canvas = document.getElementById("GLCanvas");
-    this.mGameMessage = new UIText(
-      "IN GAME",
+    this.mLargeMessage = new UIText(
+      "",
       [canvas.width / 2, canvas.height / 2 + 250],
+      GameManager.instance.State.AppState.HUDTextSize *2,
+      UIText.eHAlignment.eCenter,
+      UIText.eVAlignment.eTop,
+      [1, 1, 1, 1]
+    );
+    this.mSubtitle = new UIText(
+      "IN GAME",
+      [canvas.width / 2, canvas.height / 2 + 215],
       GameManager.instance.State.AppState.HUDTextSize,
       UIText.eHAlignment.eCenter,
       UIText.eVAlignment.eTop,
@@ -19,43 +27,51 @@ class HUD {
     RoundManager.instance.OnWavingPlayerReadyUpHide.subscribe(this.clearMessage.bind(this));
     RoundManager.instance.OnWavingPlayerStart.subscribe(this.showWavingPickSpawnMessage.bind(this));
     RoundManager.instance.OnSpawnPointSelected.subscribe(this.showWavingPickEndMessage.bind(this));
-    RoundManager.instance.OnEndPointSelected.subscribe(this.showWavingWavepointMessage.bind(this));
-
-    /* TEST - just to show the game state */
-
+    RoundManager.instance.OnEndPointSelected.subscribe(this.showWavingInstructionMessage.bind(this));
     RoundManager.instance.OnWavingPlayerEnd.subscribe(this.clearMessage.bind(this));
-    RoundManager.instance.OnVapingPlayerStart.subscribe(
-      (() => this.mGameMessage.setText("(VAPING) Click to set towers. x to finish.")).bind(this)
-    );
+    RoundManager.instance.OnVapingPlayerStart.subscribe(this.showVapingInstructionMessage.bind(this));
     RoundManager.instance.OnVapingPlayerEnd.subscribe(this.clearMessage.bind(this));
-    RoundManager.instance.OnWaveStart.subscribe((() => this.mGameMessage.setText("Wave running...")).bind(this));
+    RoundManager.instance.OnWaveStart.subscribe(this.showWave.bind(this));    
   }
 
   draw(cam) {
-    this.mGameMessage.draw(cam);
+    this.mSubtitle.draw(cam);
+    this.mLargeMessage.draw(cam);
   }
   update() {}
 
   showRoundMessage() {
-    this.mGameMessage.setText("ROUND BEGIN! press space...");
+    this.mLargeMessage.setText("ROUND BEGIN");
+    this.mSubtitle.setText("press space...");
   }
   showWavingReadyUpMessage() {
-    this.mGameMessage.setText("Waving Player press space to start ");
+    this.mLargeMessage.setText(GameManager.instance.State.GameState.PlayerOne.Role === PlayerRole.Waving ? "PLAYER ONE" : "PLAYER TWO");
+    this.mSubtitle.setText("press space to start ");
   }
   showWavingPickSpawnMessage() {
-    this.mGameMessage.setText("select a SPAWN...");
+    this.mSubtitle.setText("select a SPAWN...");
   }
   showWavingPickEndMessage() {
-    this.mGameMessage.setText("select an END...");
+    this.mSubtitle.setText("select an END...");
   }
-  showWavingWavepointMessage() {
-    this.mGameMessage.setText("(WAVING) Click to set waypoints. x to finish.");
+  showWavingInstructionMessage() {
+    this.mSubtitle.setText("(WAVING) Click to set waypoints. x to finish.");
   }
   showVapingReadyUpMessage() {
-    this.mGameMessage.setText("Vaping Player press space to start ");
+    this.mLargeMessage.setText(GameManager.instance.State.GameState.PlayerOne.Role === PlayerRole.Vaping ? "PLAYER ONE" : "PLAYER TWO");
+    this.mSubtitle.setText("press space to start ");
+  }
+  showVapingInstructionMessage(){
+    this.mSubtitle.setText("(VAPING) Click to set towers. x to finish.");
+  }
+  showWave(){
+    this.mLargeMessage.setText( `WAVE ${GameManager.instance.State.RoundState.CurrentWave}` );
+    this.mSubtitle.setText("Wave running...");
+  }
+  clearMessage() {
+    
+    this.mSubtitle.setText("");
   }
 
-  clearMessage() {
-    this.mGameMessage.setText("");
-  }
+  
 }

@@ -11,8 +11,7 @@ class MyGame extends Scene {
     this.EnemySet = null;
     this.TowerSet = null;
     this.enemy = null;
-    this.spawnTimer = 0;
-    this.waveCount = 40;
+
   }
 
   loadScene() {}
@@ -28,6 +27,7 @@ class MyGame extends Scene {
 
     this.mWavingInput = new WavingInput(this);
     this.mVapingInput = new VapingInput(this);
+    this.mWaveSpawner = new WaveSpawner(this);
     this.mHUD = new HUD();
     this.EnemySet = new GameObjectSet();
     this.TowerSet = new GameObjectSet();
@@ -40,15 +40,7 @@ class MyGame extends Scene {
   }
 
   update() {
-    if (this.gm.State.RoundState.Turn === "RUNNING_WAVE") {
-      if (this.spawnTimer > 60 && this.waveCount > 0) {
-        this.spawnTimer = 0;
-        this.instantiateEnemy(this.WaypointSet);
-        this.waveCount--;
-      }
-      this.spawnTimer++;
-    }
-
+    this.mWaveSpawner.update();
     this.mWavingInput.update();
     this.mVapingInput.update();
 
