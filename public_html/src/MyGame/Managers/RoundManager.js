@@ -86,25 +86,27 @@ class RoundManager {
     this.State.Towers.push(pos);
   }
 
-  enemySpawned(){
+  enemySpawned() {
     this.State.EnemiesSpawned++;
-    
   }
-  
+
   enemyKilled() {
     this.State.EnemiesDestroyed++;
-    var waveSize = this.State.InitialWaveSize + this.State.InitialWaveSize * (this.State.WaveSizeMultiplier*this.State.CurrentWave);
-    this.gm.State.GameState.PlayerOne.Score += this.gm.State.GameState.PlayerOne.Role == PlayerRole.Vaping ? 1 : 0;
-    this.gm.State.GameState.PlayerTwo.Score += this.gm.State.GameState.PlayerTwo.Role == PlayerRole.Vaping ? 1 : 0;
-    if(this.State.EnemiesSpawned == waveSize && this.State.EnemiesDestroyed == waveSize) this._finishRound();
+    var waveSize =
+      this.State.InitialWaveSize + this.State.InitialWaveSize * (this.State.WaveSizeMultiplier * this.State.CurrentWave);
+    if (this.State.EnemiesSpawned == waveSize && this.State.EnemiesDestroyed == waveSize) this._finishRound();
   }
 
   enemyReachedEndPoint() {
+    this.State.EnemiesDestroyed++;
     this.gm.State.GameState.PlayerOne.Score += this.gm.State.GameState.PlayerOne.Role == PlayerRole.Waving ? 1 : 0;
     this.gm.State.GameState.PlayerTwo.Score += this.gm.State.GameState.PlayerTwo.Role == PlayerRole.Waving ? 1 : 0;
+    var waveSize =
+      this.State.InitialWaveSize + this.State.InitialWaveSize * (this.State.WaveSizeMultiplier * this.State.CurrentWave);
+    if (this.State.EnemiesSpawned == waveSize && this.State.EnemiesDestroyed == waveSize) this._finishRound();
   }
 
-  _finishRound(){
+  _finishRound() {
     this.State.Turn = Turn.FinishedWave;
     this.OnRoundEnd.dispatch();
     this.OnWaveResultsShow.dispatch();
@@ -121,11 +123,13 @@ class RoundManager {
       this.State.Waypoints = [];
       this.State.Turrets = [];
       //swap roles
-      GameManager.instance.State.GameState.PlayerOne.Role = GameManager.instance.State.GameState.PlayerOne.Role === PlayerRole.Vaping ? PlayerRole.Waving : PlayerRole.Vaping;
-      GameManager.instance.State.GameState.PlayerTwo.Role = GameManager.instance.State.GameState.PlayerTwo.Role === PlayerRole.Vaping ? PlayerRole.Waving : PlayerRole.Vaping;
+      GameManager.instance.State.GameState.PlayerOne.Role =
+        GameManager.instance.State.GameState.PlayerOne.Role === PlayerRole.Vaping ? PlayerRole.Waving : PlayerRole.Vaping;
+      GameManager.instance.State.GameState.PlayerTwo.Role =
+        GameManager.instance.State.GameState.PlayerTwo.Role === PlayerRole.Vaping ? PlayerRole.Waving : PlayerRole.Vaping;
 
       this.OnWaveResultsHide.dispatch();
-    this.OnWavingPlayerReadyUpShow.dispatch();
+      this.OnWavingPlayerReadyUpShow.dispatch();
     }, 1000);
   }
 }

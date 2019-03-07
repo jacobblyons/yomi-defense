@@ -10,12 +10,20 @@ class WavingInput {
 
   update() {
     if (!this.enabled) return;
+
+    //handle start and end
+    var selectedSpawn = RoundManager.instance.State.SelectedSpawnPoint;
+    var selectedEnd = RoundManager.instance.State.SelectedEndPoint;
+    if (selectedSpawn === -1) this._handleSpawnSelect();
+    else if (selectedEnd === -1) this._handleEndSelect();
+
+    //hanlde clicks
     this._updateMousePos();
     if (gEngine.Input.isButtonClicked(0)) this._handleClick(true);
     if (gEngine.Input.isButtonClicked(2)) this._handleClick(false);
+
     //x to stop placing waypoints early
-    var selectedEnd = RoundManager.instance.State.SelectedEndPoint;
-    if (selectedEnd != -1 && gEngine.Input.isKeyClicked(gEngine.Input.keys.X)) {
+    if (selectedEnd != -1 && gEngine.Input.isKeyClicked(gEngine.Input.keys.Space)) {
       this.doneSettingWaypoints = true;
       RoundManager.instance.wavingPlayerFinished();
       this.doneSettingWaypoints = false;
@@ -31,14 +39,13 @@ class WavingInput {
   }
 
   _handleClick(real) {
+    var selectedEnd = RoundManager.instance.State.SelectedEndPoint;
+    if (selectedEnd == -1) return;
+
     var waypointLimit = RoundManager.instance.State.WaypointLimit;
     var waypoints = RoundManager.instance.State.Waypoints;
-    var selectedSpawn = RoundManager.instance.State.SelectedSpawnPoint;
-    var selectedEnd = RoundManager.instance.State.SelectedEndPoint;
 
-    if (selectedSpawn === -1) this._handleSpawnSelect();
-    else if (selectedEnd === -1) this._handleEndSelect();
-    else if (waypoints.length < waypointLimit && !this.doneSettingWaypoints) this._handleWaypointSelect(real);
+    if (waypoints.length < waypointLimit && !this.doneSettingWaypoints) this._handleWaypointSelect(real);
     else {
       RoundManager.instance.wavingPlayerFinished();
       this.doneSettingWaypoints = false;
@@ -46,25 +53,30 @@ class WavingInput {
   }
 
   _handleSpawnSelect() {
-    this.sceneRef.SpawnPointSet.mSet.forEach(s => {
-      if (s.isIntersection(this.mousePos)) {
-        RoundManager.instance.selectSpawn(s.id);
-      }
-    });
+    // keys
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.One)) {
+      RoundManager.instance.selectSpawn(2);
+    } else if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Two)) {
+      RoundManager.instance.selectSpawn(1);
+    } else if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Three)) {
+      RoundManager.instance.selectSpawn(0);
+    }
   }
 
   _handleEndSelect() {
-    this.sceneRef.EndPointSet.mSet.forEach(e => {
-      if (e.isIntersection(this.mousePos)) {
-        RoundManager.instance.selectEnd(e.id);
-      }
-    });
+    // keys
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.One)) {
+      RoundManager.instance.selectEnd(2);
+    } else if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Two)) {
+      RoundManager.instance.selectEnd(1);
+    } else if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Three)) {
+      RoundManager.instance.selectEnd(0);
+    }
   }
 
   _handleWaypointSelect(real) {
     this.sceneRef.instantiateWaypoint(this.mousePos);
-    if(real)
-      RoundManager.instance.addWaypoint(this.mousePos);
+    if (real) RoundManager.instance.addWaypoint(this.mousePos);
     else {
       RoundManager.instance.addFakeWaypoint(this.mousePos);
     }

@@ -28,7 +28,7 @@ class Enemy extends GameObject {
       var endDY = this.getXform().getYPos() - _endPos.y;
       var endDist = Math.sqrt(Math.pow(endDX, 2) + Math.pow(endDY, 2));
       if (endDist < 0.2) {
-        this.sceneRef.enemyDied(this);
+        this.sceneRef.enemyAtEndPoint(this);
       } else {
         this.moveTowards(_endPos, 0.2);
       }

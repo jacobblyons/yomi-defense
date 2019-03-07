@@ -51,6 +51,7 @@ class MyGame extends Scene {
     //this.updateEnemy();
     this.WaypointSet.update();
     this.TowerSet.update();
+
     //handle game flow input
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Space)) {
       switch (GameManager.instance.State.RoundState.Turn) {
@@ -63,23 +64,11 @@ class MyGame extends Scene {
         case Turn.WavingReadyUp:
           RoundManager.instance.wavingPlayerReady();
           break;
-      }
-    }
-
-    /* TEST CODE - these should be handled by seperate input handlers for waving and vaping or whatever*/
-    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.X)) {
-      switch (GameManager.instance.State.RoundState.Turn) {
-        case Turn.Waving:
-          //RoundManager.instance.wavingPlayerFinished();
-          //handled case safely in waypoint input
-          break;
         case Turn.Vaping:
           RoundManager.instance.vapingPlayerFinished();
           break;
       }
     }
-
-    //this._checkForDeadEnemies();
   }
   draw() {
     this.mCam.setupViewProjection();
@@ -109,9 +98,9 @@ class MyGame extends Scene {
     this.TowerSet.addToSet(new Tower(pos, this.EnemySet));
   }
 
-  enemyDied(e) {
+  enemyAtEndPoint(e) {
     this.EnemySet.removeFromSet(e);
-    RoundManager.instance.enemyKilled();
+    RoundManager.instance.enemyReachedEndPoint();
   }
 
   _initializeStartPoints() {

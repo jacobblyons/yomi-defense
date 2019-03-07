@@ -48,6 +48,17 @@ class GameManager {
     return worldCoordinates;
   }
 
+  getCanvasCoordinates(worldCoordinates) {
+    var AppState = GameManager.instance.State.AppState;
+    var multiplier = AppState.CameraWidth / AppState.CanvasWidth;
+    var lowerLeft = new Vector2(
+      AppState.CameraCenter.x - AppState.CameraWidth / 2,
+      AppState.CameraCenter.y - (AppState.CanvasHeight * multiplier) / 2
+    );
+
+    return new Vector2((worldCoordinates.x - lowerLeft.x) / multiplier, (worldCoordinates.y - lowerLeft.y) / multiplier);
+  }
+
   _toggleStateDebug() {
     this.showState = !this.showState;
     console.log(this.showState);
