@@ -26,8 +26,16 @@ class Enemy extends GameObject {
           this.waypointsReached++;
         }
       }else{
-        var _endPos = GameManager.instance.State.GameState.EndPoints[RoundManager.instance.State.SelectedEndPoint];               
-        this.moveTowards(_endPos,0.2);
+        var _endPos = GameManager.instance.State.GameState.EndPoints[RoundManager.instance.State.SelectedEndPoint];          
+        var dX = this.getXform().getXPos() - _endPos.x;
+        var dY = this.getXform().getYPos() - _endPos.y;
+        var dist = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
+        if(dist < 0.2){
+          RoundManager.instance.enemyKilled();
+        }else {
+          this.moveTowards(_endPos,0.2);
+        }
+        
       }
     }
 
@@ -55,5 +63,9 @@ class Enemy extends GameObject {
                 break;
           
       }
+  }
+
+  _checkEndCollisions(){
+
   }
 }
