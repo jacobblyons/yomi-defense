@@ -1,5 +1,5 @@
 class Enemy extends GameObject {
-  constructor(WS,ES) {
+  constructor(WS, ES, sceneRef) {
     var rend = new Renderable();
     rend.setColor([0, 1, 0, 1]);
     super(rend);
@@ -9,35 +9,34 @@ class Enemy extends GameObject {
     this.waypointsReached = 0;
     this.WaypointSet = WS;
     this.EndPointSet = ES;
+    this.sceneRef = sceneRef;
     this.mHitPoints = 3;
     this.gm = GameManager.instance;
+    this.dead = false;
   }
 
   update() {
-
-      if(this.waypointsReached < RoundManager.instance.State.Waypoints.length){ 
-
-        var _waypt = RoundManager.instance.State.Waypoints[this.waypointsReached];
-        this.moveTowards(_waypt,0.2);
-        var dX = this.getXform().getXPos() - _waypt.x;
-        var dY = this.getXform().getYPos() - _waypt.y;
-        var dist = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
-        if (dist < 0.2){
-          this.waypointsReached++;
-        }
-      }else{
-        var _endPos = GameManager.instance.State.GameState.EndPoints[RoundManager.instance.State.SelectedEndPoint];          
-        var dX = this.getXform().getXPos() - _endPos.x;
-        var dY = this.getXform().getYPos() - _endPos.y;
-        var dist = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
-        if(dist < 0.2){
-          RoundManager.instance.enemyKilled();
-        }else {
-          this.moveTowards(_endPos,0.2);
-        }
-        
+    if (this.waypointsReached < RoundManager.instance.State.Waypoints.length) {
+      var _waypt = RoundManager.instance.State.Waypoints[this.waypointsReached];
+      this.moveTowards(_waypt, 0.2);
+      var dX = this.getXform().getXPos() - _waypt.x;
+      var dY = this.getXform().getYPos() - _waypt.y;
+      var dist = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
+      if (dist < 0.2) {
+        this.waypointsReached++;
+      }
+    } else {
+      var _endPos = GameManager.instance.State.GameState.EndPoints[RoundManager.instance.State.SelectedEndPoint];
+      var endDX = this.getXform().getXPos() - _endPos.x;
+      var endDY = this.getXform().getYPos() - _endPos.y;
+      var endDist = Math.sqrt(Math.pow(endDX, 2) + Math.pow(endDY, 2));
+      if (endDist < 0.2) {
+        this.sceneRef.enemyDied(this);
+      } else {
+        this.moveTowards(_endPos, 0.2);
       }
     }
+  }
 
   moveTowards(targetPos, dist) {
     var transform = this.getXform();
@@ -46,26 +45,22 @@ class Enemy extends GameObject {
     transform.incXPosBy(vectorTowards.x * dist);
     transform.incYPosBy(vectorTowards.y * dist);
   }
-  
-  hit(){
-      this.mHitPoints--;
-      
-      switch(this.mHitPoints){
-          case 2:
-               this.getRenderable().setColor([1,.65,0,1]);
-               break;
-           case 1:
-               this.getRenderable().setColor([1,0,0,1]);
-               break;
-           
-           case 0:
-                return true;
-                break;
-          
-      }
+
+  hit() {
+    this.mHitPoints--;
+
+    switch (this.mHitPoints) {
+      case 2:
+        this.getRenderable().setColor([1, 0.65, 0, 1]);
+        break;
+      case 1:
+        this.getRenderable().setColor([1, 0, 0, 1]);
+        break;
+      case 0:
+        return true;
+        break;
+    }
   }
 
-  _checkEndCollisions(){
-
-  }
+  _checkEndCollisions() {}
 }

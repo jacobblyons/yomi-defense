@@ -28,6 +28,7 @@ class MyGame extends Scene {
     this.mVapingInput = new VapingInput(this);
     this.mWaveSpawner = new WaveSpawner(this);
     this.mHUD = new HUD();
+
     this.EnemySet = new GameObjectSet();
     this.TowerSet = new GameObjectSet();
     this.WaypointSet = new GameObjectSet();
@@ -77,6 +78,8 @@ class MyGame extends Scene {
           break;
       }
     }
+
+    //this._checkForDeadEnemies();
   }
   draw() {
     this.mCam.setupViewProjection();
@@ -91,7 +94,7 @@ class MyGame extends Scene {
   }
 
   instantiateEnemy(waypointSet) {
-    var _enemy = new Enemy(waypointSet, this.EndPointSet);
+    var _enemy = new Enemy(waypointSet, this.EndPointSet, this);
     var startPos = GameManager.instance.State.GameState.SpawnPoints[RoundManager.instance.State.SelectedSpawnPoint];
     _enemy.getXform().setXPos(startPos.x);
     _enemy.getXform().setYPos(startPos.y);
@@ -101,20 +104,27 @@ class MyGame extends Scene {
   instantiateWaypoint(pos) {
     this.WaypointSet.addToSet(new Waypoint(pos));
   }
+
   instantiateTower(pos) {
     this.TowerSet.addToSet(new Tower(pos, this.EnemySet));
+  }
+
+  enemyDied(e) {
+    this.EnemySet.removeFromSet(e);
+    RoundManager.instance.enemyKilled();
   }
 
   _initializeStartPoints() {
     var spawns = GameManager.instance.State.GameState.SpawnPoints;
     spawns.forEach((s, i) => this.SpawnPointSet.addToSet(new SpawnPoint(s, i)));
   }
+
   _initializeEndPoints() {
     var ends = GameManager.instance.State.GameState.EndPoints;
     ends.forEach((f, i) => this.EndPointSet.addToSet(new EndPoint(f, i)));
   }
 
-  _cleanupRound(){
+  _cleanupRound() {
     this.EnemySet.removeAll();
     this.WaypointSet.removeAll();
     this.TowerSet.removeAll();
