@@ -14,7 +14,9 @@ class MyGame extends Scene {
   }
 
   loadScene() {}
-  unloadScene() {}
+  unloadScene() {
+    GameManager.instance.sceneSwapReady();
+  }
   initialize() {
     var AppState = this.gm.State.AppState;
     this.mCam = new Camera(

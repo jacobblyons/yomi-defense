@@ -25,27 +25,43 @@ class Menu extends Scene {
     );
     this.mCam.setBackgroundColor([0.2, 0.2, 0.2, 1]);
 
-    this.mPlayButtonUI = new UIButton(
+    this.mPlay3RoundsButtonUI = new UIButton(
       this.kButtonSprite,
       () => {
-        GameManager.instance.startGame();
+        GameManager.instance.startGame(3);
       },
       this,
-      [canvas.width / 2, canvas.height / 2 - 100],
+      [canvas.width / 2 - 250, canvas.height / 2 - 100],
       [150, 75],
-      "Play",
+      "3 Rounds",
       6,
       [1, 0, 0, 1],
       [1, 1, 1, 1]
     );
-    
-    this.mExitButtonUI = new UIButton(
+
+    this.mPlay5RoundsButtonUI = new UIButton(
       this.kButtonSprite,
-      () => {},
+      () => {
+        GameManager.instance.startGame(5);
+      },
       this,
-      [canvas.width / 2, canvas.height / 2 - 175],
+      [canvas.width / 2, canvas.height / 2 - 100],
       [150, 75],
-      "Exit",
+      "5 Rounds",
+      6,
+      [1, 0, 0, 1],
+      [1, 1, 1, 1]
+    );
+
+    this.mPlayInfiniteButtonUI = new UIButton(
+      this.kButtonSprite,
+      () => {
+        GameManager.instance.startGame(-1);
+      },
+      this,
+      [canvas.width / 2 + 250, canvas.height / 2 - 100],
+      [150, 75],
+      "Infinite",
       6,
       [1, 0, 0, 1],
       [1, 1, 1, 1]
@@ -61,13 +77,15 @@ class Menu extends Scene {
     );
   }
   update() {
-    this.mPlayButtonUI.update();
-    this.mExitButtonUI.update();
+    this.mPlay3RoundsButtonUI.update();
+    this.mPlay5RoundsButtonUI.update();
+    this.mPlayInfiniteButtonUI.update();
   }
   draw() {
     this.mCam.setupViewProjection();
-    this.mPlayButtonUI.draw(this.mCam);
-    this.mExitButtonUI.draw(this.mCam);
+    this.mPlay3RoundsButtonUI.draw(this.mCam);
+    this.mPlay5RoundsButtonUI.draw(this.mCam);
+    this.mPlayInfiniteButtonUI.draw(this.mCam);
     this.mGameTitleTextUI.draw(this.mCam);
   }
 }

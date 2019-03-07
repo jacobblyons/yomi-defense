@@ -1,7 +1,8 @@
 //enums
 const Executing = Object.freeze({
   Game: "GAME",
-  Menu: "MENU"
+  Menu: "MENU",
+  GameOver: "GAME_OVER"
 });
 
 const Turn = Object.freeze({
@@ -17,7 +18,7 @@ const Turn = Object.freeze({
 const PlayerRole = Object.freeze({
   Waving: "WAVING",
   Vaping: "VAPING"
-})
+});
 
 class State {
   constructor() {
@@ -35,7 +36,7 @@ class State {
     };
 
     this.GameState = {
-      PlayerOne:{
+      PlayerOne: {
         Role: PlayerRole.Waving,
         Score: 0
       },
@@ -43,10 +44,10 @@ class State {
         Role: PlayerRole.Vaping,
         Score: 0
       },
+      Rounds: -1,
       SpawnPoints: [{ x: 10, y: 25 }, { x: 10, y: 50 }, { x: 10, y: 75 }],
       EndPoints: [{ x: 90, y: 25 }, { x: 90, y: 50 }, { x: 90, y: 75 }],
-      TowerFireRate: 1000,
-
+      TowerFireRate: 1000
     };
 
     this.RoundState = {
@@ -56,12 +57,12 @@ class State {
       WaypointLimit: 107,
       EnemiesSpawned: 0,
       EnemiesDestroyed: 0,
-      InitialWaveSize: 4,
-      WaveSizeMultiplier: 1.75,
+      InitialWaveSize: 1,
+      WaveSizeMultiplier: 1,
       CurrentWave: 0,
       Waypoints: [],
       FakeWaypoints: [],
-      Towers: [],
+      Towers: []
     };
   }
 

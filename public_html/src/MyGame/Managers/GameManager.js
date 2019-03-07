@@ -10,6 +10,7 @@ class GameManager {
     this.State = new State();
     this.mGameScene = new MyGame();
     this.mMenuScene = new Menu();
+    this.mGameOverScene = new GameOver();
     this.showState = true;
     //events
 
@@ -19,17 +20,32 @@ class GameManager {
     }, 100);
   }
 
-  startGame() {
-    if (this.State.AppState.Executing !== Executing.Game) {
-      this.State.AppState.Executing = Executing.Game;
-      gEngine.GameLoop.stop();
-    }
+  startGame(rounds) {
+    this.State.GameState.Rounds = rounds;
+    this.State.AppState.Executing = Executing.Game;
+    gEngine.GameLoop.stop();
+  }
+
+  restartGame() {
+    this.State.AppState.Executing = Executing.Menu;
+    this.State = new State(); //cleanup
+    RoundManager.instance.State = this.State;
+    gEngine.GameLoop.stop();
+  }
+
+  endGame() {
+    this.State.AppState.Executing = Executing.GameOver;
+    gEngine.GameLoop.stop();
   }
 
   sceneSwapReady() {
     if (this.State.AppState.Executing == Executing.Game) {
       gEngine.Core.startScene(this.mGameScene);
       RoundManager.instance.startRound();
+    } else if (this.State.AppState.Executing == Executing.Menu) {
+      gEngine.Core.startScene(this.mMenuScene);
+    } else if (this.State.AppState.Executing == Executing.GameOver) {
+      gEngine.Core.startScene(this.mGameOverScene);
     }
   }
 

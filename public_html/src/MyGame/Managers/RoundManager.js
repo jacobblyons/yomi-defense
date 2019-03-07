@@ -35,7 +35,9 @@ class RoundManager {
   }
 
   readyForRound() {
+    console.log(this.State.Turn);
     this.State.Turn = Turn.WavingReadyUp;
+    console.log(this.State.Turn);
     this.OnRoundMessageHide.dispatch();
     this.OnWavingPlayerReadyUpShow.dispatch();
   }
@@ -111,6 +113,10 @@ class RoundManager {
     this.OnRoundEnd.dispatch();
     this.OnWaveResultsShow.dispatch();
     this.OnWaveEnd.dispatch();
+    this.State.CurrentWave += this.gm.State.GameState.Rounds === -1 ? 0 : 1;
+    if (this.State.CurrentWave === this.gm.State.GameState.Rounds) {
+      return this.gm.endGame();
+    }
 
     setTimeout(() => {
       this.State.Turn = Turn.WavingReadyUp;
@@ -119,9 +125,10 @@ class RoundManager {
       this.State.SelectedSpawnPoint = -1;
       this.State.EnemiesSpawned = 0;
       this.State.EnemiesDestroyed = 0;
-      this.State.CurrentWave++;
+
       this.State.Waypoints = [];
-      this.State.Turrets = [];
+      this.State.FakeWaypoints = [];
+      this.State.Towers = [];
       //swap roles
       GameManager.instance.State.GameState.PlayerOne.Role =
         GameManager.instance.State.GameState.PlayerOne.Role === PlayerRole.Vaping ? PlayerRole.Waving : PlayerRole.Vaping;
