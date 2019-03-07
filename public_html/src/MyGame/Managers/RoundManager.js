@@ -66,6 +66,10 @@ class RoundManager {
     this.State.Waypoints.push(pos);
   }
 
+  addFakeWaypoint(pos) {
+    this.State.FakeWaypoints.push(pos);
+  }
+
   selectSpawn(s) {
     this.State.SelectedSpawnPoint = s;
     this.OnSpawnPointSelected.dispatch();

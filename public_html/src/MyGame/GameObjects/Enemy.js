@@ -15,7 +15,7 @@ class Enemy extends GameObject {
 
   update() {
 
-      if(this.waypointsReached < this.WaypointSet.size()){ 
+      if(this.waypointsReached < RoundManager.instance.State.Waypoints.length){ 
 
         var _waypt = RoundManager.instance.State.Waypoints[this.waypointsReached];
         this.moveTowards(_waypt,0.2);

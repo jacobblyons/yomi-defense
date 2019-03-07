@@ -60,6 +60,7 @@ class State {
       WaveSizeMultiplier: 1.75,
       CurrentWave: 0,
       Waypoints: [],
+      FakeWaypoints: [],
       Towers: [],
     };
   }

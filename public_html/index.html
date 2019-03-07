@@ -151,6 +151,7 @@
 
   <body
     onload="
+        document.addEventListener('contextmenu', event => event.preventDefault());
         var myGame = new Menu();
         new GameManager(); //set up singleton
         new RoundManager(); //set up singleton
