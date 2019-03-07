@@ -3,19 +3,17 @@ class Enemy extends GameObject {
     var rend = new Renderable();
     rend.setColor([0, 1, 0, 1]);
     super(rend);
-    //this.pos = pos;
-    //this.getXform().setXPos(pos.x);
-    //this.getXform().setYPos(pos.y);
     this.waypointsReached = 0;
     this.WaypointSet = WS;
     this.EndPointSet = ES;
     this.mHitPoints = 3;
     this.gm = GameManager.instance;
+    this.dead = false;
   }
 
   update() {
 
-      if(this.waypointsReached < RoundManager.instance.State.Waypoints.length){ 
+            if(this.waypointsReached < RoundManager.instance.State.Waypoints.length){ 
 
         var _waypt = RoundManager.instance.State.Waypoints[this.waypointsReached];
         this.moveTowards(_waypt,0.2);
@@ -32,6 +30,7 @@ class Enemy extends GameObject {
         var dist = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
         if(dist < 0.2){
           RoundManager.instance.enemyKilled();
+          RoundManager.instance.enemyReachedEndPoint();
         }else {
           this.moveTowards(_endPos,0.2);
         }

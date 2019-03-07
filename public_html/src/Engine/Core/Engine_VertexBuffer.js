@@ -128,7 +128,7 @@ gEngine.VertexBuffer = (function () {
      * @returns {void}
      */
     var cleanUp = function () {
-        var gl = gEngine.Core.getGL();
+        var gl = gEngine.Core.getGL(); 
         gl.deleteBuffer(mSquareVertexBuffer);
         gl.deleteBuffer(mTextureCoordBuffer);
         gl.deleteBuffer(mLineVertexBuffer);
