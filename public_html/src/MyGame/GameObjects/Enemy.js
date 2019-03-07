@@ -14,13 +14,13 @@ class Enemy extends GameObject {
   }
 
   update() {
-    //this.moveTowards(new Vector2(50, 50), 0.2);
+
       if(this.waypointsReached < this.WaypointSet.size()){ 
-        //console.log(this.waypointsReached);
-        var _waypt = this.WaypointSet.getObjectAt(this.waypointsReached);
-        this.moveTowards(_waypt.pos,0.2);
-        var dX = this.getXform().getXPos() - _waypt.getXform().getXPos();
-        var dY = this.getXform().getYPos() - _waypt.getXform().getYPos();
+
+        var _waypt = RoundManager.instance.State.Waypoints[this.waypointsReached];
+        this.moveTowards(_waypt,0.2);
+        var dX = this.getXform().getXPos() - _waypt.x;
+        var dY = this.getXform().getYPos() - _waypt.y;
         var dist = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
         if (dist < 0.2){
           this.waypointsReached++;
