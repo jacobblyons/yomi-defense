@@ -11,7 +11,6 @@ class MyGame extends Scene {
     this.EnemySet = null;
     this.TowerSet = null;
     this.enemy = null;
-
   }
 
   loadScene() {}
@@ -37,6 +36,7 @@ class MyGame extends Scene {
 
     this._initializeStartPoints();
     this._initializeEndPoints();
+    RoundManager.instance.OnRoundEnd.subscribe(this._cleanupRound.bind(this));
   }
 
   update() {
@@ -112,5 +112,11 @@ class MyGame extends Scene {
   _initializeEndPoints() {
     var ends = GameManager.instance.State.GameState.EndPoints;
     ends.forEach((f, i) => this.EndPointSet.addToSet(new EndPoint(f, i)));
+  }
+
+  _cleanupRound(){
+    this.EnemySet.removeAll();
+    this.WaypointSet.removeAll();
+    this.TowerSet.removeAll();
   }
 }

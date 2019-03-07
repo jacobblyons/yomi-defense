@@ -19,6 +19,8 @@ class RoundManager {
     this.OnWavingPlayerEnd = new GameEvent();
     this.OnWaveStart = new GameEvent();
     this.OnWaveEnd = new GameEvent();
+    this.OnWaveResultsShow = new GameEvent();
+    this.OnWaveResultsHide = new GameEvent();
     this.OnSpawnPointSelected = new GameEvent();
     this.OnEndPointSelected = new GameEvent();
     this.State = GameManager.instance.State.RoundState;
@@ -86,9 +88,30 @@ class RoundManager {
   enemyKilled() {
     this.State.EnemiesDestroyed++;
     var waveSize = this.State.InitialWaveSize + this.State.InitialWaveSize * (this.State.WaveSizeMultiplier*this.State.CurrentWave);
-    if(this.State.EnemiesSpawned == waveSize && this.State.EnemiesDestroyed == waveSize){
-      this.State.Turn = Turn.FinishedWave;
-      this.OnRoundEnd.dispatch();
-    }
+    if(this.State.EnemiesSpawned == waveSize && this.State.EnemiesDestroyed == waveSize) this._finishRound();
+  }
+  _finishRound(){
+    this.State.Turn = Turn.FinishedWave;
+    this.OnRoundEnd.dispatch();
+    this.OnWaveResultsShow.dispatch();
+    this.OnWaveEnd.dispatch();
+
+    setTimeout(() => {
+      this.State.Turn = Turn.WavingReadyUp;
+      //reset state
+      this.State.SelectedEndPoint = -1;
+      this.State.SelectedSpawnPoint = -1;
+      this.State.EnemiesSpawned = 0;
+      this.State.EnemiesDestroyed = 0;
+      this.State.CurrentWave++;
+      this.State.Waypoints = [];
+      this.State.Turrets = [];
+      //swap roles
+      GameManager.instance.State.GameState.PlayerOne.Role = GameManager.instance.State.GameState.PlayerOne.Role === PlayerRole.Vaping ? PlayerRole.Waving : PlayerRole.Vaping;
+      GameManager.instance.State.GameState.PlayerTwo.Role = GameManager.instance.State.GameState.PlayerTwo.Role === PlayerRole.Vaping ? PlayerRole.Waving : PlayerRole.Vaping;
+
+      this.OnWaveResultsHide.dispatch();
+    this.OnWavingPlayerReadyUpShow.dispatch();
+    }, 1000);
   }
 }

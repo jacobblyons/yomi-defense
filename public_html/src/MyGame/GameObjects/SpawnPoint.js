@@ -8,6 +8,7 @@ class SpawnPoint extends GameObject {
     this.getXform().setPosition(pos.x, pos.y);
     this.id = id;
     RoundManager.instance.OnSpawnPointSelected.subscribe(this._onSpawnPointSelected.bind(this));
+    RoundManager.instance.OnRoundEnd.subscribe(this._cleanup.bind(this));
   }
 
   isIntersection(point) {
@@ -17,5 +18,9 @@ class SpawnPoint extends GameObject {
   _onSpawnPointSelected() {
     if (RoundManager.instance.State.SelectedSpawnPoint !== this.id) return;
     this.getRenderable().setColor([1, 1, 0, 1]);
+  }
+
+  _cleanup(){
+    this.getRenderable().setColor([0, 0, 1, 1]);
   }
 }

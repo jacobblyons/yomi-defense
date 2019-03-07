@@ -56,7 +56,7 @@ class State {
       WaypointLimit: 107,
       EnemiesSpawned: 0,
       EnemiesDestroyed: 0,
-      InitialWaveSize: 10,
+      InitialWaveSize: 4,
       WaveSizeMultiplier: 1.75,
       CurrentWave: 0,
       Waypoints: [],

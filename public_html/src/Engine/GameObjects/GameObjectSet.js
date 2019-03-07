@@ -58,6 +58,10 @@ GameObjectSet.prototype.removeFromSet = function (obj) {
         this.mSet.splice(index, 1);
 };
 
+GameObjectSet.prototype.removeAll = function() {
+    this.mSet = [];
+}
+
 /**
  * Move GameObject to end of GameObjectSet
  * @param {GameObjec} obj to move to end of GameObjectSet
