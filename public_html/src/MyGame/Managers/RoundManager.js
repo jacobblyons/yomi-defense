@@ -4,6 +4,8 @@ class RoundManager {
   constructor() {
     if (RoundManager.instance) return RoundManager.instance;
     RoundManager.instance = this;
+    /**@type {GameManager} */
+    this.gm = GameManager.instance;
     //events
     this.OnRoundStart = new GameEvent();
     this.OnRoundEnd = new GameEvent();
@@ -92,8 +94,16 @@ class RoundManager {
   enemyKilled() {
     this.State.EnemiesDestroyed++;
     var waveSize = this.State.InitialWaveSize + this.State.InitialWaveSize * (this.State.WaveSizeMultiplier*this.State.CurrentWave);
+    this.gm.State.GameState.PlayerOne.Score += this.gm.State.GameState.PlayerOne.Role == PlayerRole.Vaping ? 1 : 0;
+    this.gm.State.GameState.PlayerTwo.Score += this.gm.State.GameState.PlayerTwo.Role == PlayerRole.Vaping ? 1 : 0;
     if(this.State.EnemiesSpawned == waveSize && this.State.EnemiesDestroyed == waveSize) this._finishRound();
   }
+
+  enemyReachedEndPoint() {
+    this.gm.State.GameState.PlayerOne.Score += this.gm.State.GameState.PlayerOne.Role == PlayerRole.Waving ? 1 : 0;
+    this.gm.State.GameState.PlayerTwo.Score += this.gm.State.GameState.PlayerTwo.Role == PlayerRole.Waving ? 1 : 0;
+  }
+
   _finishRound(){
     this.State.Turn = Turn.FinishedWave;
     this.OnRoundEnd.dispatch();

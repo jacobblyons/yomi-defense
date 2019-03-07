@@ -3,9 +3,6 @@ class Enemy extends GameObject {
     var rend = new Renderable();
     rend.setColor([0, 1, 0, 1]);
     super(rend);
-    //this.pos = pos;
-    //this.getXform().setXPos(pos.x);
-    //this.getXform().setYPos(pos.y);
     this.waypointsReached = 0;
     this.WaypointSet = WS;
     this.EndPointSet = ES;
