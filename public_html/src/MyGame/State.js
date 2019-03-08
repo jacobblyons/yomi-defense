@@ -20,6 +20,20 @@ const PlayerRole = Object.freeze({
   Vaping: "VAPING"
 });
 
+const BaseID = Object.freeze({
+  Unselected: "UNSELECTED",
+  P1: {
+    One: "P1_1",
+    Two: "P1_2",
+    Three: "P1_3"
+  },
+  P2: {
+    One: "P2_1",
+    Two: "P2_2",
+    Three: "P2_3"
+  }
+});
+
 class State {
   constructor() {
     //inits
@@ -38,22 +52,30 @@ class State {
     this.GameState = {
       PlayerOne: {
         Role: PlayerRole.Waving,
-        Score: 0
+        Score: 0,
+        Bases: {
+          [BaseID.P1.One]: { x: 10, y: 75 },
+          [BaseID.P1.Two]: { x: 10, y: 50 },
+          [BaseID.P1.Three]: { x: 10, y: 25 }
+        }
       },
       PlayerTwo: {
         Role: PlayerRole.Vaping,
-        Score: 0
+        Score: 0,
+        Bases: {
+          [BaseID.P2.One]: { x: 90, y: 75 },
+          [BaseID.P2.Two]: { x: 90, y: 50 },
+          [BaseID.P2.Three]: { x: 90, y: 25 }
+        }
       },
       Rounds: -1,
-      SpawnPoints: [{ x: 10, y: 25 }, { x: 10, y: 50 }, { x: 10, y: 75 }],
-      EndPoints: [{ x: 90, y: 25 }, { x: 90, y: 50 }, { x: 90, y: 75 }],
       TowerFireRate: 1000
     };
 
     this.RoundState = {
       Turn: Turn.RoundMessage,
-      SelectedSpawnPoint: -1,
-      SelectedEndPoint: -1,
+      SelectedSpawnBase: BaseID.Unselected,
+      SelectedEndBase: BaseID.Unselected,
       WaypointLimit: 107,
       EnemiesSpawned: 0,
       EnemiesDestroyed: 0,

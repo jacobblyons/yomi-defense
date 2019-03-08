@@ -34,11 +34,11 @@ class MyGame extends Scene {
     this.EnemySet = new GameObjectSet();
     this.TowerSet = new GameObjectSet();
     this.WaypointSet = new GameObjectSet();
-    this.SpawnPointSet = new GameObjectSet();
-    this.EndPointSet = new GameObjectSet();
+    this.PlayerOneBaseSet = new GameObjectSet();
+    this.PlayerTwoBaseSet = new GameObjectSet();
 
-    this._initializeStartPoints();
-    this._initializeEndPoints();
+    this._initializePlayerOneBases();
+    this._initializePlayerTwoBases();
     RoundManager.instance.OnRoundEnd.subscribe(this._cleanupRound.bind(this));
   }
 
@@ -79,14 +79,20 @@ class MyGame extends Scene {
     this.EnemySet.draw(this.mCam);
     this.WaypointSet.draw(this.mCam);
     this.TowerSet.draw(this.mCam);
-    this.SpawnPointSet.draw(this.mCam);
-    this.EndPointSet.draw(this.mCam);
+    this.PlayerOneBaseSet.draw(this.mCam);
+    this.PlayerTwoBaseSet.draw(this.mCam);
     this.mHUD.draw(this.mCam);
   }
 
-  instantiateEnemy(waypointSet) {
-    var _enemy = new Enemy(waypointSet, this.EndPointSet, this);
-    var startPos = GameManager.instance.State.GameState.SpawnPoints[RoundManager.instance.State.SelectedSpawnPoint];
+  instantiateEnemy() {
+    var _enemy = new Enemy(this.WaypointSet, this);
+    var p1Role = GameManager.instance.State.GameState.PlayerOne.Role;
+    var selectedSpawnID = GameManager.instance.State.RoundState.SelectedSpawnBase;
+    var startPos =
+      p1Role === PlayerRole.Waving
+        ? GameManager.instance.State.GameState.PlayerOne.Bases[selectedSpawnID]
+        : GameManager.instance.State.GameState.PlayerTwo.Bases[selectedSpawnID];
+
     _enemy.getXform().setXPos(startPos.x);
     _enemy.getXform().setYPos(startPos.y);
     this.EnemySet.addToSet(_enemy);
@@ -105,14 +111,18 @@ class MyGame extends Scene {
     RoundManager.instance.enemyReachedEndPoint();
   }
 
-  _initializeStartPoints() {
-    var spawns = GameManager.instance.State.GameState.SpawnPoints;
-    spawns.forEach((s, i) => this.SpawnPointSet.addToSet(new SpawnPoint(s, i)));
+  _initializePlayerOneBases() {
+    var bases = GameManager.instance.State.GameState.PlayerOne.Bases;
+    this.PlayerOneBaseSet.addToSet(new Base(bases[BaseID.P1.One], BaseID.P1.One));
+    this.PlayerOneBaseSet.addToSet(new Base(bases[BaseID.P1.Two], BaseID.P1.Two));
+    this.PlayerOneBaseSet.addToSet(new Base(bases[BaseID.P1.Three], BaseID.P1.Three));
   }
 
-  _initializeEndPoints() {
-    var ends = GameManager.instance.State.GameState.EndPoints;
-    ends.forEach((f, i) => this.EndPointSet.addToSet(new EndPoint(f, i)));
+  _initializePlayerTwoBases() {
+    var bases = GameManager.instance.State.GameState.PlayerTwo.Bases;
+    this.PlayerOneBaseSet.addToSet(new Base(bases[BaseID.P2.One], BaseID.P2.One));
+    this.PlayerOneBaseSet.addToSet(new Base(bases[BaseID.P2.Two], BaseID.P2.Two));
+    this.PlayerOneBaseSet.addToSet(new Base(bases[BaseID.P2.Three], BaseID.P2.Three));
   }
 
   _cleanupRound() {
