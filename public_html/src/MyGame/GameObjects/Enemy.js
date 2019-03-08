@@ -19,7 +19,7 @@ class Enemy extends GameObject {
         this.speed = 0.5;
         this.rotation = Math.random()*5 + 5;
     }
-    this.kParticleTexture = "assets/ParticleSystem/flameparticle.png";
+    this.kParticleTexture = "assets/ParticleSystem/RO.png";
     this.mParticles = new ParticleGameObjectSet();
     
         //rend.setColor([0, 1, 0, 1]);
@@ -85,8 +85,10 @@ class Enemy extends GameObject {
     }
   }
   nextPoint(){
-    var p = this.createParticle(this.getXform().getXPos(),this.getXform().getYPos());
-    this.mParticles.addToSet(p);
+    for (var i = 0; i < 10; i++){
+        var p = this.createParticle(this.getXform().getXPos(),this.getXform().getYPos());
+        this.mParticles.addToSet(p);
+    }
       this.waypointsReached++;
   }
   moveTowards(targetPos, dist) {
@@ -116,14 +118,15 @@ class Enemy extends GameObject {
   _checkEndCollisions() {}
 
   createParticle(atX,atY){
-      console.log("p created");
       	var life = 120;
 	var p = new ParticleGameObject(this.kParticleTexture, atX, atY, life);	
-        p.getRenderable().setColor([1, 1, 1, 1]);
+        //p.getRenderable().setColor([1, 1, 1, 1]);
 	// size of the particle	
-	p.getXform().setSize(2, 2);
+	p.getXform().setSize(3, 3);
         var px = p.getParticle();
-        px.setVelocity([5,5]);
+        var rx = Math.random()*10 - 5;
+        var ry = Math.random()*10 - 5;
+        px.setVelocity([rx,ry]);
 	// final color
 	var fr = 3.5 + Math.random();
 	var fg = 0.4 + 0.1 * Math.random();

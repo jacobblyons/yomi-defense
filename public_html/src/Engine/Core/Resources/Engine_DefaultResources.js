@@ -92,12 +92,17 @@ gEngine.DefaultResources = (function () {
     var fireParticleTexture = "assets/ParticleSystem/flameparticle.png";
     var smokeParticleTexture = "assets/ParticleSystem/smokeparticle.png";
     var snowParticleTexture = "assets/ParticleSystem/snowparticle.png";
-    
+    var roseParticleTexture = "assets/ParticleSystem/RO.png";
+    var skullParticleTexture = "assets/ParticleSystem/SK.png";
+    var P1ParticleTexture = "assets/ParticleSystem/P1.png";
+    var P2ParticleTexture = "assets/ParticleSystem/P2.png";
+    var P3ParticleTexture = "assets/ParticleSystem/P3.png";
+    var P4ParticleTexture = "assets/ParticleSystem/P4.png";
     // UI
     var UIRadarButtonTexture = "assets/UI/radarbutton.png";
     var UIDropDownArrow = "assets/UI/ddarrow.png";
     
-    var SpriteSheet = "assets/SpriteSheet.png"
+    var SpriteSheet = "assets/SpriteSheet.png";
     /**
      * Return the Global default font
      * @memberOf gEngine.DefaultResources
@@ -221,7 +226,12 @@ gEngine.DefaultResources = (function () {
         gEngine.Textures.loadTexture(fireParticleTexture);
         gEngine.Textures.loadTexture(smokeParticleTexture);
         gEngine.Textures.loadTexture(snowParticleTexture);
-        
+        gEngine.Textures.loadTexture(roseParticleTexture);
+        gEngine.Textures.loadTexture(skullParticleTexture);
+        gEngine.Textures.loadTexture(P1ParticleTexture);
+        gEngine.Textures.loadTexture(P2ParticleTexture);
+        gEngine.Textures.loadTexture(P3ParticleTexture);
+        gEngine.Textures.loadTexture(P4ParticleTexture);
         gEngine.Textures.loadTexture(UIRadarButtonTexture);
         gEngine.Textures.loadTexture(UIDropDownArrow);
         gEngine.Textures.loadTexture(SpriteSheet);
