@@ -3,20 +3,20 @@ class Tower extends GameObject {
     var rend = new SpriteRenderable(texture);
     //rend.setColor([0, 0, 0, 1]);
     super(rend);
-    var type = Math.floor(Math.random()*3);
-    if(type === 0){
+    this.towerType = Math.floor(Math.random()*3);
+    if(this.towerType === 0){
         rend.setElementPixelPositions(728,818,1792,2048);
         this.getXform().setSize(3,6);
         this.range = 10;
         this.fireRate = 300;
     }
-    if(type === 1){
+    if(this.towerType === 1){
         rend.setElementPixelPositions(959,1117,1792,2048);
         this.getXform().setSize(3,6);
         this.range = 20;
         this.fireRate = 800;
     }
-    if(type === 2){
+    if(this.towerType === 2){
         rend.setElementPixelPositions(600,728,1908,2048);
         this.getXform().setSize(3,6);
         this.range = 40;
@@ -39,7 +39,7 @@ class Tower extends GameObject {
           if(this.checkRange()){
               var target = this._getTarget();
               var targetPos = new Vector2(target.getXform().getPosition()[0], target.getXform().getPosition()[1]);
-              this.projectileSet.addToSet(new TowerProjectile(target, this.pos));
+              this.projectileSet.addToSet(new TowerProjectile(target, this.pos,this.towerType));
               this.lastTime = Date.now();
           }  
       }
