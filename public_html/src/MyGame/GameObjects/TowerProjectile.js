@@ -1,8 +1,9 @@
 class TowerProjectile extends GameObject {
   constructor(targetObject, towerPos) {
-    var rend = new SpriteRenderable("assets/ParticleSystem/flameparticle.png");
-    rend.setColor([0, 1, 0, 1]);
-    super(rend);
+    var rend = new SpriteRenderable("assets/SpriteSheet.png");    
+    rend.setElementPixelPositions(80,430,826,1222);
+    super(rend);    
+    this.getXform().setSize(1,1);
     this.getXform().setXPos(towerPos.x);
     this.getXform().setYPos(towerPos.y);
     this.mTargetObject = targetObject;
@@ -19,9 +20,7 @@ class TowerProjectile extends GameObject {
   moveTowards(targetPos, dist) {
     var transform = this.getXform();
     var vectorTowards = new Vector2(targetPos.x - transform.getXPos(), targetPos.y - transform.getYPos());
-
     vectorTowards = vectorTowards.getNormalized();
-
     transform.incXPosBy(vectorTowards.x * dist);
     transform.incYPosBy(vectorTowards.y * dist);
   }

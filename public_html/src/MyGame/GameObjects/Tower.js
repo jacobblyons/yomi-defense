@@ -1,12 +1,29 @@
 class Tower extends GameObject {
-  constructor(pos, enemySet) {
-    var rend = new Renderable();
-    rend.setColor([0, 0, 0, 1]);
+  constructor(pos, enemySet,texture) {
+    var rend = new SpriteRenderable(texture);
+    //rend.setColor([0, 0, 0, 1]);
     super(rend);
+    var type = Math.floor(Math.random()*3);
+    if(type === 0){
+        rend.setElementPixelPositions(728,818,1792,2048);
+        this.getXform().setSize(3,6);
+        this.range = 10;
+        this.fireRate = 300;
+    }
+    if(type === 1){
+        rend.setElementPixelPositions(959,1117,1792,2048);
+        this.getXform().setSize(3,6);
+        this.range = 20;
+        this.fireRate = 800;
+    }
+    if(type === 2){
+        rend.setElementPixelPositions(600,728,1908,2048);
+        this.getXform().setSize(3,6);
+        this.range = 40;
+        this.fireRate = 1200;
+    }
     this.gm = GameManager.instance;
     this.pos = pos;
-    this.rotateDelta = 5;
-    this.range = 25;
     this.getXform().setXPos(pos.x);
     this.getXform().setYPos(pos.y);
     this.xform = this.getXform();
@@ -18,7 +35,7 @@ class Tower extends GameObject {
   update() {
     super.update();
     if (GameManager.instance.State.RoundState.Turn === Turn.RunningWave) {
-      if (Date.now() - this.lastTime > GameManager.instance.State.GameState.TowerFireRate && this.enemySet.size() > 0) {
+      if (Date.now() - this.lastTime > this.fireRate && this.enemySet.size() > 0) {
           if(this.checkRange()){
               var target = this._getTarget();
               var targetPos = new Vector2(target.getXform().getPosition()[0], target.getXform().getPosition()[1]);
@@ -47,12 +64,11 @@ class Tower extends GameObject {
   checkCollision() {
     for (var i = 0; i < this.projectileSet.size(); i++) {
       for (var j = 0; j < this.enemySet.size(); j++) {
-        if (
-          this.projectileSet
+        if (this.projectileSet
             .getObjectAt(i)
             .getBBox()
-            .boundCollideStatus(this.enemySet.getObjectAt(j).getBBox())
-        ) {
+            .boundCollideStatus(this.enemySet.getObjectAt(j).getBBox()))                  
+        {
           this.projectileSet.removeFromSet(this.projectileSet.getObjectAt(i));
 
           var isDead = this.enemySet.getObjectAt(j).hit();
@@ -73,8 +89,8 @@ class Tower extends GameObject {
         var dX = this.getXform().getXPos() - eX;
         var dY = this.getXform().getYPos() - eY;
         var dist = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
-        if (dist < 10) {
-          var _enemyColor = _enemy.getRenderable();
+        if (dist < this.range) {
+          //var _enemyColor = _enemy.getRenderable();
           //_enemyColor.setColor([0.1, 0.7, 0.7, 1]);
           return true;
         }

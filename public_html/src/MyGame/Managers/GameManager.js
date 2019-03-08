@@ -12,8 +12,8 @@ class GameManager {
     this.mMenuScene = new Menu();
     this.mGameOverScene = new GameOver();
     this.showState = true;
-    //events
 
+    //events
     //logging
     setInterval(() => {
       document.getElementById("state-debug").innerHTML = this.State.toString();

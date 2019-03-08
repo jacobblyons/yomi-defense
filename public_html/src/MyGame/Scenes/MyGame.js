@@ -5,15 +5,20 @@ class MyGame extends Scene {
     super();
     this.mCam = null;
     this.gm = GameManager.instance;
+    //this.gm.init();
     this.mWavingInput = null;
     this.mVapingInput = null;
     this.HUD = null;
     this.EnemySet = null;
     this.TowerSet = null;
     this.enemy = null;
+    this.kTexture = "assets/SpriteSheet.png";
+
   }
 
-  loadScene() {}
+  loadScene() {
+      gEngine.Textures.loadTexture(this.kTexture);
+  }
   unloadScene() {
     GameManager.instance.sceneSwapReady();
   }
@@ -25,7 +30,10 @@ class MyGame extends Scene {
       [0, 0, AppState.CanvasWidth, AppState.CanvasHeight] // viewport (orgX, orgY, width, height)
     );
     this.mCam.setBackgroundColor([0.2, 0.2, 0.2, 1]);
-
+    this.BG = new SpriteRenderable(this.kTexture);
+    this.BG.setElementPixelPositions(512,1142,650,1280);
+    this.BG.getXform().setSize(100,90);
+    this.BG.getXform().setPosition(50,50);
     this.mWavingInput = new WavingInput(this);
     this.mVapingInput = new VapingInput(this);
     this.mWaveSpawner = new WaveSpawner(this);
@@ -74,7 +82,7 @@ class MyGame extends Scene {
   }
   draw() {
     this.mCam.setupViewProjection();
-
+    this.BG.draw(this.mCam);
     //this.enemy.draw(this.mCam);
     this.EnemySet.draw(this.mCam);
     this.WaypointSet.draw(this.mCam);
@@ -82,10 +90,11 @@ class MyGame extends Scene {
     this.SpawnPointSet.draw(this.mCam);
     this.EndPointSet.draw(this.mCam);
     this.mHUD.draw(this.mCam);
+
   }
 
   instantiateEnemy(waypointSet) {
-    var _enemy = new Enemy(waypointSet, this.EndPointSet, this);
+    var _enemy = new Enemy(waypointSet, this.EndPointSet, this, this.kTexture);
     var startPos = GameManager.instance.State.GameState.SpawnPoints[RoundManager.instance.State.SelectedSpawnPoint];
     _enemy.getXform().setXPos(startPos.x);
     _enemy.getXform().setYPos(startPos.y);
@@ -93,11 +102,11 @@ class MyGame extends Scene {
   }
 
   instantiateWaypoint(pos) {
-    this.WaypointSet.addToSet(new Waypoint(pos));
+    this.WaypointSet.addToSet(new Waypoint(pos,this.kTexture));
   }
 
   instantiateTower(pos) {
-    this.TowerSet.addToSet(new Tower(pos, this.EnemySet));
+    this.TowerSet.addToSet(new Tower(pos, this.EnemySet, this.kTexture));
   }
 
   enemyAtEndPoint(e) {

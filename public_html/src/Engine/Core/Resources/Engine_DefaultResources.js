@@ -97,6 +97,7 @@ gEngine.DefaultResources = (function () {
     var UIRadarButtonTexture = "assets/UI/radarbutton.png";
     var UIDropDownArrow = "assets/UI/ddarrow.png";
     
+    var SpriteSheet = "assets/SpriteSheet.png"
     /**
      * Return the Global default font
      * @memberOf gEngine.DefaultResources
@@ -223,7 +224,7 @@ gEngine.DefaultResources = (function () {
         
         gEngine.Textures.loadTexture(UIRadarButtonTexture);
         gEngine.Textures.loadTexture(UIDropDownArrow);
-
+        gEngine.Textures.loadTexture(SpriteSheet);
         gEngine.ResourceMap.setLoadCompleteCallback(function s() {_createShaders(callBackFunction); });
     };
 
