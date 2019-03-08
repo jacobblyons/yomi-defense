@@ -29,7 +29,7 @@ class GameManager {
   restartGame() {
     this.State.AppState.Executing = Executing.Menu;
     this.State = new State(); //cleanup
-    RoundManager.instance.State = this.State;
+    RoundManager.instance.State = this.State.RoundState;
     gEngine.GameLoop.stop();
   }
 
@@ -77,6 +77,5 @@ class GameManager {
 
   _toggleStateDebug() {
     this.showState = !this.showState;
-    console.log(this.showState);
   }
 }

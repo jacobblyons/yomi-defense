@@ -35,9 +35,7 @@ class RoundManager {
   }
 
   readyForRound() {
-    console.log(this.State.Turn);
     this.State.Turn = Turn.WavingReadyUp;
-    console.log(this.State.Turn);
     this.OnRoundMessageHide.dispatch();
     this.OnWavingPlayerReadyUpShow.dispatch();
   }
@@ -113,7 +111,7 @@ class RoundManager {
     this.OnRoundEnd.dispatch();
     this.OnWaveResultsShow.dispatch();
     this.OnWaveEnd.dispatch();
-    this.State.CurrentWave += this.gm.State.GameState.Rounds === -1 ? 0 : 1;
+    this.State.CurrentWave++;
     if (this.State.CurrentWave === this.gm.State.GameState.Rounds) {
       return this.gm.endGame();
     }
