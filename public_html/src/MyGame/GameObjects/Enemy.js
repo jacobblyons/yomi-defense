@@ -86,7 +86,7 @@ class Enemy extends GameObject {
   }
   nextPoint(){
     for (var i = 0; i < 10; i++){
-        var p = this.createParticle(this.getXform().getXPos(),this.getXform().getYPos());
+        var p = this.createRParticle(this.getXform().getXPos(),this.getXform().getYPos());
         this.mParticles.addToSet(p);
     }
       this.waypointsReached++;
@@ -117,7 +117,7 @@ class Enemy extends GameObject {
 
   _checkEndCollisions() {}
 
-  createParticle(atX,atY){
+  createRParticle(atX,atY){
       	var life = 120;
 	var p = new ParticleGameObject(this.kParticleTexture, atX, atY, life);	
         //p.getRenderable().setColor([1, 1, 1, 1]);
@@ -131,12 +131,7 @@ class Enemy extends GameObject {
 	var fr = 3.5 + Math.random();
 	var fg = 0.4 + 0.1 * Math.random();
 	var fb = 0.3 + 0.1 * Math.random();
-	p.setFinalColor([fr, fg, fb, 0.6]);
-    
-	// velocity on the particle
-	var fx = 10 - 20 * Math.random();
-	var fy = 10 * Math.random();
-	//p.getPhysicsComponent().setVelocity([fx, fy]);
+	p.setFinalColor([fr, fg, fb, 0.6]); 	
     
 	// size delta
 	p.setSizeDelta(0.98);
