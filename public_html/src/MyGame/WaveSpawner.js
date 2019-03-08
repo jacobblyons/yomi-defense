@@ -9,10 +9,12 @@ class WaveSpawner {
     this.rm.OnWaveEnd.subscribe(this._disable.bind(this));
   }
 
-  update(){
-    if(!this.enabled) return;
+  update() {
+    if (!this.enabled) return;
 
-    var waveSize =  this.rm.State.InitialWaveSize + this.rm.State.InitialWaveSize * (this.rm.State.WaveSizeMultiplier*this.rm.State.CurrentWave);
+    var waveSize =
+      this.rm.State.InitialWaveSize +
+      this.rm.State.InitialWaveSize * (this.rm.State.WaveSizeMultiplier * this.rm.State.CurrentWave);
 
     if (this.spawnTimer > 60 && this.rm.State.EnemiesSpawned < waveSize) {
       this.spawnTimer = 0;
@@ -24,13 +26,13 @@ class WaveSpawner {
 
   spawnEnemy() {
     this.rm.enemySpawned();
-    this.sceneRef.instantiateEnemy(this.sceneRef.WaypointSet);
-  } 
+    this.sceneRef.instantiateEnemy();
+  }
 
-  _enable(){
+  _enable() {
     this.enabled = true;
   }
-  _disable(){
-    this.enabled = false; 
+  _disable() {
+    this.enabled = false;
   }
 }

@@ -1,5 +1,5 @@
 class Enemy extends GameObject {
-  constructor(WS, ES, sceneRef, texture) {
+  constructor(WS, sceneRef, texture) {
     var rend = new SpriteRenderable(texture);
     super(rend);
     var type = Math.floor(Math.random()*3);
@@ -24,14 +24,12 @@ class Enemy extends GameObject {
     this.gm = GameManager.instance;
     this.waypointsReached = 0;
     this.WaypointSet = WS;
-    this.EndPointSet = ES;
     this.sceneRef = sceneRef;
     
     this.dead = false;
     this.maxedSpeedAnim = true;
     
-    this.speed = 0.3;
-    
+    this.p1Role = GameManager.instance.State.GameState.PlayerOne.Role;
   }
 
   update() {
@@ -48,7 +46,12 @@ class Enemy extends GameObject {
         this.speedUp();
       }
     } else {
-      var _endPos = GameManager.instance.State.GameState.EndPoints[RoundManager.instance.State.SelectedEndPoint];
+      var endBaseID = GameManager.instance.State.RoundState.SelectedEndBase;
+      var _endPos =
+        this.p1Role === PlayerRole.Vaping
+          ? GameManager.instance.State.GameState.PlayerOne.Bases[endBaseID]
+          : GameManager.instance.State.GameState.PlayerTwo.Bases[endBaseID];
+
       var endDX = this.getXform().getXPos() - _endPos.x;
       var endDY = this.getXform().getYPos() - _endPos.y;
       var endDist = Math.sqrt(Math.pow(endDX, 2) + Math.pow(endDY, 2));

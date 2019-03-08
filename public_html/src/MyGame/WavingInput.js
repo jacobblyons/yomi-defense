@@ -12,10 +12,10 @@ class WavingInput {
     if (!this.enabled) return;
 
     //handle start and end
-    var selectedSpawn = RoundManager.instance.State.SelectedSpawnPoint;
-    var selectedEnd = RoundManager.instance.State.SelectedEndPoint;
-    if (selectedSpawn === -1) this._handleSpawnSelect();
-    else if (selectedEnd === -1) this._handleEndSelect();
+    var selectedSpawn = RoundManager.instance.State.SelectedSpawnBase;
+    var selectedEnd = RoundManager.instance.State.SelectedEndBase;
+    if (selectedSpawn === BaseID.Unselected) this._handleSpawnSelect();
+    else if (selectedEnd === BaseID.Unselected) this._handleEndSelect();
 
     //hanlde clicks
     this._updateMousePos();
@@ -23,7 +23,7 @@ class WavingInput {
     if (gEngine.Input.isButtonClicked(2)) this._handleClick(false);
 
     //x to stop placing waypoints early
-    if (selectedEnd != -1 && gEngine.Input.isKeyClicked(gEngine.Input.keys.Space)) {
+    if (selectedEnd != BaseID.Unselected && gEngine.Input.isKeyClicked(gEngine.Input.keys.Space)) {
       this.doneSettingWaypoints = true;
       RoundManager.instance.wavingPlayerFinished();
       this.doneSettingWaypoints = false;
@@ -39,8 +39,8 @@ class WavingInput {
   }
 
   _handleClick(real) {
-    var selectedEnd = RoundManager.instance.State.SelectedEndPoint;
-    if (selectedEnd == -1) return;
+    var selectedEnd = RoundManager.instance.State.SelectedEndBase;
+    if (selectedEnd == BaseID.Unselected) return;
 
     var waypointLimit = RoundManager.instance.State.WaypointLimit;
     var waypoints = RoundManager.instance.State.Waypoints;
@@ -53,24 +53,26 @@ class WavingInput {
   }
 
   _handleSpawnSelect() {
+    var p1Role = GameManager.instance.State.GameState.PlayerOne.Role;
     // keys
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.One)) {
-      RoundManager.instance.selectSpawn(2);
+      RoundManager.instance.selectSpawn(p1Role === PlayerRole.Waving ? BaseID.P1.One : BaseID.P2.One);
     } else if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Two)) {
-      RoundManager.instance.selectSpawn(1);
+      RoundManager.instance.selectSpawn(p1Role === PlayerRole.Waving ? BaseID.P1.Two : BaseID.P2.Two);
     } else if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Three)) {
-      RoundManager.instance.selectSpawn(0);
+      RoundManager.instance.selectSpawn(p1Role === PlayerRole.Waving ? BaseID.P1.Three : BaseID.P2.Three);
     }
   }
 
   _handleEndSelect() {
+    var p1Role = GameManager.instance.State.GameState.PlayerOne.Role;
     // keys
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.One)) {
-      RoundManager.instance.selectEnd(2);
+      RoundManager.instance.selectEnd(p1Role === PlayerRole.Vaping ? BaseID.P1.One : BaseID.P2.One);
     } else if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Two)) {
-      RoundManager.instance.selectEnd(1);
+      RoundManager.instance.selectEnd(p1Role === PlayerRole.Vaping ? BaseID.P1.Two : BaseID.P2.Two);
     } else if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Three)) {
-      RoundManager.instance.selectEnd(0);
+      RoundManager.instance.selectEnd(p1Role === PlayerRole.Vaping ? BaseID.P1.Three : BaseID.P2.Three);
     }
   }
 

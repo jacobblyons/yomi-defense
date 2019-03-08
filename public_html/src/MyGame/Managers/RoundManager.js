@@ -73,12 +73,12 @@ class RoundManager {
   }
 
   selectSpawn(s) {
-    this.State.SelectedSpawnPoint = s;
+    this.State.SelectedSpawnBase = s;
     this.OnSpawnPointSelected.dispatch();
   }
 
   selectEnd(e) {
-    this.State.SelectedEndPoint = e;
+    this.State.SelectedEndBase = e;
     this.OnEndPointSelected.dispatch();
   }
 
@@ -119,8 +119,8 @@ class RoundManager {
     setTimeout(() => {
       this.State.Turn = Turn.WavingReadyUp;
       //reset state
-      this.State.SelectedEndPoint = -1;
-      this.State.SelectedSpawnPoint = -1;
+      this.State.SelectedEndBase = BaseID.Unselected;
+      this.State.SelectedSpawnBase = BaseID.Unselected;
       this.State.EnemiesSpawned = 0;
       this.State.EnemiesDestroyed = 0;
 

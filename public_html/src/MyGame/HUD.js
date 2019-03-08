@@ -19,8 +19,8 @@ class HUD {
       [1, 1, 1, 1]
     );
 
-    this.mSpawnPointNumbers = [];
-    this.mEndPointNumbers = [];
+    this.mPlayerOneBaseNumbers = [];
+    this.mPlayerTwoBaseNumbers = [];
 
     //subscriptions
     RoundManager.instance.OnRoundMessageShow.subscribe(this.showRoundMessage.bind(this));
@@ -41,8 +41,8 @@ class HUD {
   draw(cam) {
     this.mSubtitle.draw(cam);
     this.mLargeMessage.draw(cam);
-    this.mSpawnPointNumbers.forEach(n => n.draw(cam));
-    this.mEndPointNumbers.forEach(n => n.draw(cam));
+    this.mPlayerOneBaseNumbers.forEach(n => n.draw(cam));
+    this.mPlayerTwoBaseNumbers.forEach(n => n.draw(cam));
   }
   update() {}
 
@@ -55,30 +55,46 @@ class HUD {
     this.mLargeMessage.setText(
       GameManager.instance.State.GameState.PlayerOne.Role === PlayerRole.Waving ? "PLAYER ONE" : "PLAYER TWO"
     );
+    this.mLargeMessage.setColor(
+      GameManager.instance.State.GameState.PlayerOne.Role === PlayerRole.Waving ? [0, 0, 1, 1] : [1, 0, 0, 1]
+    );
     this.mSubtitle.setText("press space to start ");
   }
 
   showWavingPickSpawnMessage() {
     this.mSubtitle.setText("select a SPAWN...");
     //show numbers
-    this._createSpawnPointNumbers();
+    var p1Role = GameManager.instance.State.GameState.PlayerOne.Role;
+    if (p1Role === PlayerRole.Waving) this._createPlayerOneNumbers();
+    else this._createPlayerTwoNumbers();
   }
 
   showWavingPickEndMessage() {
     this.mSubtitle.setText("select an END...");
-    this.mSpawnPointNumbers = [];
+
     //show numbers
-    this._createEndPointNumbers();
+    var p1Role = GameManager.instance.State.GameState.PlayerOne.Role;
+    if (p1Role === PlayerRole.Vaping) {
+      this.mPlayerTwoBaseNumbers = [];
+      this._createPlayerOneNumbers();
+    } else {
+      this.mPlayerOneBaseNumbers = [];
+      this._createPlayerTwoNumbers();
+    }
   }
 
   showWavingInstructionMessage() {
-    this.mEndPointNumbers = [];
+    this.mPlayerTwoBaseNumbers = [];
+    this.mPlayerOneBaseNumbers = [];
     this.mSubtitle.setText("(WAVING) Click to set waypoints. space to finish.");
   }
 
   showVapingReadyUpMessage() {
     this.mLargeMessage.setText(
       GameManager.instance.State.GameState.PlayerOne.Role === PlayerRole.Vaping ? "PLAYER ONE" : "PLAYER TWO"
+    );
+    this.mLargeMessage.setColor(
+      GameManager.instance.State.GameState.PlayerOne.Role === PlayerRole.Vaping ? [0, 0, 1, 1] : [1, 0, 0, 1]
     );
     this.mSubtitle.setText("press space to start ");
   }
@@ -96,12 +112,13 @@ class HUD {
     this.mSubtitle.setText("");
   }
 
-  _createSpawnPointNumbers() {
-    this.gm.State.GameState.SpawnPoints.forEach((s, i) => {
-      var coord = this.gm.getCanvasCoordinates(s);
-      this.mSpawnPointNumbers.push(
+  _createPlayerOneNumbers() {
+    var bases = this.gm.State.GameState.PlayerOne.Bases;
+    Object.keys(bases).forEach((key, i) => {
+      var coord = this.gm.getCanvasCoordinates(bases[key]);
+      this.mPlayerOneBaseNumbers.push(
         new UIText(
-          `${3 - i}`,
+          `${i + 1}`,
           [coord.x, coord.y + 10],
           GameManager.instance.State.AppState.HUDTextSize,
           UIText.eHAlignment.eCenter,
@@ -112,12 +129,13 @@ class HUD {
     });
   }
 
-  _createEndPointNumbers() {
-    this.gm.State.GameState.EndPoints.forEach((s, i) => {
-      var coord = this.gm.getCanvasCoordinates(s);
-      this.mEndPointNumbers.push(
+  _createPlayerTwoNumbers() {
+    var bases = this.gm.State.GameState.PlayerTwo.Bases;
+    Object.keys(bases).forEach((key, i) => {
+      var coord = this.gm.getCanvasCoordinates(bases[key]);
+      this.mPlayerTwoBaseNumbers.push(
         new UIText(
-          `${3 - i}`,
+          `${i + 1}`,
           [coord.x, coord.y + 10],
           GameManager.instance.State.AppState.HUDTextSize,
           UIText.eHAlignment.eCenter,
