@@ -16,7 +16,7 @@ class Waypoint extends GameObject {
     this.oppositeSpinning.getXform().setSize(0.35, 0.35);
 
     this.getXform().setXPos(pos.x);
-    this.getXform().setYPos(pos.y);
+    this.getXform().setYPos(pos.y);    
   }
 
   update() {

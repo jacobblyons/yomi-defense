@@ -19,6 +19,8 @@ class Enemy extends GameObject {
         this.speed = 0.5;
         this.rotation = Math.random()*5 + 5;
     }
+    this.kParticleTexture = "assets/ParticleSystem/flameparticle.png";
+    this.mParticles = new ParticleGameObjectSet();
     
         //rend.setColor([0, 1, 0, 1]);
     this.gm = GameManager.instance;
@@ -62,6 +64,11 @@ class Enemy extends GameObject {
         this.moveTowards(_endPos, this.speed);
       }
     }
+    this.mParticles.update();
+  }
+  draw(cam) {
+    super.draw(cam);
+    this.mParticles.draw(cam);
   }
   reachedGoal(){
       this.dead = true;
@@ -78,6 +85,8 @@ class Enemy extends GameObject {
     }
   }
   nextPoint(){
+    var p = this.createParticle(this.getXform().getXPos(),this.getXform().getYPos());
+    this.mParticles.addToSet(p);
       this.waypointsReached++;
   }
   moveTowards(targetPos, dist) {
@@ -105,4 +114,30 @@ class Enemy extends GameObject {
   }
 
   _checkEndCollisions() {}
-}
+
+  createParticle(atX,atY){
+      console.log("p created");
+      	var life = 120;
+	var p = new ParticleGameObject(this.kParticleTexture, atX, atY, life);	
+        p.getRenderable().setColor([1, 1, 1, 1]);
+	// size of the particle	
+	p.getXform().setSize(2, 2);
+        var px = p.getParticle();
+        px.setVelocity([5,5]);
+	// final color
+	var fr = 3.5 + Math.random();
+	var fg = 0.4 + 0.1 * Math.random();
+	var fb = 0.3 + 0.1 * Math.random();
+	p.setFinalColor([fr, fg, fb, 0.6]);
+    
+	// velocity on the particle
+	var fx = 10 - 20 * Math.random();
+	var fy = 10 * Math.random();
+	//p.getPhysicsComponent().setVelocity([fx, fy]);
+    
+	// size delta
+	p.setSizeDelta(0.98);
+    
+	return p;
+    }
+  }
