@@ -7,13 +7,13 @@ class Tower extends GameObject {
     if(this.towerType === 0){
         rend.setElementPixelPositions(728,818,1792,2048);
         this.getXform().setSize(3,6);
-        this.range = 10;
+        this.range = 15;
         this.fireRate = 300;
     }
     if(this.towerType === 1){
         rend.setElementPixelPositions(959,1117,1792,2048);
         this.getXform().setSize(3,6);
-        this.range = 20;
+        this.range = 25;
         this.fireRate = 800;
     }
     if(this.towerType === 2){
@@ -66,19 +66,17 @@ class Tower extends GameObject {
     }
   }
   _sacrifice(){
-    for (var i = 0 ; i < this.sacShots ;i++){
-        var ppos = this.pos;
-        ppos.x += Math.random()*-2;
-        ppos.y += Math.random()*-2;        
+    this.range = 45; 
+    for (var i = 0 ; i < this.sacShots ;i++){            
         this._shoot(this.pos);
-        for (var i = 0; i < 10; i++){
-            var p = this.createSKParticle(this.getXform().getXPos(),this.getXform().getYPos());
-            this.mParticles.addToSet(p);
-        }
-        this.getXform().setSize(0.01,0.01);
-        this.canShoot = false;
-        this.canSacrifice = false;
     }
+    for (var j = 0; j < 7; j++){
+        var p = this.createSKParticle(this.getXform().getXPos(),this.getXform().getYPos());
+        this.mParticles.addToSet(p);
+    }
+    this.getXform().setSize(0.01,0.01);
+    this.canShoot = false;
+    this.canSacrifice = false;    
   }
   _getTarget() {
     return this.enemySet.mSet.reduce((acc, cur) => {

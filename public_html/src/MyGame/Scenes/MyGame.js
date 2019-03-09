@@ -17,7 +17,7 @@ class MyGame extends Scene {
     this.kOKParticleTexture = "assets/ParticleSystem/OK.png";
     this.mParticles = new ParticleGameObjectSet();    
     this.showSmallCam = false;
-    this.canShowSmallCam = false;
+    this.canShowSmallCam = true;
   }
 
   loadScene() {

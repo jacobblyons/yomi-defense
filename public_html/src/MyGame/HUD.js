@@ -4,7 +4,7 @@ class HUD {
     this.gm = GameManager.instance;
     this.mLargeMessage = new UIText(
       "",
-      [canvas.width / 2, canvas.height / 2 + 250],
+      [canvas.width / 2, canvas.height / 2 + 310],
       GameManager.instance.State.AppState.HUDTextSize * 2,
       UIText.eHAlignment.eCenter,
       UIText.eVAlignment.eTop,
@@ -12,7 +12,7 @@ class HUD {
     );
     this.mSubtitle = new UIText(
       "IN GAME",
-      [canvas.width / 2, canvas.height / 2 + 215],
+      [canvas.width / 2, canvas.height / 2 + 275],
       GameManager.instance.State.AppState.HUDTextSize,
       UIText.eHAlignment.eCenter,
       UIText.eVAlignment.eTop,
@@ -21,7 +21,7 @@ class HUD {
 
     this.mPlayerOneScore = new UIText(
       `P1 SCORE: 0`,
-      [canvas.width / 2 - 250, canvas.height / 2 + 250],
+      [canvas.width / 2 - 320, canvas.height / 2 + 300],
       GameManager.instance.State.AppState.HUDTextSize,
       UIText.eHAlignment.eCenter,
       UIText.eVAlignment.eTop,
@@ -30,7 +30,7 @@ class HUD {
 
     this.mPlayerTwoScore = new UIText(
       `P2 SCORE: 0`,
-      [canvas.width / 2 + 250, canvas.height / 2 + 250],
+      [canvas.width / 2 + 320, canvas.height / 2 + 300],
       GameManager.instance.State.AppState.HUDTextSize,
       UIText.eHAlignment.eCenter,
       UIText.eVAlignment.eTop,
@@ -68,8 +68,8 @@ class HUD {
   update() {}
 
   showRoundMessage() {
-    this.mLargeMessage.setText("ROUND BEGIN");
-    this.mSubtitle.setText("press space...");
+    this.mLargeMessage.setText("BEGIN ROUND");
+    this.mSubtitle.setText("Press space...");
   }
 
   showWavingReadyUpMessage() {
@@ -79,11 +79,11 @@ class HUD {
     this.mLargeMessage.setColor(
       GameManager.instance.State.GameState.PlayerOne.Role === PlayerRole.Waving ? [0, 0, 1, 1] : [1, 0, 0, 1]
     );
-    this.mSubtitle.setText("press space to start ");
+    this.mSubtitle.setText("Press space to start...");
   }
 
   showWavingPickSpawnMessage() {
-    this.mSubtitle.setText("select a SPAWN...");
+    this.mSubtitle.setText("Press 1, 2, or 3 to select a SPAWN POINT...");
     //show numbers
     var p1Role = GameManager.instance.State.GameState.PlayerOne.Role;
     if (p1Role === PlayerRole.Waving) this._createPlayerOneNumbers();
@@ -91,7 +91,7 @@ class HUD {
   }
 
   showWavingPickEndMessage() {
-    this.mSubtitle.setText("select an END...");
+    this.mSubtitle.setText("Press 1, 2, or 3 to select a GOAL POINT...");
 
     //show numbers
     var p1Role = GameManager.instance.State.GameState.PlayerOne.Role;
@@ -107,7 +107,7 @@ class HUD {
   showWavingInstructionMessage() {
     this.mPlayerTwoBaseNumbers = [];
     this.mPlayerOneBaseNumbers = [];
-    this.mSubtitle.setText("(WAVING) Click to set waypoints. space to finish.");
+    this.mSubtitle.setText("(WAVING) Click to set waypoints (L=Real,R=Fake). Press space when done.");
   }
 
   showVapingReadyUpMessage() {
@@ -117,16 +117,16 @@ class HUD {
     this.mLargeMessage.setColor(
       GameManager.instance.State.GameState.PlayerOne.Role === PlayerRole.Vaping ? [0, 0, 1, 1] : [1, 0, 0, 1]
     );
-    this.mSubtitle.setText("press space to start ");
+    this.mSubtitle.setText("Press space to start ");
   }
 
   showVapingInstructionMessage() {
-    this.mSubtitle.setText("(VAPING) Click to set towers. space to finish.");
+    this.mSubtitle.setText("(VAPING) Click to set towers. Press space when done.");
   }
 
   showWave() {
     this.mLargeMessage.setText(`WAVE ${GameManager.instance.State.RoundState.CurrentWave}`);
-    this.mSubtitle.setText("Wave running...");
+    this.mSubtitle.setText("WAVE Incoming...!");
   }
 
   clearMessage() {
