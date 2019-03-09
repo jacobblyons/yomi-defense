@@ -14,8 +14,10 @@ class MyGame extends Scene {
     this.TowerSet = null;
     this.enemy = null;
     this.kTexture = "assets/SpriteSheet.png";
+    this.kOKParticleTexture = "assets/ParticleSystem/OK.png";
+    this.mParticles = new ParticleGameObjectSet();    
     this.showSmallCam = false;
-    this.canShowSmallCam = true;
+    this.canShowSmallCam = false;
   }
 
   loadScene() {
@@ -93,6 +95,7 @@ class MyGame extends Scene {
           break;
       }
     }
+    this.mParticles.update();
   }
   draw() {
     this.mCam.setupViewProjection();
@@ -105,6 +108,7 @@ class MyGame extends Scene {
     this.PlayerOneBaseSet.draw(this.mCam);
     this.PlayerTwoBaseSet.draw(this.mCam);
     this.mHUD.draw(this.mCam);
+    this.mParticles.draw(this.mCam);
     if(this.showSmallCam){
         this.mSmallCam.setupViewProjection();
         this.BG.draw(this.mSmallCam);
@@ -116,6 +120,7 @@ class MyGame extends Scene {
         //var wp = GameManager.instance.State.RoundState.Waypoints;
         //wp.prototype.draw(this.mSmallCam);
     }
+    
   }
 
   instantiateEnemy() {
@@ -141,6 +146,8 @@ class MyGame extends Scene {
 
   enemyAtEndPoint(e) {
     this.canShowSmallCam = true;
+    var p = this.createOKParticle(e.getXform().getXPos(),e.getXform().getYPos());
+    this.mParticles.addToSet(p);
     this.EnemySet.removeFromSet(e);
     RoundManager.instance.enemyReachedEndPoint();
   }
@@ -169,4 +176,17 @@ class MyGame extends Scene {
     this.TowerSet.removeAll();
     this.canShowSmallCam = false;
   }
+      createOKParticle(atX,atY){
+      	var life = 90;
+	var p = new ParticleGameObject(this.kOKParticleTexture, atX, atY, life);	
+	// size of the particle	
+	p.getXform().setSize(15, 30);
+        var px = p.getParticle();        
+        px.setVelocity([0,2]);
+        px.setAcceleration([0,10]);
+    
+	// size delta
+	p.setSizeDelta(0.98);
+	return p;
+    }
 }

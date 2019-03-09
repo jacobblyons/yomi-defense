@@ -12,11 +12,11 @@ class TowerProjectile extends GameObject {
     this.mParticles = new ParticleGameObjectSet();
     this.towerType = towerType;
     if(this.towerType === 0)
-        this.speed = 1.1;
+        this.speed = 1.15;
     if(this.towerType === 1)
         this.speed = 1.25;
     if(this.towerType === 2)
-        this.speed = 1;
+        this.speed = 1.45;
   }
 
   update() {
@@ -50,7 +50,7 @@ class TowerProjectile extends GameObject {
   }
   
   createParticle(atX,atY){
-      	var life = 30 + Math.random() * 200;
+      	var life = 150;
 	var p = new ParticleGameObject(this.kParticleTexture, atX, atY, life);
 	if (this.towerType === 0)
             p.getRenderable().setColor([1, 0, 0, 1]);
@@ -61,21 +61,9 @@ class TowerProjectile extends GameObject {
 	// size of the particle
 	var r = Math.random();
 	p.getXform().setSize(r, r);
-    
-	// final color
-	var fr = 3.5 + Math.random();
-	var fg = 0.4 + 0.1 * Math.random();
-	var fb = 0.3 + 0.1 * Math.random();
-	p.setFinalColor([fr, fg, fb, 0.6]);
-    
-	// velocity on the particle
-	var fx = 10 - 20 * Math.random();
-	var fy = 10 * Math.random();
-	//p.getPhysicsComponent().setVelocity([fx, fy]);
-    
+        
 	// size delta
-	p.setSizeDelta(0.98);
-    
+	p.setSizeDelta(0.98);    
 	return p;
   }
 }

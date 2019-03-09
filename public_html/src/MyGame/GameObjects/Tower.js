@@ -49,10 +49,10 @@ class Tower extends GameObject {
     this.projectileSet.update();
     this.checkCollision();
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.X)) {
-        if(this.canSacrifice)
+        if(this.canSacrifice &&(GameManager.instance.State.RoundState.Turn === Turn.RunningWave))
             this._sacrifice();
     }
-    if (this.enemySet.length !== 0 && this.canShoot){
+    if (this.enemySet.length !== 0 && this.canShoot&&(GameManager.instance.State.RoundState.Turn === Turn.RunningWave)){
         this.canSacrifice = true;
     }
     this.mParticles.update();
