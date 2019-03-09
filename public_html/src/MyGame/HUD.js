@@ -19,6 +19,24 @@ class HUD {
       [1, 1, 1, 1]
     );
 
+    this.mPlayerOneScore = new UIText(
+      `P1 SCORE: 0`,
+      [canvas.width / 2 - 250, canvas.height / 2 + 250],
+      GameManager.instance.State.AppState.HUDTextSize,
+      UIText.eHAlignment.eCenter,
+      UIText.eVAlignment.eTop,
+      [0.5, 0.5, 1, 1]
+    );
+
+    this.mPlayerTwoScore = new UIText(
+      `P2 SCORE: 0`,
+      [canvas.width / 2 + 250, canvas.height / 2 + 250],
+      GameManager.instance.State.AppState.HUDTextSize,
+      UIText.eHAlignment.eCenter,
+      UIText.eVAlignment.eTop,
+      [1, 0, 0, 1]
+    );
+
     this.mPlayerOneBaseNumbers = [];
     this.mPlayerTwoBaseNumbers = [];
 
@@ -36,6 +54,7 @@ class HUD {
     RoundManager.instance.OnVapingPlayerStart.subscribe(this.showVapingInstructionMessage.bind(this));
     RoundManager.instance.OnVapingPlayerEnd.subscribe(this.clearMessage.bind(this));
     RoundManager.instance.OnWaveStart.subscribe(this.showWave.bind(this));
+    RoundManager.instance.OnScoreChanged.subscribe(this.updateScore.bind(this));
   }
 
   draw(cam) {
@@ -43,6 +62,8 @@ class HUD {
     this.mLargeMessage.draw(cam);
     this.mPlayerOneBaseNumbers.forEach(n => n.draw(cam));
     this.mPlayerTwoBaseNumbers.forEach(n => n.draw(cam));
+    this.mPlayerOneScore.draw(cam);
+    this.mPlayerTwoScore.draw(cam);
   }
   update() {}
 
@@ -110,6 +131,11 @@ class HUD {
 
   clearMessage() {
     this.mSubtitle.setText("");
+  }
+
+  updateScore() {
+    this.mPlayerOneScore.setText(`P1 SCORE: ${this.gm.State.GameState.PlayerOne.Score}`);
+    this.mPlayerTwoScore.setText(`P2 SCORE: ${this.gm.State.GameState.PlayerTwo.Score}`);
   }
 
   _createPlayerOneNumbers() {
