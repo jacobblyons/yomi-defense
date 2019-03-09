@@ -97,3 +97,10 @@ GameObjectSet.prototype.draw = function (aCamera) {
         this.mSet[i].draw(aCamera);
     }
 };
+  GameObjectSet.prototype.smallDraw = function (aCamera) {
+    var i;
+    for (i = 0; i < this.mSet.length; i++) {
+        this.mSet[i].smallDraw(aCamera);
+    }
+};
+

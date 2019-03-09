@@ -4,6 +4,7 @@ class MyGame extends Scene {
   constructor() {
     super();
     this.mCam = null;
+    this.mSmallCam = null;
     this.gm = GameManager.instance;
     //this.gm.init();
     this.mWavingInput = null;
@@ -13,7 +14,8 @@ class MyGame extends Scene {
     this.TowerSet = null;
     this.enemy = null;
     this.kTexture = "assets/SpriteSheet.png";
-
+    this.showSmallCam = false;
+    this.canShowSmallCam = true;
   }
 
   loadScene() {
@@ -29,6 +31,10 @@ class MyGame extends Scene {
       AppState.CameraWidth, // width of camera
       [0, 0, AppState.CanvasWidth, AppState.CanvasHeight] // viewport (orgX, orgY, width, height)
     );
+    this.mSmallCam = new Camera(
+       vec2.fromValues(AppState.CameraCenter.x, AppState.CameraCenter.y), // position of the camera
+       AppState.CameraWidth, // width of camera
+       [280, 210, AppState.CanvasWidth*.3, AppState.CanvasHeight*.3]); // viewport (orgX, orgY, width, height));
     this.mCam.setBackgroundColor([0.2, 0.2, 0.2, 1]);
     this.BG = new SpriteRenderable(this.kTexture);
     this.BG.setElementPixelPositions(512,1142,650,1280);
@@ -63,6 +69,13 @@ class MyGame extends Scene {
     this.TowerSet.update();
 
     //handle game flow input
+    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.C)) {
+        if(this.canShowSmallCam)
+            this.showSmallCam = true;
+    }else{
+        this.showSmallCam = false;
+    }
+    
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Space)) {
       switch (GameManager.instance.State.RoundState.Turn) {
         case Turn.RoundMessage:
@@ -90,7 +103,17 @@ class MyGame extends Scene {
     this.PlayerOneBaseSet.draw(this.mCam);
     this.PlayerTwoBaseSet.draw(this.mCam);
     this.mHUD.draw(this.mCam);
-
+    if(this.showSmallCam){
+        this.mSmallCam.setupViewProjection();
+        this.BG.draw(this.mSmallCam);
+        this.EnemySet.draw(this.mSmallCam);
+        this.WaypointSet.smallDraw(this.mSmallCam);        
+        this.TowerSet.draw(this.mSmallCam);
+        this.PlayerOneBaseSet.draw(this.mSmallCam);
+        this.PlayerTwoBaseSet.draw(this.mSmallCam);
+        //var wp = GameManager.instance.State.RoundState.Waypoints;
+        //wp.prototype.draw(this.mSmallCam);
+    }
   }
 
   instantiateEnemy() {
@@ -115,6 +138,7 @@ class MyGame extends Scene {
   }
 
   enemyAtEndPoint(e) {
+    this.canShowSmallCam = true;
     this.EnemySet.removeFromSet(e);
     RoundManager.instance.enemyReachedEndPoint();
   }
@@ -137,5 +161,6 @@ class MyGame extends Scene {
     this.EnemySet.removeAll();
     this.WaypointSet.removeAll();
     this.TowerSet.removeAll();
+    this.canShowSmallCam = false;
   }
 }

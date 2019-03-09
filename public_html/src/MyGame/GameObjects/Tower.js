@@ -29,7 +29,12 @@ class Tower extends GameObject {
     this.xform = this.getXform();
     this.lastTime = Date.now();
     this.projectileSet = new GameObjectSet();
+    this.kParticleTexture = "assets/ParticleSystem/SK.png";
+    this.mParticles = new ParticleGameObjectSet();
     this.enemySet = enemySet;
+    this.canShoot = true;
+    this.sacShots = 3;
+    this.canSacrifice = false;
   }
 
   update() {
@@ -37,17 +42,44 @@ class Tower extends GameObject {
     if (GameManager.instance.State.RoundState.Turn === Turn.RunningWave) {
       if (Date.now() - this.lastTime > this.fireRate && this.enemySet.size() > 0) {
           if(this.checkRange()){
-              var target = this._getTarget();
-              var targetPos = new Vector2(target.getXform().getPosition()[0], target.getXform().getPosition()[1]);
-              this.projectileSet.addToSet(new TowerProjectile(target, this.pos,this.towerType));
-              this.lastTime = Date.now();
+              this._shoot(this.pos);
           }  
       }
     }
     this.projectileSet.update();
     this.checkCollision();
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.X)) {
+        if(this.canSacrifice)
+            this._sacrifice();
+    }
+    if (this.enemySet.length !== 0 && this.canShoot){
+        this.canSacrifice = true;
+    }
+    this.mParticles.update();
   }
-
+  _shoot = function(pos){
+    if(this.canShoot){
+        var target = this._getTarget();
+        //var targetPos = new Vector2(target.getXform().getPosition()[0], target.getXform().getPosition()[1]);
+        this.projectileSet.addToSet(new TowerProjectile(target, pos,this.towerType));
+        this.lastTime = Date.now();
+    }
+  }
+  _sacrifice(){
+    for (var i = 0 ; i < this.sacShots ;i++){
+        var ppos = this.pos;
+        ppos.x += Math.random()*-2;
+        ppos.y += Math.random()*-2;        
+        this._shoot(this.pos);
+        for (var i = 0; i < 10; i++){
+            var p = this.createSKParticle(this.getXform().getXPos(),this.getXform().getYPos());
+            this.mParticles.addToSet(p);
+        }
+        this.getXform().setSize(0.01,0.01);
+        this.canShoot = false;
+        this.canSacrifice = false;
+    }
+  }
   _getTarget() {
     return this.enemySet.mSet.reduce((acc, cur) => {
       var curDist = this.pos.getDistance(new Vector2(cur.getXform().getPosition()[0], cur.getXform().getPosition()[1]));
@@ -59,6 +91,7 @@ class Tower extends GameObject {
   draw(cam) {
     super.draw(cam);
     this.projectileSet.draw(cam);
+    this.mParticles.draw(cam);
   }
 
   checkCollision() {
@@ -96,4 +129,24 @@ class Tower extends GameObject {
         }
       }
   }
+  
+    createSKParticle(atX,atY){
+      	var life = 120;
+	var p = new ParticleGameObject(this.kParticleTexture, atX, atY, life);	
+        //p.getRenderable().setColor([1, 1, 1, 1]);
+	// size of the particle	
+	p.getXform().setSize(10, 10);
+        p.getXform().incRotationByDegree(Math.random()*90-180);
+        var px = p.getParticle();
+        var rx = Math.random()*15 - 7.5;
+        var ry = Math.random()*15 - 7.5;
+        var rax = Math.random()*15 - 7.5;
+        var ray = Math.random()*15 - 7.5;
+        px.setAcceleration([rax,ray]);
+        px.setVelocity([rx,ry]);        
+    
+	// size delta
+	p.setSizeDelta(0.98);
+	return p;
+    }
 }
