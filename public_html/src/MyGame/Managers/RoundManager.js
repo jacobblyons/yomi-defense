@@ -25,6 +25,7 @@ class RoundManager {
     this.OnWaveResultsHide = new GameEvent();
     this.OnSpawnPointSelected = new GameEvent();
     this.OnEndPointSelected = new GameEvent();
+    this.OnScoreChanged = new GameEvent();
     this.State = GameManager.instance.State.RoundState;
   }
 
@@ -101,6 +102,7 @@ class RoundManager {
     this.State.EnemiesDestroyed++;
     this.gm.State.GameState.PlayerOne.Score += this.gm.State.GameState.PlayerOne.Role == PlayerRole.Waving ? 1 : 0;
     this.gm.State.GameState.PlayerTwo.Score += this.gm.State.GameState.PlayerTwo.Role == PlayerRole.Waving ? 1 : 0;
+    this.OnScoreChanged.dispatch();
     var waveSize =
       this.State.InitialWaveSize + this.State.InitialWaveSize * (this.State.WaveSizeMultiplier * this.State.CurrentWave);
     if (this.State.EnemiesSpawned == waveSize && this.State.EnemiesDestroyed == waveSize) this._finishRound();

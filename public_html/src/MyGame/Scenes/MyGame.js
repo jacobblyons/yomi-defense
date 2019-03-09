@@ -19,7 +19,7 @@ class MyGame extends Scene {
   }
 
   loadScene() {
-      gEngine.Textures.loadTexture(this.kTexture);
+    gEngine.Textures.loadTexture(this.kTexture);
   }
   unloadScene() {
     GameManager.instance.sceneSwapReady();
@@ -37,9 +37,9 @@ class MyGame extends Scene {
        [280, 210, AppState.CanvasWidth*.3, AppState.CanvasHeight*.3]); // viewport (orgX, orgY, width, height));
     this.mCam.setBackgroundColor([0.2, 0.2, 0.2, 1]);
     this.BG = new SpriteRenderable(this.kTexture);
-    this.BG.setElementPixelPositions(512,1142,650,1280);
-    this.BG.getXform().setSize(100,90);
-    this.BG.getXform().setPosition(50,50);
+    this.BG.setElementPixelPositions(512, 1142, 650, 1280);
+    this.BG.getXform().setSize(100, 90);
+    this.BG.getXform().setPosition(50, 50);
     this.mWavingInput = new WavingInput(this);
     this.mVapingInput = new VapingInput(this);
     this.mWaveSpawner = new WaveSpawner(this);
@@ -57,6 +57,7 @@ class MyGame extends Scene {
   }
 
   update() {
+    this._sortTheTowersForLayering();
     this.mWaveSpawner.update();
     this.mWavingInput.update();
     this.mVapingInput.update();
@@ -95,6 +96,7 @@ class MyGame extends Scene {
   }
   draw() {
     this.mCam.setupViewProjection();
+
     this.BG.draw(this.mCam);
     //this.enemy.draw(this.mCam);
     this.EnemySet.draw(this.mCam);
@@ -130,7 +132,7 @@ class MyGame extends Scene {
   }
 
   instantiateWaypoint(pos) {
-    this.WaypointSet.addToSet(new Waypoint(pos,this.kTexture));
+    this.WaypointSet.addToSet(new Waypoint(pos, this.kTexture));
   }
 
   instantiateTower(pos) {
@@ -155,6 +157,10 @@ class MyGame extends Scene {
     this.PlayerOneBaseSet.addToSet(new Base(bases[BaseID.P2.One], BaseID.P2.One));
     this.PlayerOneBaseSet.addToSet(new Base(bases[BaseID.P2.Two], BaseID.P2.Two));
     this.PlayerOneBaseSet.addToSet(new Base(bases[BaseID.P2.Three], BaseID.P2.Three));
+  }
+
+  _sortTheTowersForLayering() {
+    this.TowerSet.mSet.sort((a, b) => b.getXform().getPosition()[1] - a.getXform().getPosition()[1]);
   }
 
   _cleanupRound() {
