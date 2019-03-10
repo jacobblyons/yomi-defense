@@ -121,6 +121,7 @@ class Enemy extends GameObject {
     if(this.mHitPoints < 0){
         var p = this.createSKParticle(this.getXform().getXPos(),this.getXform().getYPos());
         this.mParticles.addToSet(p);
+        return true;
     }
 //    switch (this.mHitPoints) {
 //      case 2:
