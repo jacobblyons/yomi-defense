@@ -1,26 +1,26 @@
 class Tower extends GameObject {
-  constructor(pos, enemySet,texture) {
-    var rend = new SpriteRenderable(texture);
+  constructor(pos, enemySet, texture) {
+    var rend = new LightRenderable(texture);
     //rend.setColor([0, 0, 0, 1]);
     super(rend);
-    this.towerType = Math.floor(Math.random()*3);
-    if(this.towerType === 0){
-        rend.setElementPixelPositions(728,818,1792,2048);
-        this.getXform().setSize(3,6);
-        this.range = 15;
-        this.fireRate = 300;
+    this.towerType = Math.floor(Math.random() * 3);
+    if (this.towerType === 0) {
+      rend.setElementPixelPositions(728, 818, 1792, 2048);
+      this.getXform().setSize(3, 6);
+      this.range = 15;
+      this.fireRate = 300;
     }
-    if(this.towerType === 1){
-        rend.setElementPixelPositions(959,1117,1792,2048);
-        this.getXform().setSize(3,6);
-        this.range = 25;
-        this.fireRate = 800;
+    if (this.towerType === 1) {
+      rend.setElementPixelPositions(959, 1117, 1792, 2048);
+      this.getXform().setSize(3, 6);
+      this.range = 25;
+      this.fireRate = 800;
     }
-    if(this.towerType === 2){
-        rend.setElementPixelPositions(600,728,1908,2048);
-        this.getXform().setSize(3,6);
-        this.range = 40;
-        this.fireRate = 1200;
+    if (this.towerType === 2) {
+      rend.setElementPixelPositions(600, 728, 1908, 2048);
+      this.getXform().setSize(3, 6);
+      this.range = 40;
+      this.fireRate = 1200;
     }
     this.gm = GameManager.instance;
     this.pos = pos;
@@ -42,43 +42,47 @@ class Tower extends GameObject {
     super.update();
     if (GameManager.instance.State.RoundState.Turn === Turn.RunningWave) {
       if (Date.now() - this.lastTime > this.fireRate && this.enemySet.size() > 0) {
-          if(this.checkRange()){
-              this._shoot(this.pos);
-          }  
+        if (this.checkRange()) {
+          this._shoot(this.pos);
+        }
       }
     }
     this.projectileSet.update();
     this.checkCollision();
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.X)) {
-        if(this.canSacrifice &&(GameManager.instance.State.RoundState.Turn === Turn.RunningWave))
-            this._sacrifice();
+      if (this.canSacrifice && GameManager.instance.State.RoundState.Turn === Turn.RunningWave) this._sacrifice();
     }
-    if (this.enemySet.length !== 0 && this.canShoot && (this.shotsTaken === 0) &&(GameManager.instance.State.RoundState.Turn === Turn.RunningWave)){
-        this.canSacrifice = true;
+    if (
+      this.enemySet.length !== 0 &&
+      this.canShoot &&
+      this.shotsTaken === 0 &&
+      GameManager.instance.State.RoundState.Turn === Turn.RunningWave
+    ) {
+      this.canSacrifice = true;
     }
     this.mParticles.update();
   }
-  _shoot = function(pos){
-    if(this.canShoot){
-        this.shotsTaken++;
-        var target = this._getTarget();
-        //var targetPos = new Vector2(target.getXform().getPosition()[0], target.getXform().getPosition()[1]);
-        this.projectileSet.addToSet(new TowerProjectile(target, pos,this.towerType));
-        this.lastTime = Date.now();
+  _shoot = function(pos) {
+    if (this.canShoot) {
+      this.shotsTaken++;
+      var target = this._getTarget();
+      //var targetPos = new Vector2(target.getXform().getPosition()[0], target.getXform().getPosition()[1]);
+      this.projectileSet.addToSet(new TowerProjectile(target, pos, this.towerType));
+      this.lastTime = Date.now();
     }
-  }
-  _sacrifice(){
-    this.range = 45; 
-    for (var i = 0 ; i < this.sacShots ;i++){            
-        this._shoot(this.pos);
+  };
+  _sacrifice() {
+    this.range = 45;
+    for (var i = 0; i < this.sacShots; i++) {
+      this._shoot(this.pos);
     }
-    for (var j = 0; j < 7; j++){
-        var p = this.createSKParticle(this.getXform().getXPos(),this.getXform().getYPos());
-        this.mParticles.addToSet(p);
+    for (var j = 0; j < 7; j++) {
+      var p = this.createSKParticle(this.getXform().getXPos(), this.getXform().getYPos());
+      this.mParticles.addToSet(p);
     }
-    this.getXform().setSize(0.01,0.01);
+    this.getXform().setSize(0.01, 0.01);
     this.canShoot = false;
-    this.canSacrifice = false;    
+    this.canSacrifice = false;
   }
   _getTarget() {
     return this.enemySet.mSet.reduce((acc, cur) => {
@@ -97,58 +101,59 @@ class Tower extends GameObject {
   checkCollision() {
     for (var i = 0; i < this.projectileSet.size(); i++) {
       for (var j = 0; j < this.enemySet.size(); j++) {
-        if(this.projectileSet.getObjectAt(j) !== null){
-            if (this.projectileSet
-                .getObjectAt(i)
-                .getBBox()
-                .boundCollideStatus(this.enemySet.getObjectAt(j).getBBox()))                  
-            {
-              this.projectileSet.removeFromSet(this.projectileSet.getObjectAt(i));
+        if (this.projectileSet.getObjectAt(j) !== null) {
+          if (
+            this.projectileSet
+              .getObjectAt(i)
+              .getBBox()
+              .boundCollideStatus(this.enemySet.getObjectAt(j).getBBox())
+          ) {
+            this.projectileSet.removeFromSet(this.projectileSet.getObjectAt(i));
 
-              var isDead = this.enemySet.getObjectAt(j).hit();
-              if (isDead) {
-                this.enemySet.removeFromSet(this.enemySet.getObjectAt(j));
-                RoundManager.instance.enemyKilled();
-              }
+            var isDead = this.enemySet.getObjectAt(j).hit();
+            if (isDead) {
+              this.enemySet.removeFromSet(this.enemySet.getObjectAt(j));
+              RoundManager.instance.enemyKilled();
             }
+          }
         }
       }
     }
   }
-  
-  checkRange(){
-      for (var e = 0; e < this.enemySet.size(); e++) {
-        var _enemy = this.enemySet.getObjectAt(e);
-        var eX = _enemy.getXform().getXPos();
-        var eY = _enemy.getXform().getYPos();
-        var dX = this.getXform().getXPos() - eX;
-        var dY = this.getXform().getYPos() - eY;
-        var dist = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
-        if (dist < this.range) {
-          //var _enemyColor = _enemy.getRenderable();
-          //_enemyColor.setColor([0.1, 0.7, 0.7, 1]);
-          return true;
-        }
+
+  checkRange() {
+    for (var e = 0; e < this.enemySet.size(); e++) {
+      var _enemy = this.enemySet.getObjectAt(e);
+      var eX = _enemy.getXform().getXPos();
+      var eY = _enemy.getXform().getYPos();
+      var dX = this.getXform().getXPos() - eX;
+      var dY = this.getXform().getYPos() - eY;
+      var dist = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
+      if (dist < this.range) {
+        //var _enemyColor = _enemy.getRenderable();
+        //_enemyColor.setColor([0.1, 0.7, 0.7, 1]);
+        return true;
       }
-  }
-  
-    createSKParticle(atX,atY){
-      	var life = 120;
-	var p = new ParticleGameObject(this.kParticleTexture, atX, atY, life);	
-        //p.getRenderable().setColor([1, 1, 1, 1]);
-	// size of the particle	
-	p.getXform().setSize(10, 10);
-        p.getXform().incRotationByDegree(Math.random()*90-180);
-        var px = p.getParticle();
-        var rx = Math.random()*15 - 7.5;
-        var ry = Math.random()*15 - 7.5;
-        var rax = Math.random()*15 - 7.5;
-        var ray = Math.random()*15 - 7.5;
-        px.setAcceleration([rax,ray]);
-        px.setVelocity([rx,ry]);        
-    
-	// size delta
-	p.setSizeDelta(0.98);
-	return p;
     }
+  }
+
+  createSKParticle(atX, atY) {
+    var life = 120;
+    var p = new ParticleGameObject(this.kParticleTexture, atX, atY, life);
+    //p.getRenderable().setColor([1, 1, 1, 1]);
+    // size of the particle
+    p.getXform().setSize(10, 10);
+    p.getXform().incRotationByDegree(Math.random() * 90 - 180);
+    var px = p.getParticle();
+    var rx = Math.random() * 15 - 7.5;
+    var ry = Math.random() * 15 - 7.5;
+    var rax = Math.random() * 15 - 7.5;
+    var ray = Math.random() * 15 - 7.5;
+    px.setAcceleration([rax, ray]);
+    px.setVelocity([rx, ry]);
+
+    // size delta
+    p.setSizeDelta(0.98);
+    return p;
+  }
 }

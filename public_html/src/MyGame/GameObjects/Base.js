@@ -1,7 +1,7 @@
 class Base extends GameObject {
   constructor(pos, id) {
-    var rend = new SpriteRenderable("assets/SpriteSheet.png");
-    rend.setElementPixelPositions(1342,1760,1282,1792)
+    var rend = new LightRenderable("assets/SpriteSheet.png");
+    rend.setElementPixelPositions(1342, 1760, 1282, 1792);
     rend.getXform().setSize(3.5, 4);
     super(rend);
     this.gm = GameManager.instance;
