@@ -12,7 +12,7 @@ class GameManager {
     this.mMenuScene = new Menu();
     this.mGameOverScene = new GameOver();
     this.showState = true;
-
+    this.toggleStateDebug();
     //events
     //logging
     setInterval(() => {
@@ -75,7 +75,8 @@ class GameManager {
     return new Vector2((worldCoordinates.x - lowerLeft.x) / multiplier, (worldCoordinates.y - lowerLeft.y) / multiplier);
   }
 
-  _toggleStateDebug() {
+  toggleStateDebug() {
     this.showState = !this.showState;
+    document.getElementById("state-debug-container").style.display = this.showState ? "initial" : "none";
   }
 }

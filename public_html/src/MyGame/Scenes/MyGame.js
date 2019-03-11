@@ -16,7 +16,7 @@ class MyGame extends Scene {
     this.kTexture = "assets/SpriteSheet.png";
     this.kOKParticleTexture = "assets/ParticleSystem/OK.png";
     this.kXParticleTexture = "assets/ParticleSystem/X.png";
-    this.mParticles = new ParticleGameObjectSet();    
+    this.mParticles = new ParticleGameObjectSet();
     this.showSmallCam = false;
     this.canShowSmallCam = true;
   }
@@ -35,9 +35,10 @@ class MyGame extends Scene {
       [0, 0, AppState.CanvasWidth, AppState.CanvasHeight] // viewport (orgX, orgY, width, height)
     );
     this.mSmallCam = new Camera(
-       vec2.fromValues(AppState.CameraCenter.x, AppState.CameraCenter.y), // position of the camera
-       AppState.CameraWidth, // width of camera
-       [280, 210, AppState.CanvasWidth*.3, AppState.CanvasHeight*.3]); // viewport (orgX, orgY, width, height));
+      vec2.fromValues(AppState.CameraCenter.x, AppState.CameraCenter.y), // position of the camera
+      AppState.CameraWidth, // width of camera
+      [280, 210, AppState.CanvasWidth * 0.3, AppState.CanvasHeight * 0.3]
+    ); // viewport (orgX, orgY, width, height));
     this.mCam.setBackgroundColor([0.2, 0.2, 0.2, 1]);
     this.BG = new SpriteRenderable(this.kTexture);
     this.BG.setElementPixelPositions(512, 1142, 650, 1280);
@@ -74,12 +75,11 @@ class MyGame extends Scene {
 
     //handle game flow input
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.C)) {
-        if(this.canShowSmallCam)
-            this.showSmallCam = true;
-    }else{
-        this.showSmallCam = false;
+      if (this.canShowSmallCam) this.showSmallCam = true;
+    } else {
+      this.showSmallCam = false;
     }
-    
+
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Space)) {
       switch (GameManager.instance.State.RoundState.Turn) {
         case Turn.RoundMessage:
@@ -95,7 +95,7 @@ class MyGame extends Scene {
           RoundManager.instance.vapingPlayerFinished();
           break;
       }
-    }    
+    }
     this.mParticles.update();
   }
   draw() {
@@ -110,18 +110,17 @@ class MyGame extends Scene {
     this.PlayerTwoBaseSet.draw(this.mCam);
     this.mHUD.draw(this.mCam);
     this.mParticles.draw(this.mCam);
-    if(this.showSmallCam){
-        this.mSmallCam.setupViewProjection();
-        this.BG.draw(this.mSmallCam);
-        this.EnemySet.draw(this.mSmallCam);
-        this.WaypointSet.smallDraw(this.mSmallCam);        
-        this.TowerSet.draw(this.mSmallCam);
-        this.PlayerOneBaseSet.draw(this.mSmallCam);
-        this.PlayerTwoBaseSet.draw(this.mSmallCam);
-        //var wp = GameManager.instance.State.RoundState.Waypoints;
-        //wp.prototype.draw(this.mSmallCam);
+    if (this.showSmallCam) {
+      this.mSmallCam.setupViewProjection();
+      this.BG.draw(this.mSmallCam);
+      this.EnemySet.draw(this.mSmallCam);
+      this.WaypointSet.smallDraw(this.mSmallCam);
+      this.TowerSet.draw(this.mSmallCam);
+      this.PlayerOneBaseSet.draw(this.mSmallCam);
+      this.PlayerTwoBaseSet.draw(this.mSmallCam);
+      //var wp = GameManager.instance.State.RoundState.Waypoints;
+      //wp.prototype.draw(this.mSmallCam);
     }
-    
   }
 
   instantiateEnemy() {
@@ -139,25 +138,25 @@ class MyGame extends Scene {
 
   instantiateWaypoint(pos) {
     var canPlace = true;
-    for (var i = RoundManager.instance.State.Waypoints.length; i > 0; i--){
-        var WPPos = RoundManager.instance.State.Waypoints[i-1];
-        var dist = Math.sqrt((Math.pow(WPPos.x-pos.x, 2) + Math.pow(WPPos.y-pos.y, 2)));
-        if (dist < 5){
-            canPlace = false;
-        }
+    for (var i = RoundManager.instance.State.Waypoints.length; i > 0; i--) {
+      var WPPos = RoundManager.instance.State.Waypoints[i - 1];
+      var dist = Math.sqrt(Math.pow(WPPos.x - pos.x, 2) + Math.pow(WPPos.y - pos.y, 2));
+      if (dist < 5) {
+        canPlace = false;
+      }
     }
-    for (var i = RoundManager.instance.State.FakeWaypoints.length; i > 0; i--){
-        var WPPos = RoundManager.instance.State.FakeWaypoints[i-1];
-        var dist = Math.sqrt((Math.pow(WPPos.x-pos.x, 2) + Math.pow(WPPos.y-pos.y, 2)));       
-        if (dist < 5){
-            canPlace = false;
-        }
+    for (var i = RoundManager.instance.State.FakeWaypoints.length; i > 0; i--) {
+      var WPPos = RoundManager.instance.State.FakeWaypoints[i - 1];
+      var dist = Math.sqrt(Math.pow(WPPos.x - pos.x, 2) + Math.pow(WPPos.y - pos.y, 2));
+      if (dist < 5) {
+        canPlace = false;
+      }
     }
-    if (canPlace){
-        this.WaypointSet.addToSet(new Waypoint(pos, this.kTexture));
-    }else{
-        var p = this.createXParticle(pos.x,pos.y);
-        this.mParticles.addToSet(p);
+    if (canPlace) {
+      this.WaypointSet.addToSet(new Waypoint(pos, this.kTexture));
+    } else {
+      var p = this.createXParticle(pos.x, pos.y);
+      this.mParticles.addToSet(p);
     }
   }
 
@@ -167,7 +166,7 @@ class MyGame extends Scene {
 
   enemyAtEndPoint(e) {
     this.canShowSmallCam = true;
-    var p = this.createOKParticle(e.getXform().getXPos(),e.getXform().getYPos());
+    var p = this.createOKParticle(e.getXform().getXPos(), e.getXform().getYPos());
     this.mParticles.addToSet(p);
     this.EnemySet.removeFromSet(e);
     RoundManager.instance.enemyReachedEndPoint();
@@ -197,31 +196,31 @@ class MyGame extends Scene {
     this.TowerSet.removeAll();
     this.canShowSmallCam = false;
   }
-createOKParticle(atX,atY){
+  createOKParticle(atX, atY) {
     var life = 90;
-    var p = new ParticleGameObject(this.kOKParticleTexture, atX, atY, life);	
-    // size of the particle	
+    var p = new ParticleGameObject(this.kOKParticleTexture, atX, atY, life);
+    // size of the particle
     p.getXform().setSize(15, 30);
-    var px = p.getParticle();        
-    px.setVelocity([0,2]);
-    px.setAcceleration([0,10]);
+    var px = p.getParticle();
+    px.setVelocity([0, 2]);
+    px.setAcceleration([0, 10]);
 
     // size delta
     p.setSizeDelta(0.98);
     return p;
-}
-    
-createXParticle(atX,atY){
+  }
+
+  createXParticle(atX, atY) {
     var life = 60;
-    var p = new ParticleGameObject(this.kXParticleTexture, atX, atY, life);	
-    // size of the particle	
+    var p = new ParticleGameObject(this.kXParticleTexture, atX, atY, life);
+    // size of the particle
     p.getXform().setSize(10, 10);
-    var px = p.getParticle();        
-    px.setVelocity([0,2]);
-    px.setAcceleration([0,10]);
+    var px = p.getParticle();
+    px.setVelocity([0, 2]);
+    px.setAcceleration([0, 10]);
 
     // size delta
     p.setSizeDelta(0.98);
     return p;
-}
+  }
 }
