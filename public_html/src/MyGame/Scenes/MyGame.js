@@ -14,6 +14,8 @@ class MyGame extends Scene {
     this.kTexture = "assets/SpriteSheet.png";
     this.kOKParticleTexture = "assets/ParticleSystem/OK.png";
     this.kXParticleTexture = "assets/ParticleSystem/X.png";
+    this.kWPParticleTexture = "assets/ParticleSystem/P2.png";
+    this.kTParticleTexture = "assets/ParticleSystem/P1.png";
     this.mParticles = new ParticleGameObjectSet();
     this.showSmallCam = false;
     this.canShowSmallCam = true;
@@ -148,6 +150,10 @@ class MyGame extends Scene {
     }
     if (canPlace) {
       this.WaypointSet.addToSet(new Waypoint(pos, this.kTexture));
+      for (var i = 0; i < 5; i++){
+            var p = this.createWPParticle(pos.x, pos.y);
+            this.mParticles.addToSet(p);
+        }
     } else {
       var p = this.createXParticle(pos.x, pos.y);
       this.mParticles.addToSet(p);
@@ -156,6 +162,10 @@ class MyGame extends Scene {
 
   instantiateTower(pos) {
     this.TowerSet.addToSet(new Tower(pos, this.EnemySet, this.kTexture));
+    for (var i = 0; i < 5; i++){
+        var p = this.createTParticle(pos.x, pos.y);
+        this.mParticles.addToSet(p);
+    }    
   }
 
   enemyAtEndPoint(e) {
@@ -213,6 +223,38 @@ class MyGame extends Scene {
     var px = p.getParticle();
     px.setVelocity([0, 2]);
     px.setAcceleration([0, 10]);
+
+    // size delta
+    p.setSizeDelta(0.98);
+    return p;
+  }
+  
+    createWPParticle(atX,atY){
+    var life = 60;
+    var p = new ParticleGameObject(this.kWPParticleTexture, atX, atY, life);
+    // size of the particle
+    p.getXform().setSize(7, 7);
+    var px = p.getParticle();    
+    var rx = Math.random()*2 - 1;
+    var ry = Math.random()*2 - 1;
+    px.setVelocity([rx*5, ry*5]);
+    px.setAcceleration([rx, ry]);
+
+    // size delta
+    p.setSizeDelta(0.98);
+    return p;
+  }
+    createTParticle(atX,atY){
+    var life = 45;
+    var p = new ParticleGameObject(this.kTParticleTexture, atX, atY, life);
+    // size of the particle
+    p.getXform().setSize(7, 7);
+    p.getXform().incRotationByDegree(Math.random()*180-90);
+    var px = p.getParticle();
+    var rx = Math.random()*2 - 1;
+    var ry = Math.random()*2 - 1;
+    px.setVelocity([rx*5, ry*5]);
+    px.setAcceleration([rx, ry]);
 
     // size delta
     p.setSizeDelta(0.98);
