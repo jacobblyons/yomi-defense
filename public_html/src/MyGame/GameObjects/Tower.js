@@ -34,6 +34,7 @@ class Tower extends GameObject {
     this.enemySet = enemySet;
     this.canShoot = true;
     this.sacShots = 3;
+    this.shotsTaken = 0;
     this.canSacrifice = false;
   }
 
@@ -52,13 +53,14 @@ class Tower extends GameObject {
         if(this.canSacrifice &&(GameManager.instance.State.RoundState.Turn === Turn.RunningWave))
             this._sacrifice();
     }
-    if (this.enemySet.length !== 0 && this.canShoot&&(GameManager.instance.State.RoundState.Turn === Turn.RunningWave)){
+    if (this.enemySet.length !== 0 && this.canShoot && (this.shotsTaken === 0) &&(GameManager.instance.State.RoundState.Turn === Turn.RunningWave)){
         this.canSacrifice = true;
     }
     this.mParticles.update();
   }
   _shoot = function(pos){
     if(this.canShoot){
+        this.shotsTaken++;
         var target = this._getTarget();
         //var targetPos = new Vector2(target.getXform().getPosition()[0], target.getXform().getPosition()[1]);
         this.projectileSet.addToSet(new TowerProjectile(target, pos,this.towerType));
