@@ -101,6 +101,7 @@ gEngine.DefaultResources = (function () {
     var CRParticleTexture = "assets/ParticleSystem/CR.png";
     var OKParticleTexture = "assets/ParticleSystem/OK.png";
     var XParticleTexture = "assets/ParticleSystem/X.png";
+    var RulesTexture = "assets/RuleSheet.png";
     // UI
     var UIRadarButtonTexture = "assets/UI/radarbutton.png";
     var UIDropDownArrow = "assets/UI/ddarrow.png";
@@ -241,6 +242,7 @@ gEngine.DefaultResources = (function () {
         gEngine.Textures.loadTexture(UIRadarButtonTexture);
         gEngine.Textures.loadTexture(UIDropDownArrow);
         gEngine.Textures.loadTexture(SpriteSheet);
+        gEngine.Textures.loadTexture(RulesTexture);
         gEngine.ResourceMap.setLoadCompleteCallback(function s() {_createShaders(callBackFunction); });
     };
 
