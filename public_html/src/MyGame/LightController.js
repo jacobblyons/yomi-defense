@@ -30,7 +30,7 @@ class LightController {
     this.raveLight.setZPos(10);
     this.raveLight.setNear(10);
     this.raveLight.setFar(40);
-    this.raveLight.setIntensity(1);
+    this.raveLight.setIntensity(0.85);
     this.raveLight.setLightTo(true);
     setInterval(
       (() => {
@@ -61,6 +61,8 @@ class LightController {
     RoundManager.instance.OnWavingPlayerStart.subscribe(this._showSpawn.bind(this));
     RoundManager.instance.OnSpawnPointSelected.subscribe(this._showEnd.bind(this));
     RoundManager.instance.OnEndPointSelected.subscribe(this._dimSpawnEnd.bind(this));
+    RoundManager.instance.OnWaveStart.subscribe(this._waveLights.bind(this));
+    RoundManager.instance.OnWaveEnd.subscribe(this._endWaveLights.bind(this));
   }
 
   addLightsToDynamicObjects(obj) {
@@ -69,7 +71,6 @@ class LightController {
     obj.getRenderable().addLight(this.raveLight);
   }
 
-  update() {}
   _showSpawn() {
     this.p1Light.setLightTo(false);
     this.p2Light.setLightTo(false);
@@ -83,6 +84,7 @@ class LightController {
     } else {
       this.p1Light.setLightTo(true);
     }
+    this.raveLight.setIntensity(0.5);
   }
 
   _showEnd() {
@@ -101,7 +103,26 @@ class LightController {
     this.p2Light.setLightTo(true);
     this.p1Light.setColor([1, 1, 1, 1]);
     this.p2Light.setColor([1, 1, 1, 1]);
-    this.p1Light.setIntensity(0.25);
-    this.p2Light.setIntensity(0.25);
+    this.p1Light.setIntensity(0.1);
+    this.p2Light.setIntensity(0.1);
+    this.raveLight.setIntensity(0.85);
+  }
+
+  _waveLights() {
+    this.p1Light.setIntensity(0.15);
+    this.p2Light.setIntensity(0.15);
+    this.p1Light.setColor([1, 0, 0, 1]);
+    this.p2Light.setColor([1, 0, 0, 1]);
+    this.raveLight.setIntensity(0.05);
+  }
+
+  _endWaveLights() {
+    this.p1Light.setLightTo(false);
+    this.p2Light.setLightTo(false);
+    this.p1Light.setIntensity(0.7);
+    this.p2Light.setIntensity(0.7);
+    this.p1Light.setColor([0, 0, 1, 1]);
+    this.p2Light.setColor([1, 0, 0, 1]);
+    this.raveLight.setIntensity(0.85);
   }
 }
