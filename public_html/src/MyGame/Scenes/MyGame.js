@@ -177,6 +177,10 @@ class MyGame extends Scene {
     this.canShowSmallCam = true;
     var p = this.createOKParticle(e.getXform().getXPos(), e.getXform().getYPos());
     this.mParticles.addToSet(p);
+    if(e.speed > 1.39){
+        this.gm.State.GameState.PlayerOne.Score += this.gm.State.GameState.PlayerOne.Role == PlayerRole.Waving ? 1 : 0;
+        this.gm.State.GameState.PlayerTwo.Score += this.gm.State.GameState.PlayerTwo.Role == PlayerRole.Waving ? 1 : 0;       
+    }
     this.EnemySet.removeFromSet(e);
     RoundManager.instance.enemyReachedEndPoint();
   }
