@@ -1,20 +1,107 @@
 class LightController {
   constructor(sceneRef) {
     this.sceneRef = sceneRef;
-    /** @type {LightSet} */
-    this.LightSet = new LightSet();
+    this.raveColor = [1, 1, 1];
 
-    var p1Light = new Light();
-    p1Light.setColor([1, 1, 1, 1]);
-    p1Light.setXPos(50);
-    p1Light.setYPos(50);
-    p1Light.setZPos(5);
-    p1Light.setNear(20);
-    p1Light.setFar(50);
-    p1Light.setIntensity(5.5);
-    p1Light.setLightTo(true);
-    this.LightSet.addToSet(p1Light);
+    this.p1Light = new Light();
+    this.p1Light.setColor([1, 1, 1, 1]);
+    this.p1Light.setXPos(0);
+    this.p1Light.setYPos(50);
+    this.p1Light.setZPos(10);
+    this.p1Light.setNear(30);
+    this.p1Light.setFar(50);
+    this.p1Light.setIntensity(0.7);
+    this.p1Light.setLightTo(false);
+
+    this.p2Light = new Light();
+    this.p2Light.setColor([1, 1, 1, 1]);
+    this.p2Light.setXPos(100);
+    this.p2Light.setYPos(50);
+    this.p2Light.setZPos(10);
+    this.p2Light.setNear(30);
+    this.p2Light.setFar(50);
+    this.p2Light.setIntensity(0.7);
+    this.p2Light.setLightTo(false);
+
+    this.raveLight = new Light();
+    this.raveLight.setColor([...this.raveColor, 1]);
+    this.raveLight.setXPos(50);
+    this.raveLight.setYPos(50);
+    this.raveLight.setZPos(10);
+    this.raveLight.setNear(10);
+    this.raveLight.setFar(40);
+    this.raveLight.setIntensity(1);
+    this.raveLight.setLightTo(true);
+    setInterval(
+      (() => {
+        this.raveColor = this.raveColor.map(val => {
+          var rand = Math.random() * 0.4;
+          rand %= 0.75;
+          rand += 0.25;
+          return rand;
+        });
+        this.raveLight.setColor([...this.raveColor, 1]);
+      }).bind(this),
+      200
+    );
+
+    //add lights
+    this.sceneRef.PlayerOneBaseSet.addLight(this.p1Light);
+    this.sceneRef.PlayerOneBaseSet.addLight(this.raveLight);
+    this.sceneRef.PlayerTwoBaseSet.addLight(this.p2Light);
+    this.sceneRef.PlayerTwoBaseSet.addLight(this.raveLight);
+    this.sceneRef.BG.addLight(this.p1Light);
+    this.sceneRef.BG.addLight(this.p2Light);
+    this.sceneRef.BG.addLight(this.raveLight);
+    this.sceneRef.WaypointSet.addLight(this.p1Light);
+    this.sceneRef.WaypointSet.addLight(this.p2Light);
+    this.sceneRef.WaypointSet.addLight(this.raveLight);
+
+    //events
+    RoundManager.instance.OnWavingPlayerStart.subscribe(this._showSpawn.bind(this));
+    RoundManager.instance.OnSpawnPointSelected.subscribe(this._showEnd.bind(this));
+    RoundManager.instance.OnEndPointSelected.subscribe(this._dimSpawnEnd.bind(this));
   }
+
+  addLightsToDynamicObjects(obj) {
+    obj.getRenderable().addLight(this.p1Light);
+    obj.getRenderable().addLight(this.p2Light);
+    obj.getRenderable().addLight(this.raveLight);
+  }
+
   update() {}
-  draw() {}
+  _showSpawn() {
+    this.p1Light.setLightTo(false);
+    this.p2Light.setLightTo(false);
+    this.p1Light.setIntensity(0.7);
+    this.p2Light.setIntensity(0.7);
+    this.p1Light.setColor([0.5, 0.5, 1, 1]);
+    this.p2Light.setColor([1, 0.5, 0.5, 1]);
+    var p1Role = GameManager.instance.State.GameState.PlayerOne.Role;
+    if (p1Role === PlayerRole.Vaping) {
+      this.p2Light.setLightTo(true);
+    } else {
+      this.p1Light.setLightTo(true);
+    }
+  }
+
+  _showEnd() {
+    this.p1Light.setLightTo(false);
+    this.p2Light.setLightTo(false);
+    var p1Role = GameManager.instance.State.GameState.PlayerOne.Role;
+    if (p1Role === PlayerRole.Vaping) {
+      this.p1Light.setLightTo(true);
+    } else {
+      this.p2Light.setLightTo(true);
+    }
+  }
+
+  _dimSpawnEnd() {
+    this.p1Light.setLightTo(true);
+    this.p2Light.setLightTo(true);
+    this.p1Light.setColor([1, 1, 1, 1]);
+    this.p2Light.setColor([1, 1, 1, 1]);
+    this.p1Light.setIntensity(0.25);
+    this.p2Light.setIntensity(0.25);
+  }
 }

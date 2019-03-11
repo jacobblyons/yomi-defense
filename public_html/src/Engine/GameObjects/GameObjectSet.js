@@ -1,4 +1,4 @@
-/* File: GameObjectSet.js 
+/* File: GameObjectSet.js
  *
  * Support for working with a set of GameObjects
  */
@@ -7,7 +7,7 @@
 /*global  */
 /* find out more about jslint: http://www.jslint.com/help.html */
 
-"use strict";  // Operate in Strict mode such that variables must be declared before used!
+"use strict"; // Operate in Strict mode such that variables must be declared before used!
 
 /**
  * Default Constructor<p>
@@ -16,7 +16,7 @@
  * @class GameObjectSet
  */
 function GameObjectSet() {
-    this.mSet = [];
+  this.mSet = [];
 }
 
 /**
@@ -24,7 +24,9 @@ function GameObjectSet() {
  * @returns {Number} count of GameObjects in set
  * @memberOf GameObjectSet
  */
-GameObjectSet.prototype.size = function () { return this.mSet.length; };
+GameObjectSet.prototype.size = function() {
+  return this.mSet.length;
+};
 
 /**
  * Return the GameObject at index
@@ -32,8 +34,8 @@ GameObjectSet.prototype.size = function () { return this.mSet.length; };
  * @returns {GameObject}
  * @memberOf GameObjectSet
  */
-GameObjectSet.prototype.getObjectAt = function (index) {
-    return this.mSet[index];
+GameObjectSet.prototype.getObjectAt = function(index) {
+  return this.mSet[index];
 };
 
 /**
@@ -42,8 +44,8 @@ GameObjectSet.prototype.getObjectAt = function (index) {
  * @returns {void}
  * @memberOf GameObjectSet
  */
-GameObjectSet.prototype.addToSet = function (obj) {
-    this.mSet.push(obj);
+GameObjectSet.prototype.addToSet = function(obj) {
+  this.mSet.push(obj);
 };
 
 /**
@@ -52,15 +54,14 @@ GameObjectSet.prototype.addToSet = function (obj) {
  * @returns {void}
  * @memberOf GameObjectSet
  */
-GameObjectSet.prototype.removeFromSet = function (obj) {
-    var index = this.mSet.indexOf(obj);
-    if (index > -1)
-        this.mSet.splice(index, 1);
+GameObjectSet.prototype.removeFromSet = function(obj) {
+  var index = this.mSet.indexOf(obj);
+  if (index > -1) this.mSet.splice(index, 1);
 };
 
 GameObjectSet.prototype.removeAll = function() {
-    this.mSet = [];
-}
+  this.mSet = [];
+};
 
 /**
  * Move GameObject to end of GameObjectSet
@@ -68,9 +69,9 @@ GameObjectSet.prototype.removeAll = function() {
  * @returns {void}
  * @memberOf GameObjectSet
  */
-GameObjectSet.prototype.moveToLast = function (obj) {
-    this.removeFromSet(obj);
-    this.addToSet(obj);
+GameObjectSet.prototype.moveToLast = function(obj) {
+  this.removeFromSet(obj);
+  this.addToSet(obj);
 };
 
 /**
@@ -78,11 +79,11 @@ GameObjectSet.prototype.moveToLast = function (obj) {
  * @returns {void}
  * @memberOf GameObjectSet
  */
-GameObjectSet.prototype.update = function () {
-    var i;
-    for (i = 0; i < this.mSet.length; i++) {
-        this.mSet[i].update();
-    }
+GameObjectSet.prototype.update = function() {
+  var i;
+  for (i = 0; i < this.mSet.length; i++) {
+    this.mSet[i].update();
+  }
 };
 
 /**
@@ -91,16 +92,19 @@ GameObjectSet.prototype.update = function () {
  * @returns {undefined}
  * @memberOf GameObjectSet
  */
-GameObjectSet.prototype.draw = function (aCamera) {
-    var i;
-    for (i = 0; i < this.mSet.length; i++) {
-        this.mSet[i].draw(aCamera);
-    }
+GameObjectSet.prototype.draw = function(aCamera) {
+  var i;
+  for (i = 0; i < this.mSet.length; i++) {
+    this.mSet[i].draw(aCamera);
+  }
 };
-  GameObjectSet.prototype.smallDraw = function (aCamera) {
-    var i;
-    for (i = 0; i < this.mSet.length; i++) {
-        this.mSet[i].smallDraw(aCamera);
-    }
+GameObjectSet.prototype.smallDraw = function(aCamera) {
+  var i;
+  for (i = 0; i < this.mSet.length; i++) {
+    this.mSet[i].smallDraw(aCamera);
+  }
 };
 
+GameObjectSet.prototype.addLight = function(aLight) {
+  this.mSet.forEach(g => g.getRenderable().addLight(aLight));
+};

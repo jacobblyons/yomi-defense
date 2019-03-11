@@ -48,7 +48,7 @@ class MyGame extends Scene {
     this.BG.getXform().setPosition(50, 50);
     this.mWavingInput = new WavingInput(this);
     this.mVapingInput = new VapingInput(this);
-    this.mLightController = new LightController();
+
     this.mWaveSpawner = new WaveSpawner(this);
     this.mHUD = new HUD();
     this.EnemySet = new GameObjectSet();
@@ -60,6 +60,7 @@ class MyGame extends Scene {
     this._initializePlayerOneBases();
     this._initializePlayerTwoBases();
     RoundManager.instance.OnRoundEnd.subscribe(this._cleanupRound.bind(this));
+    this.mLightController = new LightController(this);
   }
 
   update() {
@@ -135,6 +136,7 @@ class MyGame extends Scene {
     _enemy.getXform().setXPos(startPos.x);
     _enemy.getXform().setYPos(startPos.y);
     this.EnemySet.addToSet(_enemy);
+    this.mLightController.addLightsToDynamicObjects(_enemy);
   }
 
   instantiateWaypoint(pos) {
@@ -154,11 +156,13 @@ class MyGame extends Scene {
       }
     }
     if (canPlace) {
-      this.WaypointSet.addToSet(new Waypoint(pos, this.kTexture));
-      for (var i = 0; i < 5; i++){
-            var p = this.createWPParticle(pos.x, pos.y);
-            this.mParticles.addToSet(p);
-        }
+      var waypoint = new Waypoint(pos, this.kTexture);
+      this.WaypointSet.addToSet(waypoint);
+      this.mLightController.addLightsToDynamicObjects(waypoint);
+      for (var i = 0; i < 5; i++) {
+        var p = this.createWPParticle(pos.x, pos.y);
+        this.mParticles.addToSet(p);
+      }
     } else {
       var p = this.createXParticle(pos.x, pos.y);
       this.mParticles.addToSet(p);
@@ -166,11 +170,13 @@ class MyGame extends Scene {
   }
 
   instantiateTower(pos) {
-    this.TowerSet.addToSet(new Tower(pos, this.EnemySet, this.kTexture));
-    for (var i = 0; i < 5; i++){
-        var p = this.createTParticle(pos.x, pos.y);
-        this.mParticles.addToSet(p);
-    }    
+    var tower = new Tower(pos, this.EnemySet, this.kTexture);
+    this.TowerSet.addToSet(tower);
+    this.mLightController.addLightsToDynamicObjects(tower);
+    for (var i = 0; i < 5; i++) {
+      var p = this.createTParticle(pos.x, pos.y);
+      this.mParticles.addToSet(p);
+    }
   }
 
   enemyAtEndPoint(e) {
@@ -190,9 +196,9 @@ class MyGame extends Scene {
 
   _initializePlayerTwoBases() {
     var bases = GameManager.instance.State.GameState.PlayerTwo.Bases;
-    this.PlayerOneBaseSet.addToSet(new Base(bases[BaseID.P2.One], BaseID.P2.One));
-    this.PlayerOneBaseSet.addToSet(new Base(bases[BaseID.P2.Two], BaseID.P2.Two));
-    this.PlayerOneBaseSet.addToSet(new Base(bases[BaseID.P2.Three], BaseID.P2.Three));
+    this.PlayerTwoBaseSet.addToSet(new Base(bases[BaseID.P2.One], BaseID.P2.One));
+    this.PlayerTwoBaseSet.addToSet(new Base(bases[BaseID.P2.Two], BaseID.P2.Two));
+    this.PlayerTwoBaseSet.addToSet(new Base(bases[BaseID.P2.Three], BaseID.P2.Three));
   }
 
   _sortTheTowersForLayering() {
@@ -233,40 +239,40 @@ class MyGame extends Scene {
     p.setSizeDelta(0.98);
     return p;
   }
-  
-    createWPParticle(atX,atY){
+
+  createWPParticle(atX, atY) {
     var life = 60;
     var p = new ParticleGameObject(this.kWPParticleTexture, atX, atY, life);
     // size of the particle
     p.getXform().setSize(7, 7);
-    var px = p.getParticle();    
-    var rx = Math.random()*2 - 1;
-    var ry = Math.random()*2 - 1;
-    px.setVelocity([rx*5, ry*5]);
+    var px = p.getParticle();
+    var rx = Math.random() * 2 - 1;
+    var ry = Math.random() * 2 - 1;
+    px.setVelocity([rx * 5, ry * 5]);
     px.setAcceleration([rx, ry]);
 
     // size delta
     p.setSizeDelta(0.98);
     return p;
   }
-    createTParticle(atX,atY){
+  createTParticle(atX, atY) {
     var life = 45;
     var p = new ParticleGameObject(this.kTParticleTexture, atX, atY, life);
     // size of the particle
     p.getXform().setSize(7, 7);
-    p.getXform().incRotationByDegree(Math.random()*180-90);
+    p.getXform().incRotationByDegree(Math.random() * 180 - 90);
     var px = p.getParticle();
-    var rx = Math.random()*2 - 1;
-    var ry = Math.random()*2 - 1;
-    px.setVelocity([rx*5, ry*5]);
+    var rx = Math.random() * 2 - 1;
+    var ry = Math.random() * 2 - 1;
+    px.setVelocity([rx * 5, ry * 5]);
     px.setAcceleration([rx, ry]);
 
     // size delta
     p.setSizeDelta(0.98);
     return p;
   }
-  
-  getCamera(){
-      return this.mCam;
+
+  getCamera() {
+    return this.mCam;
   }
 }
