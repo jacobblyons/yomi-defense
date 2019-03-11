@@ -150,7 +150,7 @@ class RoundManager {
     this.State.Turn = Turn.FinishedWave;
     this.OnRoundEnd.dispatch();
     this.OnWaveResultsShow.dispatch();
-    this.OnWaveEnd.dispatch();
+
     this.State.CurrentWave++;
     this.gm.State.GameState.CurrentRound += this.State.CurrentWave % 2 == 0 ? 1 : 0;
     if (this.gm.State.GameState.CurrentRound === this.gm.State.GameState.Rounds + 1) {
@@ -158,6 +158,7 @@ class RoundManager {
     }
 
     setTimeout(() => {
+      this.OnWaveEnd.dispatch();
       this.State.Turn = Turn.WavingReadyUp;
       //reset state
       this.State.SelectedEndBase = BaseID.Unselected;
@@ -176,6 +177,6 @@ class RoundManager {
 
       this.OnWaveResultsHide.dispatch();
       this.OnWavingPlayerReadyUpShow.dispatch();
-    }, 1000);
+    }, 2000);
   }
 }
