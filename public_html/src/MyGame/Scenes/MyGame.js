@@ -1,17 +1,15 @@
 "use strict";
-
 class MyGame extends Scene {
   constructor() {
     super();
     this.mCam = null;
     this.mSmallCam = null;
-    this.gm = GameManager.instance;
-    //this.gm.init();
+    this.gm = GameManager.instance;   
     this.mWavingInput = null;
-    this.mVapingInput = null;
-    this.HUD = null;
+    this.mVapingInput = null;    
     this.EnemySet = null;
     this.TowerSet = null;
+    this.HUD = null;
     this.enemy = null;
     this.kTexture = "assets/SpriteSheet.png";
     this.kOKParticleTexture = "assets/ParticleSystem/OK.png";
@@ -48,13 +46,11 @@ class MyGame extends Scene {
     this.mVapingInput = new VapingInput(this);
     this.mWaveSpawner = new WaveSpawner(this);
     this.mHUD = new HUD();
-
     this.EnemySet = new GameObjectSet();
     this.TowerSet = new GameObjectSet();
     this.WaypointSet = new GameObjectSet();
     this.PlayerOneBaseSet = new GameObjectSet();
     this.PlayerTwoBaseSet = new GameObjectSet();
-
     this._initializePlayerOneBases();
     this._initializePlayerTwoBases();
     RoundManager.instance.OnRoundEnd.subscribe(this._cleanupRound.bind(this));
@@ -98,11 +94,11 @@ class MyGame extends Scene {
     }
     this.mParticles.update();
   }
+  
   draw() {
     this.mCam.setupViewProjection();
 
     this.BG.draw(this.mCam);
-    //this.enemy.draw(this.mCam);
     this.EnemySet.draw(this.mCam);
     this.WaypointSet.draw(this.mCam);
     this.TowerSet.draw(this.mCam);
@@ -110,17 +106,15 @@ class MyGame extends Scene {
     this.PlayerTwoBaseSet.draw(this.mCam);
     this.mHUD.draw(this.mCam);
     this.mParticles.draw(this.mCam);
-    if (this.showSmallCam) {
-      this.mSmallCam.setupViewProjection();
-      this.BG.draw(this.mSmallCam);
-      this.EnemySet.draw(this.mSmallCam);
-      this.WaypointSet.smallDraw(this.mSmallCam);
-      this.TowerSet.draw(this.mSmallCam);
-      this.PlayerOneBaseSet.draw(this.mSmallCam);
-      this.PlayerTwoBaseSet.draw(this.mSmallCam);
-      //var wp = GameManager.instance.State.RoundState.Waypoints;
-      //wp.prototype.draw(this.mSmallCam);
-    }
+    if(this.showSmallCam){
+        this.mSmallCam.setupViewProjection();
+        this.BG.draw(this.mSmallCam);
+        this.EnemySet.draw(this.mSmallCam);
+        this.WaypointSet.smallDraw(this.mSmallCam);        
+        this.TowerSet.draw(this.mSmallCam);
+        this.PlayerOneBaseSet.draw(this.mSmallCam);
+        this.PlayerTwoBaseSet.draw(this.mSmallCam);
+    }    
   }
 
   instantiateEnemy() {
@@ -196,7 +190,8 @@ class MyGame extends Scene {
     this.TowerSet.removeAll();
     this.canShowSmallCam = false;
   }
-  createOKParticle(atX, atY) {
+  
+  createOKParticle(atX,atY){
     var life = 90;
     var p = new ParticleGameObject(this.kOKParticleTexture, atX, atY, life);
     // size of the particle
@@ -209,8 +204,8 @@ class MyGame extends Scene {
     p.setSizeDelta(0.98);
     return p;
   }
-
-  createXParticle(atX, atY) {
+    
+  createXParticle(atX,atY){
     var life = 60;
     var p = new ParticleGameObject(this.kXParticleTexture, atX, atY, life);
     // size of the particle
