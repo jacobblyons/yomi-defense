@@ -15,6 +15,7 @@ class MyGame extends Scene {
     this.enemy = null;
     this.kTexture = "assets/SpriteSheet.png";
     this.kOKParticleTexture = "assets/ParticleSystem/OK.png";
+    this.kXParticleTexture = "assets/ParticleSystem/X.png";
     this.mParticles = new ParticleGameObjectSet();    
     this.showSmallCam = false;
     this.canShowSmallCam = true;
@@ -137,7 +138,31 @@ class MyGame extends Scene {
   }
 
   instantiateWaypoint(pos) {
-    this.WaypointSet.addToSet(new Waypoint(pos, this.kTexture));
+    var canPlace = true;
+    for (var i = RoundManager.instance.State.Waypoints.length; i > 0; i--){
+        var dist = 0;
+        var WPPos = RoundManager.instance.State.Waypoints[i-1];
+        dist = Math.sqrt((Math.pow(WPPos.x-pos.x, 2) + Math.pow(WPPos.y-pos.y, 2)));
+        console.log(dist);
+        if (dist < 5){
+            canPlace = false;
+        }
+    }
+    for (var i = RoundManager.instance.State.FakeWaypoints.length; i > 0; i--){
+        var dist = 0;
+        var WPPos = RoundManager.instance.State.FakeWaypoints[i-1];
+        dist = Math.sqrt((Math.pow(WPPos.x-pos.x, 2) + Math.pow(WPPos.y-pos.y, 2)));
+        console.log(dist);
+        if (dist < 5){
+            canPlace = false;
+        }
+    }
+    if (canPlace){
+        this.WaypointSet.addToSet(new Waypoint(pos, this.kTexture));
+    }else{
+        var p = this.createXParticle(pos.x,pos.y);
+        this.mParticles.addToSet(p);
+    }
   }
 
   instantiateTower(pos) {
@@ -176,17 +201,31 @@ class MyGame extends Scene {
     this.TowerSet.removeAll();
     this.canShowSmallCam = false;
   }
-      createOKParticle(atX,atY){
-      	var life = 90;
-	var p = new ParticleGameObject(this.kOKParticleTexture, atX, atY, life);	
-	// size of the particle	
-	p.getXform().setSize(15, 30);
-        var px = p.getParticle();        
-        px.setVelocity([0,2]);
-        px.setAcceleration([0,10]);
+createOKParticle(atX,atY){
+    var life = 90;
+    var p = new ParticleGameObject(this.kOKParticleTexture, atX, atY, life);	
+    // size of the particle	
+    p.getXform().setSize(15, 30);
+    var px = p.getParticle();        
+    px.setVelocity([0,2]);
+    px.setAcceleration([0,10]);
+
+    // size delta
+    p.setSizeDelta(0.98);
+    return p;
+}
     
-	// size delta
-	p.setSizeDelta(0.98);
-	return p;
-    }
+createXParticle(atX,atY){
+    var life = 60;
+    var p = new ParticleGameObject(this.kXParticleTexture, atX, atY, life);	
+    // size of the particle	
+    p.getXform().setSize(10, 10);
+    var px = p.getParticle();        
+    px.setVelocity([0,2]);
+    px.setAcceleration([0,10]);
+
+    // size delta
+    p.setSizeDelta(0.98);
+    return p;
+}
 }

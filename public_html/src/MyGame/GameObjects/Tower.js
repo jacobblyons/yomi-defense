@@ -95,7 +95,7 @@ class Tower extends GameObject {
   checkCollision() {
     for (var i = 0; i < this.projectileSet.size(); i++) {
       for (var j = 0; j < this.enemySet.size(); j++) {
-        if(this.projectileSet.getObjectAt(i) !== null){
+        if(this.projectileSet.getObjectAt(j) !== null){
             if (this.projectileSet
                 .getObjectAt(i)
                 .getBBox()

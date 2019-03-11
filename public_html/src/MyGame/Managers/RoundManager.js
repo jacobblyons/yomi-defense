@@ -66,11 +66,49 @@ class RoundManager {
   }
 
   addWaypoint(pos) {
-    this.State.Waypoints.push(pos);
+    var canPlace = true;
+    for (var i = 0; i < this.State.Waypoints.length; i++){
+        var dist = 0;
+        var WPPos = this.State.Waypoints[i];
+        dist = Math.sqrt(Math.pow(WPPos.x-pos.x, 2) + Math.pow(WPPos.y-pos.y, 2));
+        if (dist < 5){
+            canPlace = false;
+        }
+    }
+    for (var i = 0; i < this.State.FakeWaypoints.length; i++){
+        var dist = 0;
+        var WPPos = this.State.FakeWaypoints[i];
+        dist = Math.sqrt(Math.pow(WPPos.x-pos.x, 2) + Math.pow(WPPos.y-pos.y, 2));
+        if (dist < 5){
+            canPlace = false;
+        }
+    }
+    if (canPlace){
+        this.State.Waypoints.push(pos);
+    }
   }
 
   addFakeWaypoint(pos) {
+    var canPlace = true;
+    for (var i = 0; i < this.State.Waypoints.length; i++){
+        var dist = 0;
+        var WPPos = this.State.Waypoints[i];
+        dist = Math.sqrt(Math.pow(WPPos.x-pos.x, 2) + Math.pow(WPPos.y-pos.y, 2));
+        if (dist < 5){
+            canPlace = false;
+        }
+    }
+    for (var i = 0; i < this.State.FakeWaypoints.length; i++){
+        var dist = 0;
+        var WPPos = this.State.FakeWaypoints[i];
+        dist = Math.sqrt(Math.pow(WPPos.x-pos.x, 2) + Math.pow(WPPos.y-pos.y, 2));
+        if (dist < 5){
+            canPlace = false;
+        }
+    }
+    if (canPlace){
     this.State.FakeWaypoints.push(pos);
+    }
   }
 
   selectSpawn(s) {
@@ -84,7 +122,7 @@ class RoundManager {
   }
 
   addTower(pos) {
-    this.State.Towers.push(pos);
+        this.State.Towers.push(pos);
   }
 
   enemySpawned() {

@@ -100,6 +100,7 @@ gEngine.DefaultResources = (function () {
     var P4ParticleTexture = "assets/ParticleSystem/P4.png";
     var CRParticleTexture = "assets/ParticleSystem/CR.png";
     var OKParticleTexture = "assets/ParticleSystem/OK.png";
+    var XParticleTexture = "assets/ParticleSystem/X.png";
     // UI
     var UIRadarButtonTexture = "assets/UI/radarbutton.png";
     var UIDropDownArrow = "assets/UI/ddarrow.png";
@@ -236,6 +237,7 @@ gEngine.DefaultResources = (function () {
         gEngine.Textures.loadTexture(P4ParticleTexture);
         gEngine.Textures.loadTexture(CRParticleTexture);
         gEngine.Textures.loadTexture(OKParticleTexture);
+        gEngine.Textures.loadTexture(XParticleTexture);
         gEngine.Textures.loadTexture(UIRadarButtonTexture);
         gEngine.Textures.loadTexture(UIDropDownArrow);
         gEngine.Textures.loadTexture(SpriteSheet);
