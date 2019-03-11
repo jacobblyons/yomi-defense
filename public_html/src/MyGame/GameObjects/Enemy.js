@@ -85,7 +85,7 @@ class Enemy extends GameObject {
   }
   speedUp(){
     if (this.speed < this.maxSpeed){
-        this.speed += 0.175;
+        this.speed += 0.18;
         this.speed.toFixed(5);
     }else{
             var p = this.createCRParticle(this.getXform().getXPos(),this.getXform().getYPos());
