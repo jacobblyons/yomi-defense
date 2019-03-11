@@ -41,10 +41,10 @@ class State {
       Executing: Executing.Menu,
       CanvasWidth: document.getElementById("GLCanvas").width,
       CanvasHeight: document.getElementById("GLCanvas").height,
-      CameraWidth: 100,
+      CameraWidth: 125,
       CameraCenter: {
         x: 50,
-        y: 50
+        y: 55
       },
       HUDTextSize: 2
     };

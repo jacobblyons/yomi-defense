@@ -4,7 +4,7 @@ class HUD {
     this.gm = GameManager.instance;
     this.mLargeMessage = new UIText(
       "",
-      [canvas.width / 2, canvas.height / 2 + 310],
+      [canvas.width / 2, canvas.height / 2 + 290],
       GameManager.instance.State.AppState.HUDTextSize * 2,
       UIText.eHAlignment.eCenter,
       UIText.eVAlignment.eTop,
@@ -12,7 +12,7 @@ class HUD {
     );
     this.mSubtitle = new UIText(
       "IN GAME",
-      [canvas.width / 2, canvas.height / 2 + 275],
+      [canvas.width / 2, canvas.height / 2 + 255],
       GameManager.instance.State.AppState.HUDTextSize,
       UIText.eHAlignment.eCenter,
       UIText.eVAlignment.eTop,
@@ -21,7 +21,7 @@ class HUD {
 
     this.mPlayerOneScore = new UIText(
       `P1 SCORE: 0`,
-      [canvas.width / 2 - 320, canvas.height / 2 + 300],
+      [canvas.width / 2 - 320, canvas.height / 2 + 275],
       GameManager.instance.State.AppState.HUDTextSize,
       UIText.eHAlignment.eCenter,
       UIText.eVAlignment.eTop,
@@ -30,7 +30,7 @@ class HUD {
 
     this.mPlayerTwoScore = new UIText(
       `P2 SCORE: 0`,
-      [canvas.width / 2 + 320, canvas.height / 2 + 300],
+      [canvas.width / 2 + 320, canvas.height / 2 + 275],
       GameManager.instance.State.AppState.HUDTextSize,
       UIText.eHAlignment.eCenter,
       UIText.eVAlignment.eTop,

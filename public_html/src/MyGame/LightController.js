@@ -29,8 +29,8 @@ class LightController {
     this.raveLight.setYPos(50);
     this.raveLight.setZPos(10);
     this.raveLight.setNear(10);
-    this.raveLight.setFar(40);
-    this.raveLight.setIntensity(0.85);
+    this.raveLight.setFar(53);
+    this.raveLight.setIntensity(0.75);
     this.raveLight.setLightTo(true);
     setInterval(
       (() => {
@@ -109,14 +109,17 @@ class LightController {
   }
 
   _waveLights() {
-    this.p1Light.setIntensity(0.15);
-    this.p2Light.setIntensity(0.15);
-    this.p1Light.setColor([1, 0, 0, 1]);
+    this.p1Light.setIntensity(0.45);
+    this.p2Light.setIntensity(0.45);
+    this.p1Light.setColor([0, 0, 1, 1]);
     this.p2Light.setColor([1, 0, 0, 1]);
     this.raveLight.setIntensity(0.05);
+    this.sceneRef.BG.setColor([0, 0, 0, 0.7]);
+    this.sceneRef.mCam.setBackgroundColor([5 / 255, 5 / 255, 7 / 255, 1]);
   }
 
   _endWaveLights() {
+    this.sceneRef.BG.setColor([0, 0, 0, 0]);
     this.p1Light.setLightTo(false);
     this.p2Light.setLightTo(false);
     this.p1Light.setIntensity(0.7);
@@ -124,5 +127,6 @@ class LightController {
     this.p1Light.setColor([0, 0, 1, 1]);
     this.p2Light.setColor([1, 0, 0, 1]);
     this.raveLight.setIntensity(0.85);
+    this.sceneRef.mCam.setBackgroundColor([12 / 255, 13 / 255, 15 / 255, 1]);
   }
 }

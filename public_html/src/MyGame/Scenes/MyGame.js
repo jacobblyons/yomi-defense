@@ -41,11 +41,12 @@ class MyGame extends Scene {
       AppState.CameraWidth, // width of camera
       [280, 210, AppState.CanvasWidth * 0.3, AppState.CanvasHeight * 0.3]
     ); // viewport (orgX, orgY, width, height));
-    this.mCam.setBackgroundColor([0, 0, 0, 1]);
+    this.mCam.setBackgroundColor([12 / 255, 13 / 255, 15 / 255, 1]);
     this.BG = new LightRenderable(this.kTexture);
     this.BG.setElementPixelPositions(512, 1142, 650, 1280);
     this.BG.getXform().setSize(100, 90);
     this.BG.getXform().setPosition(50, 50);
+
     this.mWavingInput = new WavingInput(this);
     this.mVapingInput = new VapingInput(this);
 
