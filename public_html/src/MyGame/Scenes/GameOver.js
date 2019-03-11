@@ -61,6 +61,10 @@ class GameOver extends Scene {
     }else{
         this.showRules = false;       
     }
+    var v = gEngine.DefaultResources.getGlobalAmbientColor();
+    v[0] = 1;
+    v[1] = 1;
+    v[2] = 1;
   }
   draw() {
     this.mCam.setupViewProjection();

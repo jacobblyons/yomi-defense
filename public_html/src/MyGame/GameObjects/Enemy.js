@@ -86,13 +86,19 @@ class Enemy extends GameObject {
   reachedGoal() {
     this.dead = true;
   }
-  speedUp() {
-    if (this.speed < this.maxSpeed) {
-      this.speed += 0.175;
-      this.speed.toFixed(5);
-    } else {
-      var p = this.createCRParticle(this.getXform().getXPos(), this.getXform().getYPos());
-      this.mParticles.addToSet(p);
+  speedUp(){
+    if (this.speed < this.maxSpeed){
+        this.speed += 0.2;
+        this.speed.toFixed(5);
+        if (this.speed > this.maxSpeed){
+            this.speed = this.maxSpeed;
+            var p = this.createCRParticle(this.getXform().getXPos(),this.getXform().getYPos());
+            this.mParticles.addToSet(p);
+        }
+    }else{
+            var p = this.createCRParticle(this.getXform().getXPos(),this.getXform().getYPos());
+            this.mParticles.addToSet(p);
+        }
     }
   }
 
@@ -125,17 +131,6 @@ class Enemy extends GameObject {
       this.mParticles.addToSet(p);
       return true;
     }
-    //    switch (this.mHitPoints) {
-    //      case 2:
-    //        this.getRenderable().setColor([1, 0.65, 0, 1]);
-    //        break;
-    //      case 1:
-    //        this.getRenderable().setColor([1, 0, 0, 1]);
-    //        break;
-    //      case 0:
-    //        return true;
-    //        break;
-    //    }
   }
 
   _checkEndCollisions() {}

@@ -95,6 +95,10 @@ class Menu extends Scene {
       [1, 0, 0, 1],
       [1, 1, 1, 1]
     );
+    var v = gEngine.DefaultResources.getGlobalAmbientColor();
+    v[0] = 1;
+    v[1] = 1;
+    v[2] = 1;
   }
   
   update() {
