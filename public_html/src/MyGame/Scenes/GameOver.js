@@ -20,14 +20,18 @@ class GameOver extends Scene {
       200, // width of camera
       [0, 0, canvas.width, canvas.height] // viewport (orgX, orgY, width, height)
     );
-    this.mCam.setBackgroundColor([0.2, 0.2, 0.2, 1]);
+    this.mCam.setBackgroundColor([0, 0, 0, 1]);
+    this.mRules = new SpriteRenderable("assets/RuleSheet.png");
+    this.mRules.setElementPixelPositions(0,2040,0,2048);
+    this.mRules.getXform().setSize(200,200);
+    this.mRules.getXform().setPosition(100,90);
     this.mPlayAgainButton = new UIButton(
       this.kButtonSprite,
       () => {
         GameManager.instance.restartGame();
       },
       this,
-      [canvas.width / 2, canvas.height / 2 - 100],
+      [canvas.width / 2, canvas.height / 2 - 175],
       [150, 75],
       "Play Again",
       6,
@@ -43,7 +47,7 @@ class GameOver extends Scene {
           ? "DRAW"
           : "PLAYER TWO WINS"
       }`,
-      [canvas.width / 2, canvas.height / 2 + 100],
+      [canvas.width / 2, canvas.height / 2 - 95],
       10,
       UIText.eHAlignment.eCenter,
       UIText.eVAlignment.eTop,
@@ -52,9 +56,17 @@ class GameOver extends Scene {
   }
   update() {
     this.mPlayAgainButton.update();
+    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Space)) {
+        this.showRules = true;
+    }else{
+        this.showRules = false;       
+    }
   }
   draw() {
     this.mCam.setupViewProjection();
+    if(this.showRules){
+        this.mRules.draw(this.mCam);
+    }   
     this.mPlayAgainButton.draw(this.mCam);
     this.mWinnerMessage.draw(this.mCam);
   }
