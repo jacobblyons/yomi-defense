@@ -86,19 +86,18 @@ class Enemy extends GameObject {
   reachedGoal() {
     this.dead = true;
   }
-  speedUp(){
-    if (this.speed < this.maxSpeed){
-        this.speed += 0.2;
-        this.speed.toFixed(5);
-        if (this.speed > this.maxSpeed){
-            this.speed = this.maxSpeed;
-            var p = this.createCRParticle(this.getXform().getXPos(),this.getXform().getYPos());
-            this.mParticles.addToSet(p);
-        }
-    }else{
-            var p = this.createCRParticle(this.getXform().getXPos(),this.getXform().getYPos());
-            this.mParticles.addToSet(p);
-        }
+  speedUp() {
+    if (this.speed < this.maxSpeed) {
+      this.speed += 0.2;
+      this.speed.toFixed(5);
+      if (this.speed > this.maxSpeed) {
+        this.speed = this.maxSpeed;
+        var p = this.createCRParticle(this.getXform().getXPos(), this.getXform().getYPos());
+        this.mParticles.addToSet(p);
+      }
+    } else {
+      var p = this.createCRParticle(this.getXform().getXPos(), this.getXform().getYPos());
+      this.mParticles.addToSet(p);
     }
   }
 
