@@ -41,7 +41,7 @@ class MyGame extends Scene {
       AppState.CameraWidth, // width of camera
       [280, 210, AppState.CanvasWidth * 0.3, AppState.CanvasHeight * 0.3]
     ); // viewport (orgX, orgY, width, height));
-    this.mCam.setBackgroundColor([0.2, 0.2, 0.2, 1]);
+    this.mCam.setBackgroundColor([0, 0, 0, 1]);
     this.BG = new LightRenderable(this.kTexture);
     this.BG.setElementPixelPositions(512, 1142, 650, 1280);
     this.BG.getXform().setSize(100, 90);
@@ -62,9 +62,9 @@ class MyGame extends Scene {
     RoundManager.instance.OnRoundEnd.subscribe(this._cleanupRound.bind(this));
     this.mLightController = new LightController(this);
     var v = gEngine.DefaultResources.getGlobalAmbientColor();
-    v[0] = .5;
-    v[1] = .5;
-    v[2] = .5;
+    v[0] = 0.5;
+    v[1] = 0.5;
+    v[2] = 0.5;
   }
 
   update() {
@@ -187,9 +187,9 @@ class MyGame extends Scene {
     this.canShowSmallCam = true;
     var p = this.createOKParticle(e.getXform().getXPos(), e.getXform().getYPos());
     this.mParticles.addToSet(p);
-    if(e.speed > 1.39){
-        this.gm.State.GameState.PlayerOne.Score += this.gm.State.GameState.PlayerOne.Role == PlayerRole.Waving ? 1 : 0;
-        this.gm.State.GameState.PlayerTwo.Score += this.gm.State.GameState.PlayerTwo.Role == PlayerRole.Waving ? 1 : 0;       
+    if (e.speed > 1.39) {
+      this.gm.State.GameState.PlayerOne.Score += this.gm.State.GameState.PlayerOne.Role == PlayerRole.Waving ? 1 : 0;
+      this.gm.State.GameState.PlayerTwo.Score += this.gm.State.GameState.PlayerTwo.Role == PlayerRole.Waving ? 1 : 0;
     }
     this.EnemySet.removeFromSet(e);
     RoundManager.instance.enemyReachedEndPoint();
