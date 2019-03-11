@@ -16,10 +16,10 @@ class Enemy extends GameObject {
         this.rotation = Math.random()*3 + 2;
         this.mHitPoints = 3;}
     if(type === 2){
-        rend.setElementPixelPositions(512,893,1536,1792);
-        this.getXform().setSize(4.5,3);
+        rend.setElementPixelPositions(1629,1886,1802,2048);
+        this.getXform().setSize(3,3);
         this.speed = 0.5;
-        this.rotation = Math.random()*5 + 5;
+        this.rotation = Math.random()*5;
         this.mHitPoints = 2;}
     this.kROParticleTexture = "assets/ParticleSystem/RO.png";
     this.kSKParticleTexture = "assets/ParticleSystem/SK.png";
