@@ -68,6 +68,7 @@ class State {
           [BaseID.P2.Three]: { x: 90, y: 25 }
         }
       },
+      CurrentRound: 1,
       Rounds: -1,
       TowerFireRate: 1000
     };

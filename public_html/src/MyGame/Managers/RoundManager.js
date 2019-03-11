@@ -67,45 +67,45 @@ class RoundManager {
 
   addWaypoint(pos) {
     var canPlace = true;
-    for (var i = 0; i < this.State.Waypoints.length; i++){        
-        var WPPos = this.State.Waypoints[i];
-        var dist = Math.sqrt(Math.pow(WPPos.x-pos.x, 2) + Math.pow(WPPos.y-pos.y, 2));
-        if (dist < 5){
-            canPlace = false;
-        }
+    for (var i = 0; i < this.State.Waypoints.length; i++) {
+      var WPPos = this.State.Waypoints[i];
+      var dist = Math.sqrt(Math.pow(WPPos.x - pos.x, 2) + Math.pow(WPPos.y - pos.y, 2));
+      if (dist < 5) {
+        canPlace = false;
+      }
     }
-    for (var i = 0; i < this.State.FakeWaypoints.length; i++){        
-        var WPPos = this.State.FakeWaypoints[i];
-        var dist = Math.sqrt(Math.pow(WPPos.x-pos.x, 2) + Math.pow(WPPos.y-pos.y, 2));
-        if (dist < 5){
-            canPlace = false;
-        }
+    for (var i = 0; i < this.State.FakeWaypoints.length; i++) {
+      var WPPos = this.State.FakeWaypoints[i];
+      var dist = Math.sqrt(Math.pow(WPPos.x - pos.x, 2) + Math.pow(WPPos.y - pos.y, 2));
+      if (dist < 5) {
+        canPlace = false;
+      }
     }
-    if (canPlace){
-        this.State.Waypoints.push(pos);
+    if (canPlace) {
+      this.State.Waypoints.push(pos);
     }
   }
 
   addFakeWaypoint(pos) {
     var canPlace = true;
-    for (var i = 0; i < this.State.Waypoints.length; i++){
-        var dist = 0;
-        var WPPos = this.State.Waypoints[i];
-        dist = Math.sqrt(Math.pow(WPPos.x-pos.x, 2) + Math.pow(WPPos.y-pos.y, 2));
-        if (dist < 5){
-            canPlace = false;
-        }
+    for (var i = 0; i < this.State.Waypoints.length; i++) {
+      var dist = 0;
+      var WPPos = this.State.Waypoints[i];
+      dist = Math.sqrt(Math.pow(WPPos.x - pos.x, 2) + Math.pow(WPPos.y - pos.y, 2));
+      if (dist < 5) {
+        canPlace = false;
+      }
     }
-    for (var i = 0; i < this.State.FakeWaypoints.length; i++){
-        var dist = 0;
-        var WPPos = this.State.FakeWaypoints[i];
-        dist = Math.sqrt(Math.pow(WPPos.x-pos.x, 2) + Math.pow(WPPos.y-pos.y, 2));
-        if (dist < 5){
-            canPlace = false;
-        }
+    for (var i = 0; i < this.State.FakeWaypoints.length; i++) {
+      var dist = 0;
+      var WPPos = this.State.FakeWaypoints[i];
+      dist = Math.sqrt(Math.pow(WPPos.x - pos.x, 2) + Math.pow(WPPos.y - pos.y, 2));
+      if (dist < 5) {
+        canPlace = false;
+      }
     }
-    if (canPlace){
-    this.State.FakeWaypoints.push(pos);
+    if (canPlace) {
+      this.State.FakeWaypoints.push(pos);
     }
   }
 
@@ -120,7 +120,7 @@ class RoundManager {
   }
 
   addTower(pos) {
-        this.State.Towers.push(pos);
+    this.State.Towers.push(pos);
   }
 
   enemySpawned() {
@@ -130,7 +130,8 @@ class RoundManager {
   enemyKilled() {
     this.State.EnemiesDestroyed++;
     var waveSize =
-      this.State.InitialWaveSize + this.State.InitialWaveSize * (this.State.WaveSizeMultiplier * this.State.CurrentWave);
+      this.State.InitialWaveSize +
+      this.State.InitialWaveSize * (this.State.WaveSizeMultiplier * this.gm.State.GameState.CurrentRound);
     if (this.State.EnemiesSpawned == waveSize && this.State.EnemiesDestroyed == waveSize) this._finishRound();
   }
 
@@ -140,7 +141,8 @@ class RoundManager {
     this.gm.State.GameState.PlayerTwo.Score += this.gm.State.GameState.PlayerTwo.Role == PlayerRole.Waving ? 1 : 0;
     this.OnScoreChanged.dispatch();
     var waveSize =
-      this.State.InitialWaveSize + this.State.InitialWaveSize * (this.State.WaveSizeMultiplier * this.State.CurrentWave);
+      this.State.InitialWaveSize +
+      this.State.InitialWaveSize * (this.State.WaveSizeMultiplier * this.gm.State.GameState.CurrentRound);
     if (this.State.EnemiesSpawned == waveSize && this.State.EnemiesDestroyed == waveSize) this._finishRound();
   }
 
@@ -150,7 +152,8 @@ class RoundManager {
     this.OnWaveResultsShow.dispatch();
     this.OnWaveEnd.dispatch();
     this.State.CurrentWave++;
-    if (this.State.CurrentWave === this.gm.State.GameState.Rounds) {
+    this.gm.State.GameState.CurrentRound += this.State.CurrentWave % 2 == 0 ? 1 : 0;
+    if (this.gm.State.GameState.CurrentRound === this.gm.State.GameState.Rounds + 1) {
       return this.gm.endGame();
     }
 

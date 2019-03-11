@@ -14,7 +14,7 @@ class WaveSpawner {
 
     var waveSize =
       this.rm.State.InitialWaveSize +
-      this.rm.State.InitialWaveSize * (this.rm.State.WaveSizeMultiplier * this.rm.State.CurrentWave);
+      this.rm.State.InitialWaveSize * (this.rm.State.WaveSizeMultiplier * GameManager.instance.State.GameState.CurrentRound);
 
     if (this.spawnTimer > 60 && this.rm.State.EnemiesSpawned < waveSize) {
       this.spawnTimer = 0;

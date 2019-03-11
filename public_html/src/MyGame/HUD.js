@@ -125,7 +125,7 @@ class HUD {
   }
 
   showWave() {
-    this.mLargeMessage.setText(`WAVE ${GameManager.instance.State.RoundState.CurrentWave}`);
+    this.mLargeMessage.setText(`ROUND ${GameManager.instance.State.GameState.CurrentRound}`);
     this.mSubtitle.setText("WAVE Incoming...!");
   }
 
