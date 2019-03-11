@@ -56,6 +56,10 @@ class MyGame extends Scene {
     this._initializePlayerOneBases();
     this._initializePlayerTwoBases();
     RoundManager.instance.OnRoundEnd.subscribe(this._cleanupRound.bind(this));
+    var v = gEngine.DefaultResources.getGlobalAmbientColor();
+    v[0] = .5;
+    v[1] = .5;
+    v[2] = .5;
   }
 
   update() {
