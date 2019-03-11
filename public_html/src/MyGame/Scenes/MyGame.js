@@ -140,19 +140,15 @@ class MyGame extends Scene {
   instantiateWaypoint(pos) {
     var canPlace = true;
     for (var i = RoundManager.instance.State.Waypoints.length; i > 0; i--){
-        var dist = 0;
         var WPPos = RoundManager.instance.State.Waypoints[i-1];
-        dist = Math.sqrt((Math.pow(WPPos.x-pos.x, 2) + Math.pow(WPPos.y-pos.y, 2)));
-        console.log(dist);
+        var dist = Math.sqrt((Math.pow(WPPos.x-pos.x, 2) + Math.pow(WPPos.y-pos.y, 2)));
         if (dist < 5){
             canPlace = false;
         }
     }
     for (var i = RoundManager.instance.State.FakeWaypoints.length; i > 0; i--){
-        var dist = 0;
         var WPPos = RoundManager.instance.State.FakeWaypoints[i-1];
-        dist = Math.sqrt((Math.pow(WPPos.x-pos.x, 2) + Math.pow(WPPos.y-pos.y, 2)));
-        console.log(dist);
+        var dist = Math.sqrt((Math.pow(WPPos.x-pos.x, 2) + Math.pow(WPPos.y-pos.y, 2)));       
         if (dist < 5){
             canPlace = false;
         }
