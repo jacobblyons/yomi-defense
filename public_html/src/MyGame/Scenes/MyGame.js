@@ -70,6 +70,7 @@ class MyGame extends Scene {
     //this.updateEnemy();
     this.WaypointSet.update();
     this.TowerSet.update();
+    this.mCam.update();
 
     //handle game flow input
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.C)) {
@@ -259,5 +260,9 @@ class MyGame extends Scene {
     // size delta
     p.setSizeDelta(0.98);
     return p;
+  }
+  
+  getCamera(){
+      return this.mCam;
   }
 }

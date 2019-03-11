@@ -104,6 +104,8 @@ class Tower extends GameObject {
                 .boundCollideStatus(this.enemySet.getObjectAt(j).getBBox()))                  
             {
               this.projectileSet.removeFromSet(this.projectileSet.getObjectAt(i));
+              
+              GameManager.instance.mGameScene.getCamera().shake(-1,-1,30,10);
 
               var isDead = this.enemySet.getObjectAt(j).hit();
               if (isDead) {
