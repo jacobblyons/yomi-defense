@@ -94,7 +94,7 @@ class MyGame extends Scene {
           RoundManager.instance.vapingPlayerFinished();
           break;
       }
-    }
+    }    
     this.mParticles.update();
   }
   draw() {

@@ -95,18 +95,20 @@ class Tower extends GameObject {
   checkCollision() {
     for (var i = 0; i < this.projectileSet.size(); i++) {
       for (var j = 0; j < this.enemySet.size(); j++) {
-        if (this.projectileSet
-            .getObjectAt(i)
-            .getBBox()
-            .boundCollideStatus(this.enemySet.getObjectAt(j).getBBox()))                  
-        {
-          this.projectileSet.removeFromSet(this.projectileSet.getObjectAt(i));
+        if(this.projectileSet.getObjectAt(i) !== null){
+            if (this.projectileSet
+                .getObjectAt(i)
+                .getBBox()
+                .boundCollideStatus(this.enemySet.getObjectAt(j).getBBox()))                  
+            {
+              this.projectileSet.removeFromSet(this.projectileSet.getObjectAt(i));
 
-          var isDead = this.enemySet.getObjectAt(j).hit();
-          if (isDead) {
-            this.enemySet.removeFromSet(this.enemySet.getObjectAt(j));
-            RoundManager.instance.enemyKilled();
-          }
+              var isDead = this.enemySet.getObjectAt(j).hit();
+              if (isDead) {
+                this.enemySet.removeFromSet(this.enemySet.getObjectAt(j));
+                RoundManager.instance.enemyKilled();
+              }
+            }
         }
       }
     }
