@@ -34,7 +34,7 @@ class Tower extends GameObject {
     this.enemySet = enemySet;
     this.canShoot = true;
     this.sacShots = 3;
-    this.shotsTaken = 0;
+    this.shotsTaken = 0;    
     this.canSacrifice = false;
   }
 
@@ -48,6 +48,7 @@ class Tower extends GameObject {
       }
     }
     this.projectileSet.update();
+    this.checkProjectileLife();
     this.checkCollision();
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.X)) {
       if (this.canSacrifice && GameManager.instance.State.RoundState.Turn === Turn.RunningWave) this._sacrifice();
@@ -110,7 +111,18 @@ class Tower extends GameObject {
     this.projectileSet.draw(cam);
     this.mParticles.draw(cam);
   }
-
+  checkProjectileLife(){
+      for (var i = 0; i < this.projectileSet.size(); i++) {
+          var projectile = this.projectileSet.getObjectAt(i);
+          if(projectile !== null){
+              if (projectile.lifespan < 1){
+                  this.projectileSet.removeFromSet(projectile);
+              }else{
+                  projectile.lifespan--;
+              }
+          }
+      }
+  }
   checkCollision() {
     for (var i = 0; i < this.projectileSet.size(); i++) {
       for (var j = 0; j < this.enemySet.size(); j++) {

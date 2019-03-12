@@ -11,6 +11,7 @@ class TowerProjectile extends GameObject {
     this.kParticleTexture = "assets/ParticleSystem/particle.png";
     this.mParticles = new ParticleGameObjectSet();
     this.towerType = towerType;
+    this.lifespan = 60;
     if (this.towerType === 0) this.speed = 1.15;
     if (this.towerType === 1) this.speed = 1.25;
     if (this.towerType === 2) this.speed = 1.45;
