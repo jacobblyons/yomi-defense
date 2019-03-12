@@ -18,6 +18,8 @@ class MyGame extends Scene {
     this.kXParticleTexture = "assets/ParticleSystem/X.png";
     this.kWPParticleTexture = "assets/ParticleSystem/P2.png";
     this.kTParticleTexture = "assets/ParticleSystem/P1.png";
+    this.kRParticleTexture = "assets/ParticleSystem/particle.png"
+    this.kSKParticleTexture = "assets/ParticleSystem/SK.png";
     this.mParticles = new ParticleGameObjectSet();
     this.showSmallCam = false;
     this.canShowSmallCam = true;
@@ -183,6 +185,8 @@ class MyGame extends Scene {
       var p = this.createTParticle(pos.x, pos.y);
       this.mParticles.addToSet(p);
     }
+    var p = this.createRangeParticle(pos.x,pos.y,tower.towerType);
+    this.mParticles.addToSet(p);
   }
 
   enemyAtEndPoint(e) {
@@ -227,6 +231,7 @@ class MyGame extends Scene {
     var p = new ParticleGameObject(this.kOKParticleTexture, atX, atY, life);
     // size of the particle
     p.getXform().setSize(15, 30);
+    p.getXform().incRotationByDegree(Math.random()*15-30);
     var px = p.getParticle();
     px.setVelocity([0, 2]);
     px.setAcceleration([0, 10]);
@@ -266,7 +271,7 @@ class MyGame extends Scene {
     return p;
   }
   createTParticle(atX, atY) {
-    var life = 45;
+    var life = 120;
     var p = new ParticleGameObject(this.kTParticleTexture, atX, atY, life);
     // size of the particle
     p.getXform().setSize(7, 7);
@@ -274,14 +279,53 @@ class MyGame extends Scene {
     var px = p.getParticle();
     var rx = Math.random() * 2 - 1;
     var ry = Math.random() * 2 - 1;
-    px.setVelocity([rx * 5, ry * 5]);
+    px.setVelocity([rx * 15, ry * 15]);
     px.setAcceleration([rx, ry]);
 
     // size delta
     p.setSizeDelta(0.98);
     return p;
   }
+    createRangeParticle(atX, atY, towerType) {
+    var life = 120;
+    var p = new ParticleGameObject(this.kRParticleTexture, atX, atY, life);
+    // size of the particle
+    var range = 1;
+    var color = [0,0,0,0];
+    if(towerType === 0){
+        range = 15;
+        color = [1,.08,.58,.75];
+    }
+    if(towerType === 1){
+        range = 25;
+        color = [0,1,.5,.75];
+    }
+    if(towerType === 2){
+        range = 40;
+        color = [0,1,1,.75];
+    }    
+    p.setFinalColor(color);
+    p.getXform().setSize(2*range, 2*range);
+    // size delta
+    p.setSizeDelta(0.98);
+    return p;
+  }
 
+  createSKParticle(atX, atY) {
+    var life = 120;
+    var p = new ParticleGameObject(this.kSKParticleTexture, atX, atY, life);
+    
+    // size of the particle
+    p.getXform().setSize(12, 15);
+    var px = p.getParticle();
+    px.setVelocity([1, 1]);
+    px.setAcceleration([0, 1]);
+    // size delta
+    p.setSizeDelta(0.98);
+    p.getXform().incRotationByDegree(Math.random()*15-30);
+    this.mParticles.addToSet(p);
+    //return p;
+  }
   getCamera() {
     return this.mCam;
   }

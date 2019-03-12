@@ -8,7 +8,6 @@ class Menu extends Scene {
     this.mShowDebug = null;
     this.mGameTitleTextUI = null;
     this.mCam = null;
-    this.showRules = false;
     this.mShowInstructionText = null;
   }
 
@@ -97,14 +96,14 @@ class Menu extends Scene {
       [1, 1, 1, 1]
     );
 
-    this.mShowInstructionText = new UIText(
-      "HOLD SPACE FOR INSTRUCTIONS",
-      [canvas.width / 2, canvas.height / 2 - 250],
-      5,
-      UIText.eHAlignment.eCenter,
-      UIText.eVAlignment.eTop,
-      [1, 1, 1, 1]
-    );
+//    this.mShowInstructionText = new UIText(
+//      "HOLD SPACE FOR INSTRUCTIONS",
+//      [canvas.width / 2, canvas.height / 2 - 250],
+//      5,
+//      UIText.eHAlignment.eCenter,
+//      UIText.eVAlignment.eTop,
+//      [1, 1, 1, 1]
+//    );
 
     var v = gEngine.DefaultResources.getGlobalAmbientColor();
     v[0] = 1;
@@ -117,23 +116,15 @@ class Menu extends Scene {
     this.mPlay5RoundsButtonUI.update();
     this.mPlayInfiniteButtonUI.update();
     this.mShowDebug.update();
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Space)) {
-      this.showRules = true;
-    } else {
-      this.showRules = false;
-    }
   }
 
   draw() {
     this.mCam.setupViewProjection();
-    if (this.showRules) {
-      this.mRules.draw(this.mCam);
-    }
+    this.mRules.draw(this.mCam);
     this.mPlay3RoundsButtonUI.draw(this.mCam);
     this.mPlay5RoundsButtonUI.draw(this.mCam);
     this.mPlayInfiniteButtonUI.draw(this.mCam);
     this.mGameTitleTextUI.draw(this.mCam);
     this.mShowDebug.draw(this.mCam);
-    this.mShowInstructionText.draw(this.mCam);
   }
 }

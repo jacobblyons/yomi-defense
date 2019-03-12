@@ -88,7 +88,10 @@ class Tower extends GameObject {
   _sacrifice() {
     this.range = 45;
     for (var i = 0; i < this.sacShots; i++) {
-      this._shoot(this.pos);
+      var rpos = this.pos;
+      rpos.x += Math.random()*1.5-3;
+      rpos.y += Math.random()*1.5-3;
+      this._shoot(rpos);
     }
     for (var j = 0; j < 7; j++) {
       var p = this.createSKParticle(this.getXform().getXPos(), this.getXform().getYPos());
