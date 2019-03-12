@@ -68,6 +68,19 @@ class Tower extends GameObject {
       var target = this._getTarget();
       //var targetPos = new Vector2(target.getXform().getPosition()[0], target.getXform().getPosition()[1]);
       this.projectileSet.addToSet(new TowerProjectile(target, pos, this.towerType));
+      this.getRenderable().setColor([1, 1, 1, 0.6]);
+      setTimeout(
+        (() => {
+          this.getRenderable().setColor([1, 0, 0, 0.6]);
+        }).bind(this),
+        25
+      );
+      setTimeout(
+        (() => {
+          this.getRenderable().setColor([1, 1, 1, 0]);
+        }).bind(this),
+        75
+      );
       this.lastTime = Date.now();
     }
   };
