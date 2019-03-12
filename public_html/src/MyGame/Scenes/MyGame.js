@@ -37,11 +37,12 @@ class MyGame extends Scene {
       [0, 0, AppState.CanvasWidth, AppState.CanvasHeight] // viewport (orgX, orgY, width, height)
     );
     this.mSmallCam = new Camera(
-      vec2.fromValues(AppState.CameraCenter.x, AppState.CameraCenter.y), // position of the camera
-      AppState.CameraWidth, // width of camera
-      [280, 210, AppState.CanvasWidth * 0.3, AppState.CanvasHeight * 0.3]
+      vec2.fromValues(AppState.CameraCenter.x, AppState.CameraCenter.y - 5), // position of the camera
+      AppState.CameraWidth - 25, // width of camera
+      [280, 210, AppState.CanvasWidth * 0.3, AppState.CanvasHeight * 0.3 + 20]
     ); // viewport (orgX, orgY, width, height));
     this.mCam.setBackgroundColor([12 / 255, 13 / 255, 15 / 255, 1]);
+    this.mSmallCam.setBackgroundColor([0, 0, 0, 0]);
     this.BG = new LightRenderable(this.kTexture);
     this.BG.setElementPixelPositions(512, 1142, 650, 1280);
     this.BG.getXform().setSize(100, 90);
