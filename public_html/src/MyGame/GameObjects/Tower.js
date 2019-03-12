@@ -83,8 +83,14 @@ class Tower extends GameObject {
         75
       );
       this.lastTime = Date.now();
+      //this.blowback(target);
     }
   };
+  //blowback(target){     
+    // var v2t = vec2(this.getXform().getXPos() - target.x,this.getXform().getYPos()-target.y);
+    // v2t.normalize();
+    // this.getXform().setPosition(this.getXform().getXPos()+v2t.x,this.getXform().getYPos()+v2t.y)
+  //}
   _sacrifice() {
     this.range = 45;
     for (var i = 0; i < this.sacShots; i++) {
