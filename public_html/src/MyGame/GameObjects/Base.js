@@ -42,13 +42,13 @@ class Base extends GameObject {
   }
 
   _setColor() {
-    //this.getRenderable().setColor(this.isPlayerOneBase ? [0, 0, 1, 1] : [1, 0, 0, 1]);
+    this.getRenderable().setColor([0, 0, 0, 0]);
   }
 
   _showSelected() {
     if (RoundManager.instance.State.SelectedSpawnBase !== this.id && RoundManager.instance.State.SelectedEndBase !== this.id)
       return;
-    //this.getRenderable().setColor([1, 1, 0, 1]);
+    this.getRenderable().setColor([1, 0.4, 0, 0.3]);
   }
 
   _cleanup() {

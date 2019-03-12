@@ -145,7 +145,7 @@ class HUD {
       this.mPlayerOneBaseNumbers.push(
         new UIText(
           `${i + 1}`,
-          [coord.x, coord.y + 10],
+          [coord.x, coord.y + 7],
           GameManager.instance.State.AppState.HUDTextSize,
           UIText.eHAlignment.eCenter,
           UIText.eVAlignment.eTop,
@@ -162,7 +162,7 @@ class HUD {
       this.mPlayerTwoBaseNumbers.push(
         new UIText(
           `${i + 1}`,
-          [coord.x, coord.y + 10],
+          [coord.x, coord.y + 7],
           GameManager.instance.State.AppState.HUDTextSize,
           UIText.eHAlignment.eCenter,
           UIText.eVAlignment.eTop,
