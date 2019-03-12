@@ -8,19 +8,19 @@ class Tower extends GameObject {
       rend.setElementPixelPositions(728, 818, 1792, 2048);
       this.getXform().setSize(3, 6);
       this.range = 15;
-      this.fireRate = 300;
+      this.fireRate = 275;
     }
     if (this.towerType === 1) {
       rend.setElementPixelPositions(959, 1117, 1792, 2048);
       this.getXform().setSize(3, 6);
       this.range = 25;
-      this.fireRate = 800;
+      this.fireRate = 700;
     }
     if (this.towerType === 2) {
       rend.setElementPixelPositions(600, 728, 1908, 2048);
       this.getXform().setSize(3, 6);
       this.range = 40;
-      this.fireRate = 1200;
+      this.fireRate = 1100;
     }
     this.gm = GameManager.instance;
     this.pos = pos;
@@ -34,7 +34,7 @@ class Tower extends GameObject {
     this.enemySet = enemySet;
     this.canShoot = true;
     this.sacShots = 3;
-    this.shotsTaken = 0;    
+    this.shotsTaken = 0;
     this.canSacrifice = false;
   }
 
@@ -66,8 +66,7 @@ class Tower extends GameObject {
   _shoot = function(pos) {
     if (this.canShoot) {
       this.shotsTaken++;
-      var target = this._getTarget();
-      //var targetPos = new Vector2(target.getXform().getPosition()[0], target.getXform().getPosition()[1]);
+      var target = this._getTarget();      
       this.projectileSet.addToSet(new TowerProjectile(target, pos, this.towerType));
       this.getRenderable().setColor([1, 1, 1, 0.6]);
       setTimeout(
@@ -82,21 +81,16 @@ class Tower extends GameObject {
         }).bind(this),
         75
       );
-      this.lastTime = Date.now();
-      //this.blowback(target);
+      this.lastTime = Date.now();      
     }
   };
-  //blowback(target){     
-    // var v2t = vec2(this.getXform().getXPos() - target.x,this.getXform().getYPos()-target.y);
-    // v2t.normalize();
-    // this.getXform().setPosition(this.getXform().getXPos()+v2t.x,this.getXform().getYPos()+v2t.y)
-  //}
+
   _sacrifice() {
     this.range = 45;
     for (var i = 0; i < this.sacShots; i++) {
       var rpos = this.pos;
-      rpos.x += Math.random()*1.5-3;
-      rpos.y += Math.random()*1.5-3;
+      rpos.x += Math.random()*1-2;
+      rpos.y += Math.random()*1-2;
       this._shoot(rpos);
     }
     for (var j = 0; j < 7; j++) {
@@ -164,8 +158,6 @@ class Tower extends GameObject {
       var dY = this.getXform().getYPos() - eY;
       var dist = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
       if (dist < this.range) {
-        //var _enemyColor = _enemy.getRenderable();
-        //_enemyColor.setColor([0.1, 0.7, 0.7, 1]);
         return true;
       }
     }
@@ -173,8 +165,7 @@ class Tower extends GameObject {
 
   createSKParticle(atX, atY) {
     var life = 120;
-    var p = new ParticleGameObject(this.kParticleTexture, atX, atY, life);
-    //p.getRenderable().setColor([1, 1, 1, 1]);
+    var p = new ParticleGameObject(this.kParticleTexture, atX, atY, life);    
     // size of the particle
     p.getXform().setSize(10, 10);
     p.getXform().incRotationByDegree(Math.random() * 90 - 180);
