@@ -50,9 +50,9 @@ class TowerProjectile extends GameObject {
   createParticle(atX, atY) {
     var life = 150;
     var p = new ParticleGameObject(this.kParticleTexture, atX, atY, life);
-    if (this.towerType === 0) p.getRenderable().setColor([1, 0, 0, 1]);
-    if (this.towerType === 1) p.getRenderable().setColor([0, 1, 0, 1]);
-    if (this.towerType === 2) p.getRenderable().setColor([0, 0, 1, 1]);
+    if (this.towerType === 0) p.getRenderable().setColor([0, 1, 1, 1]);
+    if (this.towerType === 1) p.getRenderable().setColor([1, .08, .47, 1]);
+    if (this.towerType === 2) p.getRenderable().setColor([0.3, 0, .51, 1]);
     // size of the particle
     var r = Math.random();
     p.getXform().setSize(r, r);

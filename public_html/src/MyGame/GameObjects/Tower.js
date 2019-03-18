@@ -7,7 +7,7 @@ class Tower extends GameObject {
     if (this.towerType === 0) {
       rend.setElementPixelPositions(728, 818, 1792, 2048);
       this.getXform().setSize(3, 6);
-      this.range = 10;
+      this.range = 15;
       this.fireRate = 200;
     }
     if (this.towerType === 1) {

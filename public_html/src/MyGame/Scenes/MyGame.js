@@ -10,7 +10,7 @@ class MyGame extends Scene {
     this.mLightController = null;
     this.EnemySet = null;
     this.TowerSet = null;
-
+    this.projectileSet = new GameObjectSet();
     this.HUD = null;
     this.enemy = null;
     this.kTexture = "assets/SpriteSheet.png";
@@ -112,6 +112,7 @@ class MyGame extends Scene {
     //this.updateEnemy();
     this.WaypointSet.update();
     this.TowerSet.update();
+    this.projectileSet.update();
     this.mCam.update();
 
     //handle game flow input
@@ -147,6 +148,7 @@ class MyGame extends Scene {
     this.EnemySet.draw(this.mCam);
     this.WaypointSet.draw(this.mCam);
     this.TowerSet.draw(this.mCam);
+    this.projectileSet.draw(this.mCam);
     this.PlayerOneBaseSet.draw(this.mCam);
     this.PlayerTwoBaseSet.draw(this.mCam);
     this.mHUD.draw(this.mCam);
@@ -174,7 +176,11 @@ class MyGame extends Scene {
     _enemy.getXform().setYPos(startPos.y);
     this.EnemySet.addToSet(_enemy);
     this.mLightController.addLightsToDynamicObjects(_enemy);
-    gEngine.AudioClips.playACue(this.C10clip);
+    if(_enemy.isSpecial){
+        gEngine.AudioClips.playACue(this.C3clip);
+    }else{
+        gEngine.AudioClips.playACue(this.C10clip);
+    }
   }
 
   instantiateWaypoint(pos) {
@@ -211,19 +217,26 @@ class MyGame extends Scene {
 
   instantiateTower(pos) {
     var canPlace = true;
-    if (pos.x<25 || pos.x > 75) canPlace = false;
+    if (pos.x<20 || pos.x > 80) canPlace = false;
+    for (var i = RoundManager.instance.State.Towers.length; i > 0; i--) {
+      var WPPos = RoundManager.instance.State.Towers[i - 1];
+      var dist = Math.sqrt(Math.pow(WPPos.x - pos.x, 2) + Math.pow(WPPos.y - pos.y, 2));
+      if (dist < 7) {
+        canPlace = false;
+      }
+    }
     if(this.towerCount < (Math.floor((RoundManager.instance.State.Waypoints.length + RoundManager.instance.State.FakeWaypoints.length)/2) + 2) && canPlace){
         var tower = new Tower(pos, this.EnemySet, this.kTexture);
         this.TowerSet.addToSet(tower);
         this.mLightController.addLightsToDynamicObjects(tower);
         for (var i = 0; i < 5; i++) {
           var p = this.createTParticle(pos.x, pos.y);
-          this.mParticles.addToSet(p);
         }
         var p = this.createRangeParticle(pos.x,pos.y,tower.towerType);
         this.mParticles.addToSet(p);
         gEngine.AudioClips.playACue(this.FBS8clip);
         this.towerCount++;
+        return true;
     }else {
       var p = this.createXParticle(pos.x, pos.y);
       this.mParticles.addToSet(p);
@@ -246,6 +259,10 @@ class MyGame extends Scene {
     if (diffBase){
       this.gm.State.GameState.PlayerOne.Score += this.gm.State.GameState.PlayerOne.Role == PlayerRole.Waving ? 1 : 0;
       this.gm.State.GameState.PlayerTwo.Score += this.gm.State.GameState.PlayerTwo.Role == PlayerRole.Waving ? 1 : 0;  
+    }
+    if (e.isSpecial){
+      this.gm.State.GameState.PlayerOne.Score += this.gm.State.GameState.PlayerOne.Role == PlayerRole.Waving ? 1 : 0;
+      this.gm.State.GameState.PlayerTwo.Score += this.gm.State.GameState.PlayerTwo.Role == PlayerRole.Waving ? 1 : 0;    
     }
     this.EnemySet.removeFromSet(e);
     RoundManager.instance.enemyReachedEndPoint();
@@ -277,6 +294,18 @@ class MyGame extends Scene {
     this.TowerSet.removeAll();
     this.canShowSmallCam = false;
     this.towerCount =0;
+  }
+  
+  specialDeath(atX, atY){
+      console.log("spec death called");
+        var pos = new Vector2(atX,atY);
+        var tower = new Tower(pos, this.EnemySet, this.kTexture);
+        this.TowerSet.addToSet(tower);
+        this.mLightController.addLightsToDynamicObjects(tower);
+        for (var i = 0; i < 5; i++) {
+          var p = this.createTParticle(pos.x, pos.y);
+          this.mParticles.addToSet(p);
+        }
   }
 
   createOKParticle(atX, atY) {
@@ -334,7 +363,7 @@ class MyGame extends Scene {
     var ry = Math.random() * 2 - 1;
     px.setVelocity([rx * 15, ry * 15]);
     px.setAcceleration([rx, ry]);
-
+    this.mParticles.addToSet(p);
     // size delta
     p.setSizeDelta(0.98);
     return p;
@@ -365,7 +394,7 @@ class MyGame extends Scene {
   }
 
   createSKParticle(atX, atY) {
-    var life = 120;
+    var life = 150;
     var p = new ParticleGameObject(this.kSKParticleTexture, atX, atY, life);
     
     // size of the particle
@@ -375,7 +404,6 @@ class MyGame extends Scene {
     px.setAcceleration([0, 1]);
     // size delta
     p.setSizeDelta(0.98);
-    p.getXform().incRotationByDegree(Math.random()*15-30);
     this.mParticles.addToSet(p);
     gEngine.AudioClips.playACue(this.IKclip);
     //return p;

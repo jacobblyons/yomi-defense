@@ -25,8 +25,9 @@ class VapingInput {
   }
 
   _handleClick() {
-      this.sceneRef.instantiateTower(this.mousePos);
+    if(this.sceneRef.instantiateTower(this.mousePos)){
       RoundManager.instance.addTower(this.mousePos);
+    }
   }
 
   _updateMousePos() {
