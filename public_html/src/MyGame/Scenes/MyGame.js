@@ -210,7 +210,9 @@ class MyGame extends Scene {
   }
 
   instantiateTower(pos) {
-    if(this.towerCount < (Math.floor((RoundManager.instance.State.Waypoints.length + RoundManager.instance.State.FakeWaypoints.length)/2) + 2)){
+    var canPlace = true;
+    if (pos.x<25 || pos.x > 75) canPlace = false;
+    if(this.towerCount < (Math.floor((RoundManager.instance.State.Waypoints.length + RoundManager.instance.State.FakeWaypoints.length)/2) + 2) && canPlace){
         var tower = new Tower(pos, this.EnemySet, this.kTexture);
         this.TowerSet.addToSet(tower);
         this.mLightController.addLightsToDynamicObjects(tower);
@@ -245,8 +247,6 @@ class MyGame extends Scene {
       this.gm.State.GameState.PlayerOne.Score += this.gm.State.GameState.PlayerOne.Role == PlayerRole.Waving ? 1 : 0;
       this.gm.State.GameState.PlayerTwo.Score += this.gm.State.GameState.PlayerTwo.Role == PlayerRole.Waving ? 1 : 0;  
     }
-    console.log(RoundManager.instance.State.SelectedSpawnBase);
-    console.log(RoundManager.instance.State.SelectedEndBase);
     this.EnemySet.removeFromSet(e);
     RoundManager.instance.enemyReachedEndPoint();
     GameManager.instance.mGameScene.getCamera().shake(-1, -1, 30, 10);

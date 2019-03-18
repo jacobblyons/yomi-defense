@@ -8,19 +8,19 @@ class Enemy extends GameObject {
       this.getXform().setSize(3, 3);
       this.speed = 0.2;
       this.rotation = Math.random() * 8-16;
-      this.mHitPoints = 3;
+      this.mHitPoints = 4;
     }
     if (type === 1) {
       rend.setElementPixelPositions(1372, 1629, 1828, 2048);
       this.getXform().setSize(3, 3);
       this.speed = 0.35;
       this.rotation = Math.random() * 3 - 6;
-      this.mHitPoints = 2;
+      this.mHitPoints = 3;
     }
     if (type === 2) {
       rend.setElementPixelPositions(1629, 1886, 1802, 2048);
       this.getXform().setSize(3, 3);
-      this.speed = 0.55;
+      this.speed = 0.6;
       this.rotation = Math.random() * 2.5 -5;
       this.mHitPoints = 1;
     }
