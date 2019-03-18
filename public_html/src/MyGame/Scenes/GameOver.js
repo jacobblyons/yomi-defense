@@ -5,7 +5,7 @@ class GameOver extends Scene {
     this.mPlayAgainButton = null;
     this.mCam = null;
     this.mWinnerMessage = null;
-    this.kBGAudio = "assets/audio/piano.wav";
+    this.kBGAudio = "assets/audio/Piano.wav";
   }
   loadScene() {
     gEngine.Textures.loadTexture(this.kButtonSprite);

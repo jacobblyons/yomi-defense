@@ -174,7 +174,7 @@ class MyGame extends Scene {
     _enemy.getXform().setYPos(startPos.y);
     this.EnemySet.addToSet(_enemy);
     this.mLightController.addLightsToDynamicObjects(_enemy);
-    gEngine.AudioClips.playACue(this.L7clip);
+    gEngine.AudioClips.playACue(this.C10clip);
   }
 
   instantiateWaypoint(pos) {
