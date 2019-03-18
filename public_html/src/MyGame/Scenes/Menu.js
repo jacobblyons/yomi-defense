@@ -5,7 +5,6 @@ class Menu extends Scene {
     this.mGameTitle = "YOMI DEFENSE";
     this.mPlayButtonUI = null;
     this.mExitButtonUI = null;
-    this.mShowDebug = null;
     this.mGameTitleTextUI = null;
     this.mCam = null;
     this.mShowInstructionText = null;
@@ -85,19 +84,6 @@ class Menu extends Scene {
       [1, 1, 1, 1]
     );
 
-    this.mShowDebug = new UIButton(
-      this.kButtonSprite,
-      () => {
-        GameManager.instance.toggleStateDebug();
-      },
-      this,
-      [canvas.width / 2 + 300, canvas.height / 2 + 250],
-      [75, 50],
-      "DEBUG",
-      4,
-      [1, 0, 0, 1],
-      [1, 1, 1, 1]
-    );
 
 //    this.mShowInstructionText = new UIText(
 //      "HOLD SPACE FOR INSTRUCTIONS",
@@ -119,7 +105,6 @@ class Menu extends Scene {
     this.mPlay3RoundsButtonUI.update();
     this.mPlay5RoundsButtonUI.update();
     this.mPlayInfiniteButtonUI.update();
-    this.mShowDebug.update();
   }
 
   draw() {
@@ -129,6 +114,5 @@ class Menu extends Scene {
     this.mPlay5RoundsButtonUI.draw(this.mCam);
     this.mPlayInfiniteButtonUI.draw(this.mCam);
     this.mGameTitleTextUI.draw(this.mCam);
-    this.mShowDebug.draw(this.mCam);
   }
 }

@@ -7,21 +7,21 @@ class Enemy extends GameObject {
       rend.setElementPixelPositions(256, 384, 1926, 2048);
       this.getXform().setSize(3, 3);
       this.speed = 0.2;
-      this.rotation = Math.random() * 2;
+      this.rotation = Math.random() * 8-16;
       this.mHitPoints = 3;
     }
     if (type === 1) {
       rend.setElementPixelPositions(1372, 1629, 1828, 2048);
       this.getXform().setSize(3, 3);
       this.speed = 0.35;
-      this.rotation = Math.random() * 3 + 2;
+      this.rotation = Math.random() * 3 - 6;
       this.mHitPoints = 2;
     }
     if (type === 2) {
       rend.setElementPixelPositions(1629, 1886, 1802, 2048);
       this.getXform().setSize(3, 3);
       this.speed = 0.55;
-      this.rotation = Math.random() * 5;
+      this.rotation = Math.random() * 2.5 -5;
       this.mHitPoints = 1;
     }
     this.kROParticleTexture = "assets/ParticleSystem/RO.png";
@@ -116,6 +116,7 @@ class Enemy extends GameObject {
     if (this.speed < this.maxSpeed) {
       this.speed += 0.2;
       this.speed.toFixed(5);
+      this.rotation = Math.random() * 6-12;
       if (this.speed > this.maxSpeed) {
         this.speed = this.maxSpeed;
         var p = this.createCRParticle(this.getXform().getXPos(), this.getXform().getYPos());
@@ -124,6 +125,7 @@ class Enemy extends GameObject {
     } else {
       var p = this.createCRParticle(this.getXform().getXPos(), this.getXform().getYPos());
       this.mParticles.addToSet(p);
+      this.rotation = Math.random() * 8-16;
     }
   }
 
