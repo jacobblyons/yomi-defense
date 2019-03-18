@@ -5,11 +5,14 @@ class GameOver extends Scene {
     this.mPlayAgainButton = null;
     this.mCam = null;
     this.mWinnerMessage = null;
+    this.kBGAudio = "assets/audio/piano.wav";
   }
   loadScene() {
     gEngine.Textures.loadTexture(this.kButtonSprite);
+    gEngine.AudioClips.loadAudio(this.kBGAudio);
   }
   unloadScene() {
+    gEngine.AudioClips.stopBackgroundAudio();
     gEngine.Textures.unloadTexture(this.kButtonSprite);
     GameManager.instance.sceneSwapReady();
   }
@@ -53,6 +56,7 @@ class GameOver extends Scene {
       UIText.eVAlignment.eTop,
       [1, 1, 1, 1]
     );
+    gEngine.AudioClips.playBackgroundAudio(this.kBGAudio);
   }
   update() {
     this.mPlayAgainButton.update();

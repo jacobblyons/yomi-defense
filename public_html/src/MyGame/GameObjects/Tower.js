@@ -38,6 +38,19 @@ class Tower extends GameObject {
     this.canSacrifice = false;
     this.mShake = new ShakePosition(1.5,3,1,60);
     this.mShakeFlag = false;
+
+    this.C2clip = "assets/audio/C2.wav";
+    this.C3clip = "assets/audio/C3.wav";
+    this.C8clip = "assets/audio/C8.wav";
+    this.C9clip = "assets/audio/C9.wav";
+    this.C10clip = "assets/audio/C10.wav";
+    this.FBS8clip = "assets/audio/FBS8.wav";
+    this.HHSclip = "assets/audio/HHS.wav";
+    this.IKclip = "assets/audio/IK.wav";
+    this.KDclip = "assets/audio/KD.wav";
+    this.L7clip = "assets/audio/L7.wav";
+    this.L8clip = "assets/audio/L8.wav";
+    this.SDclip = "assets/audio/SD.wav";   
   }
 
   update() {
@@ -83,6 +96,7 @@ class Tower extends GameObject {
     if (this.canShoot) {
       this.mShakeFlag = true;
       this.shotsTaken++;
+      gEngine.AudioClips.playACue(this.KDclip);
       var target = this._getTarget();      
       this.projectileSet.addToSet(new TowerProjectile(target, pos, this.towerType));
       this.getRenderable().setColor([1, 1, 1, 0.6]);

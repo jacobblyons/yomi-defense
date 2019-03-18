@@ -8,21 +8,21 @@ class Enemy extends GameObject {
       this.getXform().setSize(3, 3);
       this.speed = 0.2;
       this.rotation = Math.random() * 2;
-      this.mHitPoints = 4;
+      this.mHitPoints = 3;
     }
     if (type === 1) {
       rend.setElementPixelPositions(1372, 1629, 1828, 2048);
       this.getXform().setSize(3, 3);
       this.speed = 0.35;
       this.rotation = Math.random() * 3 + 2;
-      this.mHitPoints = 3;
+      this.mHitPoints = 2;
     }
     if (type === 2) {
       rend.setElementPixelPositions(1629, 1886, 1802, 2048);
       this.getXform().setSize(3, 3);
-      this.speed = 0.5;
+      this.speed = 0.55;
       this.rotation = Math.random() * 5;
-      this.mHitPoints = 2;
+      this.mHitPoints = 1;
     }
     this.kROParticleTexture = "assets/ParticleSystem/RO.png";
     this.kSKParticleTexture = "assets/ParticleSystem/SK.png";
@@ -44,6 +44,19 @@ class Enemy extends GameObject {
     this.p1Role = GameManager.instance.State.GameState.PlayerOne.Role;
     this.mShake = new ShakePosition(this.getXform().getSize()[0]/2, this.getXform().getSize()[1]/2, 1, 60);
     this.mShakeFlag = false;
+    
+    this.C2clip = "assets/audio/C2.wav";
+    this.C3clip = "assets/audio/C3.wav";
+    this.C8clip = "assets/audio/C8.wav";
+    this.C9clip = "assets/audio/C9.wav";
+    this.C10clip = "assets/audio/C10.wav";
+    this.FBS8clip = "assets/audio/FBS8.wav";
+    this.HHSclip = "assets/audio/HHS.wav";
+    this.IKclip = "assets/audio/IK.wav";
+    this.KDclip = "assets/audio/KD.wav";
+    this.L7clip = "assets/audio/L7.wav";
+    this.L8clip = "assets/audio/L8.wav";
+    this.SDclip = "assets/audio/SD.wav";   
   }
 
   update() {
@@ -123,6 +136,7 @@ class Enemy extends GameObject {
     if (this.incHP) this.mHitPoints++;
     this.waypointsReached++;
     this.incHP = !this.incHP;
+    gEngine.AudioClips.playACue(this.C9clip);
   }
   moveTowards(targetPos, dist) {
     var transform = this.getXform();
@@ -145,6 +159,7 @@ class Enemy extends GameObject {
       this.sceneRef.createSKParticle(this.getXform().getXPos(), this.getXform().getYPos())
       return true;
     }
+    gEngine.AudioClips.playACue(this.C8clip);
   }
 
   _checkEndCollisions() {}

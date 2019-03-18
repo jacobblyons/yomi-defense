@@ -9,12 +9,15 @@ class Menu extends Scene {
     this.mGameTitleTextUI = null;
     this.mCam = null;
     this.mShowInstructionText = null;
+    this.kBGAudio = "assets/audio/Organ.wav";
   }
 
   loadScene() {
     gEngine.Textures.loadTexture(this.kButtonSprite);
+    gEngine.AudioClips.loadAudio(this.kBGAudio);
   }
   unloadScene() {
+    gEngine.AudioClips.stopBackgroundAudio();
     gEngine.Textures.unloadTexture(this.kButtonSprite);
     GameManager.instance.sceneSwapReady();
   }
@@ -109,6 +112,7 @@ class Menu extends Scene {
     v[0] = 1;
     v[1] = 1;
     v[2] = 1;
+    gEngine.AudioClips.playBackgroundAudio(this.kBGAudio);
   }
 
   update() {

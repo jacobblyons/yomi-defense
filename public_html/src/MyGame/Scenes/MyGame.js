@@ -23,12 +23,40 @@ class MyGame extends Scene {
     this.mParticles = new ParticleGameObjectSet();
     this.showSmallCam = false;
     this.canShowSmallCam = true;
+    this.towerCount = 0;
+    this.kBGAudio = "assets/audio/synth.wav";
+    this.C2clip = "assets/audio/C2.wav";
+    this.C3clip = "assets/audio/C3.wav";
+    this.C8clip = "assets/audio/C8.wav";
+    this.C9clip = "assets/audio/C9.wav";
+    this.C10clip = "assets/audio/C10.wav";
+    this.FBS8clip = "assets/audio/FBS8.wav";
+    this.HHSclip = "assets/audio/HHS.wav";
+    this.IKclip = "assets/audio/IK.wav";
+    this.KDclip = "assets/audio/KD.wav";
+    this.L7clip = "assets/audio/L7.wav";
+    this.L8clip = "assets/audio/L8.wav";
+    this.SDclip = "assets/audio/SD.wav";    
   }
 
   loadScene() {
     gEngine.Textures.loadTexture(this.kTexture);
+    gEngine.AudioClips.loadAudio(this.kBGAudio);
+    gEngine.AudioClips.loadAudio(this.C2clip);
+    gEngine.AudioClips.loadAudio(this.C3clip);
+    gEngine.AudioClips.loadAudio(this.C8clip);
+    gEngine.AudioClips.loadAudio(this.C9clip);
+    gEngine.AudioClips.loadAudio(this.C10clip);
+    gEngine.AudioClips.loadAudio(this.FBS8clip);
+    gEngine.AudioClips.loadAudio(this.HHSclip);
+    gEngine.AudioClips.loadAudio(this.IKclip);
+    gEngine.AudioClips.loadAudio(this.KDclip);
+    gEngine.AudioClips.loadAudio(this.L7clip);
+    gEngine.AudioClips.loadAudio(this.L8clip);
+    gEngine.AudioClips.loadAudio(this.SDclip);
   }
   unloadScene() {
+    gEngine.AudioClips.stopBackgroundAudio();
     GameManager.instance.sceneSwapReady();
   }
   initialize() {
@@ -69,6 +97,7 @@ class MyGame extends Scene {
     v[0] = 0.5;
     v[1] = 0.5;
     v[2] = 0.5;
+    gEngine.AudioClips.playBackgroundAudio(this.kBGAudio);
   }
 
   update() {
@@ -145,6 +174,7 @@ class MyGame extends Scene {
     _enemy.getXform().setYPos(startPos.y);
     this.EnemySet.addToSet(_enemy);
     this.mLightController.addLightsToDynamicObjects(_enemy);
+    gEngine.AudioClips.playACue(this.L7clip);
   }
 
   instantiateWaypoint(pos) {
@@ -167,6 +197,7 @@ class MyGame extends Scene {
       var waypoint = new Waypoint(pos, this.kTexture);
       this.WaypointSet.addToSet(waypoint);
       this.mLightController.addLightsToDynamicObjects(waypoint);
+      gEngine.AudioClips.playACue(this.L7clip);
       for (var i = 0; i < 5; i++) {
         var p = this.createWPParticle(pos.x, pos.y);
         this.mParticles.addToSet(p);
@@ -174,19 +205,28 @@ class MyGame extends Scene {
     } else {
       var p = this.createXParticle(pos.x, pos.y);
       this.mParticles.addToSet(p);
+      gEngine.AudioClips.playACue(this.L8clip);
     }
   }
 
   instantiateTower(pos) {
-    var tower = new Tower(pos, this.EnemySet, this.kTexture);
-    this.TowerSet.addToSet(tower);
-    this.mLightController.addLightsToDynamicObjects(tower);
-    for (var i = 0; i < 5; i++) {
-      var p = this.createTParticle(pos.x, pos.y);
+    if(this.towerCount < (Math.floor((RoundManager.instance.State.Waypoints.length + RoundManager.instance.State.FakeWaypoints.length)/2) + 2)){
+        var tower = new Tower(pos, this.EnemySet, this.kTexture);
+        this.TowerSet.addToSet(tower);
+        this.mLightController.addLightsToDynamicObjects(tower);
+        for (var i = 0; i < 5; i++) {
+          var p = this.createTParticle(pos.x, pos.y);
+          this.mParticles.addToSet(p);
+        }
+        var p = this.createRangeParticle(pos.x,pos.y,tower.towerType);
+        this.mParticles.addToSet(p);
+        gEngine.AudioClips.playACue(this.FBS8clip);
+        this.towerCount++;
+    }else {
+      var p = this.createXParticle(pos.x, pos.y);
       this.mParticles.addToSet(p);
+      gEngine.AudioClips.playACue(this.L8clip);
     }
-    var p = this.createRangeParticle(pos.x,pos.y,tower.towerType);
-    this.mParticles.addToSet(p);
   }
 
   enemyAtEndPoint(e) {
@@ -200,6 +240,7 @@ class MyGame extends Scene {
     this.EnemySet.removeFromSet(e);
     RoundManager.instance.enemyReachedEndPoint();
     GameManager.instance.mGameScene.getCamera().shake(-1, -1, 30, 10);
+    gEngine.AudioClips.playACue(this.C9clip);
   }
 
   _initializePlayerOneBases() {
@@ -225,6 +266,7 @@ class MyGame extends Scene {
     this.WaypointSet.removeAll();
     this.TowerSet.removeAll();
     this.canShowSmallCam = false;
+    this.towerCount =0;
   }
 
   createOKParticle(atX, atY) {
@@ -269,7 +311,7 @@ class MyGame extends Scene {
 
     // size delta
     p.setSizeDelta(0.98);
-    return p;
+    return p;    
   }
   createTParticle(atX, atY) {
     var life = 120;
@@ -325,6 +367,7 @@ class MyGame extends Scene {
     p.setSizeDelta(0.98);
     p.getXform().incRotationByDegree(Math.random()*15-30);
     this.mParticles.addToSet(p);
+    gEngine.AudioClips.playACue(this.IKclip);
     //return p;
   }
   getCamera() {
