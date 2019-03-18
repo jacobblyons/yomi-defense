@@ -4,7 +4,7 @@ class LightController {
     this.raveColor = [1, 1, 1];
 
     this.p1Light = new Light();
-    this.p1Light.setColor([1, 1, 1, 1]);
+    this.p1Light.setColor([0, 1, 1, 1]);
     this.p1Light.setXPos(0);
     this.p1Light.setYPos(50);
     this.p1Light.setZPos(10);
@@ -14,7 +14,7 @@ class LightController {
     this.p1Light.setLightTo(false);
 
     this.p2Light = new Light();
-    this.p2Light.setColor([1, 1, 1, 1]);
+    this.p2Light.setColor([1, .08, .57, 1]);
     this.p2Light.setXPos(100);
     this.p2Light.setYPos(50);
     this.p2Light.setZPos(10);
@@ -111,8 +111,8 @@ class LightController {
   _waveLights() {
     this.p1Light.setIntensity(0.45);
     this.p2Light.setIntensity(0.45);
-    this.p1Light.setColor([0, 0, 1, 1]);
-    this.p2Light.setColor([1, 0, 0, 1]);
+    this.p1Light.setColor([0, 1, 1, 1]);
+    this.p2Light.setColor([1, .08, .57, 1]);
     this.raveLight.setIntensity(0.05);
     this.sceneRef.BG.setColor([0, 0, 0, 0.7]);
     this.sceneRef.mCam.setBackgroundColor([5 / 255, 5 / 255, 7 / 255, 1]);
@@ -124,8 +124,8 @@ class LightController {
     this.p2Light.setLightTo(false);
     this.p1Light.setIntensity(0.7);
     this.p2Light.setIntensity(0.7);
-    this.p1Light.setColor([0, 0, 1, 1]);
-    this.p2Light.setColor([1, 0, 0, 1]);
+    this.p1Light.setColor([0, 1, 1, 1]);
+    this.p2Light.setColor([1, .08, .57, 1]);
     this.raveLight.setIntensity(0.85);
     this.sceneRef.mCam.setBackgroundColor([12 / 255, 13 / 255, 15 / 255, 1]);
   }

@@ -25,7 +25,7 @@ class HUD {
       GameManager.instance.State.AppState.HUDTextSize,
       UIText.eHAlignment.eCenter,
       UIText.eVAlignment.eTop,
-      [0.5, 0.5, 1, 1]
+      [0, 1, 1, 1]
     );
 
     this.mPlayerTwoScore = new UIText(
@@ -34,7 +34,7 @@ class HUD {
       GameManager.instance.State.AppState.HUDTextSize,
       UIText.eHAlignment.eCenter,
       UIText.eVAlignment.eTop,
-      [1, 0, 0, 1]
+      [1, .08, .57, 1]
     );
 
     this.mPlayerOneBaseNumbers = [];
@@ -77,7 +77,7 @@ class HUD {
       GameManager.instance.State.GameState.PlayerOne.Role === PlayerRole.Waving ? "PLAYER ONE" : "PLAYER TWO"
     );
     this.mLargeMessage.setColor(
-      GameManager.instance.State.GameState.PlayerOne.Role === PlayerRole.Waving ? [0, 0, 1, 1] : [1, 0, 0, 1]
+      GameManager.instance.State.GameState.PlayerOne.Role === PlayerRole.Waving ? [0, 1, 1, 1] : [1, .08, .57, 1]
     );
     this.mSubtitle.setText("Press space to start...");
   }
@@ -107,7 +107,7 @@ class HUD {
   showWavingInstructionMessage() {
     this.mPlayerTwoBaseNumbers = [];
     this.mPlayerOneBaseNumbers = [];
-    this.mSubtitle.setText("(WAVING) Click to set waypoints (L=Real,R=Fake). Press space when done.");
+    this.mSubtitle.setText("(WAVING) Click to set waypoints (LMB=Real,RMB=Fake). Press space when done.");
   }
 
   showVapingReadyUpMessage() {
@@ -115,7 +115,7 @@ class HUD {
       GameManager.instance.State.GameState.PlayerOne.Role === PlayerRole.Vaping ? "PLAYER ONE" : "PLAYER TWO"
     );
     this.mLargeMessage.setColor(
-      GameManager.instance.State.GameState.PlayerOne.Role === PlayerRole.Vaping ? [0, 0, 1, 1] : [1, 0, 0, 1]
+      GameManager.instance.State.GameState.PlayerOne.Role === PlayerRole.Vaping ? [0, 1, 1, 1] : [1, .08, .57, 1]
     );
     this.mSubtitle.setText("Press space to start ");
   }

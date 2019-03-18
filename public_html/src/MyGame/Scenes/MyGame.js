@@ -199,6 +199,7 @@ class MyGame extends Scene {
     }
     this.EnemySet.removeFromSet(e);
     RoundManager.instance.enemyReachedEndPoint();
+    GameManager.instance.mGameScene.getCamera().shake(-1, -1, 30, 10);
   }
 
   _initializePlayerOneBases() {

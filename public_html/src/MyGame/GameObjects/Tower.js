@@ -36,6 +36,8 @@ class Tower extends GameObject {
     this.sacShots = 3;
     this.shotsTaken = 0;
     this.canSacrifice = false;
+    this.mShake = new ShakePosition(1.5,3,1,60);
+    this.mShakeFlag = false;
   }
 
   update() {
@@ -62,9 +64,24 @@ class Tower extends GameObject {
       this.canSacrifice = true;
     }
     this.mParticles.update();
+    if (this.canSacrifice){
+        if(this.mShakeFlag){
+            if(this.mShake.shakeDone()){
+                this.mShakeFlag = false;
+                this.mShake = new ShakePosition(1.5, 3, 1, 60);            
+            }
+            else
+            {
+            var SR = this.mShake.getShakeResults();
+            this.getXform().setSize(3-SR[0], 6-SR[1]);
+            }
+        }
+    }
   }
+  
   _shoot = function(pos) {
     if (this.canShoot) {
+      this.mShakeFlag = true;
       this.shotsTaken++;
       var target = this._getTarget();      
       this.projectileSet.addToSet(new TowerProjectile(target, pos, this.towerType));
@@ -83,7 +100,7 @@ class Tower extends GameObject {
       );
       this.lastTime = Date.now();      
     }
-  };
+  }
 
   _sacrifice() {
     this.range = 45;
@@ -136,11 +153,11 @@ class Tower extends GameObject {
               .getBBox()
               .boundCollideStatus(this.enemySet.getObjectAt(j).getBBox())
           ) {
-            this.projectileSet.removeFromSet(this.projectileSet.getObjectAt(i));
-            GameManager.instance.mGameScene.getCamera().shake(-1, -1, 30, 10);
+            this.projectileSet.removeFromSet(this.projectileSet.getObjectAt(i));            
             var isDead = this.enemySet.getObjectAt(j).hit();
             if (isDead) {
               this.enemySet.removeFromSet(this.enemySet.getObjectAt(j));
+              GameManager.instance.mGameScene.getCamera().shake(-1, -1, 30, 10);
               RoundManager.instance.enemyKilled();
             }
           }

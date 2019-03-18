@@ -12,7 +12,7 @@ class Enemy extends GameObject {
     }
     if (type === 1) {
       rend.setElementPixelPositions(1372, 1629, 1828, 2048);
-      this.getXform().setSize(4.5, 3);
+      this.getXform().setSize(3, 3);
       this.speed = 0.35;
       this.rotation = Math.random() * 3 + 2;
       this.mHitPoints = 3;
@@ -42,6 +42,8 @@ class Enemy extends GameObject {
     this.maxSpeed = 1.4;
     this.incHP = false;
     this.p1Role = GameManager.instance.State.GameState.PlayerOne.Role;
+    this.mShake = new ShakePosition(this.getXform().getSize()[0]/2, this.getXform().getSize()[1]/2, 1, 60);
+    this.mShakeFlag = false;
   }
 
   update() {
@@ -78,6 +80,17 @@ class Enemy extends GameObject {
       this.hit();
     }
     this.mParticles.update();
+    if(this.mShakeFlag){
+        if(this.mShake.shakeDone()){
+            this.mShakeFlag = false;
+            this.mShake = new ShakePosition(this.getXform().getSize()[0]/2, this.getXform().getSize()[1]/2, 1, 60);            
+        }
+        else
+        {
+        var SR = this.mShake.getShakeResults();
+        this.getXform().setSize(3-SR[0], 3-SR[1]);
+        }
+    }
   }
   draw(cam) {
     super.draw(cam);
@@ -121,6 +134,7 @@ class Enemy extends GameObject {
 
   hit() {
     this.mHitPoints--;
+    this.mShakeFlag = true;
     for (var i = 0; i < 5; i++) {
       var p = this.createSplashParticle(this.getXform().getXPos(), this.getXform().getYPos());
       this.mParticles.addToSet(p);
