@@ -297,7 +297,6 @@ class MyGame extends Scene {
   }
   
   specialDeath(atX, atY){
-      console.log("spec death called");
         var pos = new Vector2(atX,atY);
         var tower = new Tower(pos, this.EnemySet, this.kTexture);
         this.TowerSet.addToSet(tower);

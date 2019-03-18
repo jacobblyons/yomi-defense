@@ -29,7 +29,7 @@ class Enemy extends GameObject {
     if (r< 0.20) this.isSpecial = true;
     if (this.isSpecial){
         this.getRenderable().setColor([1,1,1,1]);
-        this.mHitPoints++;
+        this.mHitPoints += 5;
     }
     this.kROParticleTexture = "assets/ParticleSystem/RO.png";
     this.kSKParticleTexture = "assets/ParticleSystem/SK.png";
