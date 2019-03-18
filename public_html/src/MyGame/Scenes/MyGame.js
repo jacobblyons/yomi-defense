@@ -231,12 +231,22 @@ class MyGame extends Scene {
 
   enemyAtEndPoint(e) {
     this.canShowSmallCam = true;
+    var diffBase = false;
     var p = this.createOKParticle(e.getXform().getXPos(), e.getXform().getYPos());
     this.mParticles.addToSet(p);
     if (e.speed > 1.39) {
       this.gm.State.GameState.PlayerOne.Score += this.gm.State.GameState.PlayerOne.Role == PlayerRole.Waving ? 1 : 0;
       this.gm.State.GameState.PlayerTwo.Score += this.gm.State.GameState.PlayerTwo.Role == PlayerRole.Waving ? 1 : 0;
     }
+    var id1 = RoundManager.instance.State.SelectedSpawnBase.slice(-1);
+    var id2 = RoundManager.instance.State.SelectedEndBase.slice(-1);
+    if (id1 === id2) diffBase = true;
+    if (diffBase){
+      this.gm.State.GameState.PlayerOne.Score += this.gm.State.GameState.PlayerOne.Role == PlayerRole.Waving ? 1 : 0;
+      this.gm.State.GameState.PlayerTwo.Score += this.gm.State.GameState.PlayerTwo.Role == PlayerRole.Waving ? 1 : 0;  
+    }
+    console.log(RoundManager.instance.State.SelectedSpawnBase);
+    console.log(RoundManager.instance.State.SelectedEndBase);
     this.EnemySet.removeFromSet(e);
     RoundManager.instance.enemyReachedEndPoint();
     GameManager.instance.mGameScene.getCamera().shake(-1, -1, 30, 10);
