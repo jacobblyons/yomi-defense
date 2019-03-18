@@ -36,7 +36,8 @@ class MyGame extends Scene {
     this.KDclip = "assets/audio/KD.wav";
     this.L7clip = "assets/audio/L7.wav";
     this.L8clip = "assets/audio/L8.wav";
-    this.SDclip = "assets/audio/SD.wav";    
+    this.SDclip = "assets/audio/SD.wav";   
+    this.YOclip = "assets/audio/YO.mp3";
   }
 
   loadScene() {
@@ -54,6 +55,7 @@ class MyGame extends Scene {
     gEngine.AudioClips.loadAudio(this.L7clip);
     gEngine.AudioClips.loadAudio(this.L8clip);
     gEngine.AudioClips.loadAudio(this.SDclip);
+    gEngine.AudioClips.loadAudio(this.YOclip);
   }
   unloadScene() {
     gEngine.AudioClips.stopBackgroundAudio();
@@ -263,6 +265,7 @@ class MyGame extends Scene {
     if (e.isSpecial){
       this.gm.State.GameState.PlayerOne.Score += this.gm.State.GameState.PlayerOne.Role == PlayerRole.Waving ? 1 : 0;
       this.gm.State.GameState.PlayerTwo.Score += this.gm.State.GameState.PlayerTwo.Role == PlayerRole.Waving ? 1 : 0;    
+      gEngine.AudioClips.playACue(this.YOclip);
     }
     this.EnemySet.removeFromSet(e);
     RoundManager.instance.enemyReachedEndPoint();
@@ -291,6 +294,20 @@ class MyGame extends Scene {
   _cleanupRound() {
     this.EnemySet.removeAll();
     this.WaypointSet.removeAll();
+    var cleanRound = true;
+    for(var i = 0; i < this.TowerSet.size(); i++){
+        var t = this.TowerSet.getObjectAt(i);
+        if (t.shotsTaken !== 0){
+            cleanRound = false;
+        }
+    }
+    if(cleanRound){
+        for(var i = 0; i < 3; i++){
+        gEngine.AudioClips.playACue(this.YOclip);
+        this.gm.State.GameState.PlayerOne.Score += this.gm.State.GameState.PlayerOne.Role == PlayerRole.Waving ? 15 : 0;
+        this.gm.State.GameState.PlayerTwo.Score += this.gm.State.GameState.PlayerTwo.Role == PlayerRole.Waving ? 15 : 0;
+        }        
+    }
     this.TowerSet.removeAll();
     this.canShowSmallCam = false;
     this.towerCount =0;
