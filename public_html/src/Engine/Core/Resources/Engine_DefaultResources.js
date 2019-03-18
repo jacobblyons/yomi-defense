@@ -105,7 +105,21 @@ gEngine.DefaultResources = (function () {
     // UI
     var UIRadarButtonTexture = "assets/UI/radarbutton.png";
     var UIDropDownArrow = "assets/UI/ddarrow.png";
-    
+    var kBGAudio1 = "assets/audio/synth.wav";
+    var kBGAudio2 = "assets/audio/synth2.wav";
+    var kBGAudio3 = "assets/audio/piano.wav";
+    var C2clip = "assets/audio/C2.wav";
+    var C3clip = "assets/audio/C3.wav";
+    var C8clip = "assets/audio/C8.wav";
+    var C9clip = "assets/audio/C9.wav";
+    var C10clip = "assets/audio/C10.wav";
+    var FBS8clip = "assets/audio/FBS8.wav";
+    var HHSclip = "assets/audio/HHS.wav";
+    var IKclip = "assets/audio/IK.wav";
+    var KDclip = "assets/audio/KD.wav";
+    var L7clip = "assets/audio/L7.wav";
+    var L8clip = "assets/audio/L8.wav";
+    var SDclip = "assets/audio/SD.wav";   
     var SpriteSheet = "assets/SpriteSheet.png";
     /**
      * Return the Global default font
@@ -243,6 +257,22 @@ gEngine.DefaultResources = (function () {
         gEngine.Textures.loadTexture(UIDropDownArrow);
         gEngine.Textures.loadTexture(SpriteSheet);
         gEngine.Textures.loadTexture(RulesTexture);
+
+        gEngine.AudioClips.loadAudio(kBGAudio1);
+        gEngine.AudioClips.loadAudio(kBGAudio2);
+        gEngine.AudioClips.loadAudio(kBGAudio3);
+        gEngine.AudioClips.loadAudio(C2clip);
+        gEngine.AudioClips.loadAudio(C3clip);
+        gEngine.AudioClips.loadAudio(C8clip);
+        gEngine.AudioClips.loadAudio(C9clip);
+        gEngine.AudioClips.loadAudio(C10clip);
+        gEngine.AudioClips.loadAudio(FBS8clip);
+        gEngine.AudioClips.loadAudio(HHSclip);
+        gEngine.AudioClips.loadAudio(IKclip);
+        gEngine.AudioClips.loadAudio(KDclip);
+        gEngine.AudioClips.loadAudio(L7clip);
+        gEngine.AudioClips.loadAudio(L8clip);
+        gEngine.AudioClips.loadAudio(SDclip);
         gEngine.ResourceMap.setLoadCompleteCallback(function s() {_createShaders(callBackFunction); });
     };
 

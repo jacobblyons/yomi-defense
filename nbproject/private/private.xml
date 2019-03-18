@@ -4,14 +4,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/mustardback/Dropbox/CSS452/Final/JCVDDTS-Final/public_html/src/MyGame/GameObjects/Tower.js</file>
-            <file>file:/C:/Users/mustardback/Dropbox/CSS452/Final/JCVDDTS-Final/public_html/src/GLSLShaders/LightFS.glsl</file>
             <file>file:/C:/Users/mustardback/Dropbox/CSS452/Final/JCVDDTS-Final/public_html/src/MyGame/Scenes/Menu.js</file>
-            <file>file:/C:/Users/mustardback/Dropbox/CSS452/Final/JCVDDTS-Final/public_html/src/MyGame/GameObjects/Waypoint.js</file>
             <file>file:/C:/Users/mustardback/Dropbox/CSS452/Final/JCVDDTS-Final/public_html/src/MyGame/Scenes/GameOver.js</file>
-            <file>file:/C:/Users/mustardback/Dropbox/CSS452/Final/JCVDDTS-Final/public_html/src/Engine/Shaders/LightShader.js</file>
             <file>file:/C:/Users/mustardback/Dropbox/CSS452/Final/JCVDDTS-Final/public_html/src/MyGame/GameObjects/Enemy.js</file>
             <file>file:/C:/Users/mustardback/Dropbox/CSS452/Final/JCVDDTS-Final/public_html/src/MyGame/Scenes/MyGame.js</file>
-            <file>file:/C:/Users/mustardback/Dropbox/CSS452/Final/JCVDDTS-Final/public_html/src/MyGame/GameObjects/TowerProjectile.js</file>
+            <file>file:/C:/Users/mustardback/Dropbox/CSS452/Final/JCVDDTS-Final/public_html/src/MyGame/State.js</file>
         </group>
     </open-files>
 </project-private>
