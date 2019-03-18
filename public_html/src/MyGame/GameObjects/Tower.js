@@ -7,19 +7,19 @@ class Tower extends GameObject {
     if (this.towerType === 0) {
       rend.setElementPixelPositions(728, 818, 1792, 2048);
       this.getXform().setSize(3, 6);
-      this.range = 15;
+      this.range = 10;
       this.fireRate = 275;
     }
     if (this.towerType === 1) {
       rend.setElementPixelPositions(959, 1117, 1792, 2048);
       this.getXform().setSize(3, 6);
-      this.range = 25;
+      this.range = 20;
       this.fireRate = 700;
     }
     if (this.towerType === 2) {
       rend.setElementPixelPositions(600, 728, 1908, 2048);
       this.getXform().setSize(3, 6);
-      this.range = 40;
+      this.range = 30;
       this.fireRate = 1100;
     }
     this.gm = GameManager.instance;
