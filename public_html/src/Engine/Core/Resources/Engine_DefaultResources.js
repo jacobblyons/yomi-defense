@@ -105,9 +105,9 @@ gEngine.DefaultResources = (function () {
     // UI
     var UIRadarButtonTexture = "assets/UI/radarbutton.png";
     var UIDropDownArrow = "assets/UI/ddarrow.png";
-    var kBGAudio1 = "assets/audio/synth.wav";
-    var kBGAudio2 = "assets/audio/synth2.wav";
-    var kBGAudio3 = "assets/audio/piano.wav";
+    var kBGAudio1 = "assets/audio/Synth.wav";
+    var kBGAudio2 = "assets/audio/Synth2.wav";
+    var kBGAudio3 = "assets/audio/Piano.wav";
     var C2clip = "assets/audio/C2.wav";
     var C3clip = "assets/audio/C3.wav";
     var C8clip = "assets/audio/C8.wav";

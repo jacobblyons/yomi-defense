@@ -24,7 +24,7 @@ class MyGame extends Scene {
     this.showSmallCam = false;
     this.canShowSmallCam = true;
     this.towerCount = 0;
-    this.kBGAudio = "assets/audio/synth.wav";
+    this.kBGAudio = "assets/audio/Synth.wav";
     this.C2clip = "assets/audio/C2.wav";
     this.C3clip = "assets/audio/C3.wav";
     this.C8clip = "assets/audio/C8.wav";
