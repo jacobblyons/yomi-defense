@@ -257,7 +257,7 @@ class MyGame extends Scene {
     }
     var id1 = RoundManager.instance.State.SelectedSpawnBase.slice(-1);
     var id2 = RoundManager.instance.State.SelectedEndBase.slice(-1);
-    if (id1 === id2) diffBase = true;
+    if (id1 !== id2) diffBase = true;
     if (diffBase){
       this.gm.State.GameState.PlayerOne.Score += this.gm.State.GameState.PlayerOne.Role == PlayerRole.Waving ? 1 : 0;
       this.gm.State.GameState.PlayerTwo.Score += this.gm.State.GameState.PlayerTwo.Role == PlayerRole.Waving ? 1 : 0;  
@@ -303,10 +303,10 @@ class MyGame extends Scene {
     }
     if(cleanRound){
         for(var i = 0; i < 3; i++){
-        gEngine.AudioClips.playACue(this.YOclip);
-        this.gm.State.GameState.PlayerOne.Score += this.gm.State.GameState.PlayerOne.Role == PlayerRole.Waving ? 15 : 0;
-        this.gm.State.GameState.PlayerTwo.Score += this.gm.State.GameState.PlayerTwo.Role == PlayerRole.Waving ? 15 : 0;
+        gEngine.AudioClips.playACue(this.YOclip);        
         }        
+        this.gm.State.GameState.PlayerOne.Score += this.gm.State.GameState.PlayerOne.Role === PlayerRole.Waving ? 15 : 0;
+        this.gm.State.GameState.PlayerTwo.Score += this.gm.State.GameState.PlayerTwo.Role === PlayerRole.Waving ? 15 : 0;
     }
     this.TowerSet.removeAll();
     this.canShowSmallCam = false;
